@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KILO">
 
-    <link rel="icon" type="image/png" href="icon.png?v=8">
-    <link rel="apple-touch-icon" href="icon.png?v=8">
+    <link rel="icon" type="image/png" href="icon.png?v=9">
+    <link rel="apple-touch-icon" href="icon.png?v=9">
 
     <title>KILO App</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -31,15 +31,8 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
         
-        /* BLOQUEAR PULL-TO-REFRESH (PRUEBA 2 SUPERADA) */
-        html, body {
-            overscroll-behavior-y: none; /* Esto evita que Chrome/Safari recarguen al deslizar */
-            height: 100%;
-            overflow: hidden; /* Controlamos el scroll en .screen */
-        }
-
         /* INPUTS GLOBAL STYLE */
-        input { 
+        input, textarea { 
             user-select: text; 
             background-color: #252527 !important; 
             border: 1px solid #333; 
@@ -51,12 +44,28 @@
             outline: none; 
             -webkit-appearance: none;
             transition: border-color 0.3s;
+            font-family: 'Inter', sans-serif;
         }
-        input:focus { border-color: var(--primary-color); }
+        input:focus, textarea:focus { border-color: var(--primary-color); }
 
         /* ELIMINAR FLECHAS NUMÉRICAS */
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number] { -moz-appearance: textfield; }
+
+        /* NOTAS DE EJERCICIO */
+        .exercise-note {
+            background: #111 !important;
+            border: none;
+            border-top: 1px solid #333;
+            border-radius: 0 0 12px 12px;
+            padding: 12px;
+            font-size: 13px;
+            color: #aaa !important;
+            margin-top: 5px;
+            resize: none;
+            height: 45px;
+        }
+        .exercise-note:focus { height: 80px; color: white !important; }
 
         /* ESTILOS ESPECÍFICOS */
         .measure-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
@@ -66,7 +75,7 @@
         .weight-hero input { background-color: #000 !important; border: 2px solid #333; color: var(--primary-color) !important; font-size: 32px; height: 60px; text-align: center; }
         #library-search, #selector-input { background-color: #111 !important; border-radius: 50px; padding-left: 20px; }
 
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); height: 100vh; display: flex; flex-direction: column; overflow: hidden; overscroll-behavior-y: none; }
         .hidden { display: none !important; }
         .accent { color: var(--primary-color); }
 
@@ -80,8 +89,6 @@
         /* UI BASE */
         h1 { font-size: 28px; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; }
         h2 { font-size: 14px; font-weight: 700; margin: 25px 0 10px 0; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
-        
-        /* SCROLL SOLO AQUÍ */
         .screen { flex: 1; overflow-y: auto; padding: calc(20px + var(--safe-top)) 20px calc(var(--nav-height) + 20px + var(--safe-bottom)) 20px; display: none; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; -webkit-overflow-scrolling: touch; height: 100%; }
         .screen.active { display: block; opacity: 1; transform: translateY(0); }
         .screen::-webkit-scrollbar { display: none; }
@@ -104,7 +111,7 @@
         .btn-outline { background-color: transparent; border: 1px solid #444; color: var(--text-color); }
         .btn-text { background: none; border: none; color: var(--primary-color); font-weight: bold; cursor: pointer; padding: 10px; }
 
-        .exercise-block { background: #0A0A0A; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #333; }
+        .exercise-block { background: #0A0A0A; padding: 15px 15px 0 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #333; overflow: hidden; }
         .set-row { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
         .set-num { width: 25px; height: 25px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #FFF; font-weight: bold; }
         .input-mini { width: 70px; text-align: center; background: #1a1a1a !important; padding: 10px; border-radius: 8px; border: 1px solid #333; color: white !important; outline: none; }
@@ -526,15 +533,34 @@
         function openExerciseSelector() { document.getElementById('selector-input').value = ''; updateExerciseSelector(); openModal('addExerciseModal'); }
         function updateExerciseSelector() { const query = document.getElementById('selector-input').value.toLowerCase(); const container = document.getElementById('selector-results'); const matches = state.exercises.filter(e => e.name.toLowerCase().includes(query)); let html = ''; if (query.length > 0 && !matches.find(e => e.name.toLowerCase() === query)) html += `<div class="search-result-item" onclick="selectExercise('${document.getElementById('selector-input').value}')" style="border-left: 3px solid var(--primary-color);"><div><h3 class="accent">Crear "${document.getElementById('selector-input').value}"</h3><p style="font-size:12px">Personalizado</p></div><i class="ph ph-plus-circle accent" style="font-size:24px"></i></div>`; matches.forEach(e => { html += `<div class="search-result-item" onclick="selectExercise('${e.name}')"><div><h3>${e.name}</h3><p>${e.muscle}</p></div><i class="ph ph-plus-circle" style="font-size:24px; color:#555;"></i></div>`; }); container.innerHTML = html; }
         function selectExercise(name) { const finalName = name.charAt(0).toUpperCase() + name.slice(1); addExerciseBlock(finalName); closeModal('addExerciseModal'); }
-        function addExerciseBlock(name, presetReps = null) { const container = document.getElementById('active-exercises-list'); const div = document.createElement('div'); div.className = 'exercise-block'; div.innerHTML = `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><h3 style="color:var(--primary-color);" contenteditable="true">${name}</h3></div><div class="sets-container"></div><button class="btn-outline" style="width:100%; margin-top:10px; padding:8px; border-style:dashed; color:#666;" onclick="addSet(this)">+ Añadir Serie</button>`; container.appendChild(div); const setsContainer = div.querySelector('.sets-container'); if (presetReps && Array.isArray(presetReps)) { presetReps.forEach(repVal => { addSetRow(setsContainer, repVal); }); } else { addSetRow(setsContainer, null); } div.scrollIntoView({behavior: 'smooth'}); }
+        
+        // MODIFIED: Added Notes Field
+        function addExerciseBlock(name, presetReps = null) { 
+            const container = document.getElementById('active-exercises-list'); 
+            const div = document.createElement('div'); 
+            div.className = 'exercise-block'; 
+            div.innerHTML = `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><h3 style="color:var(--primary-color);" contenteditable="true">${name}</h3></div><div class="sets-container"></div><button class="btn-outline" style="width:100%; margin-top:10px; padding:8px; border-style:dashed; color:#666;" onclick="addSet(this)">+ Añadir Serie</button><textarea class="exercise-note" placeholder="Notas (ej: banco al 30%, agarre ancho...)" rows="1"></textarea>`; 
+            container.appendChild(div); 
+            const setsContainer = div.querySelector('.sets-container'); 
+            if (presetReps && Array.isArray(presetReps)) { presetReps.forEach(repVal => { addSetRow(setsContainer, repVal); }); } 
+            else { addSetRow(setsContainer, null); } 
+            div.scrollIntoView({behavior: 'smooth'}); 
+        }
         function addSet(btn) { addSetRow(btn.previousElementSibling, null); }
         function addSetRow(container, repValue) { const count = container.children.length + 1; const div = document.createElement('div'); div.className = 'set-row'; const repInputValue = repValue !== null ? `value="${repValue}"` : ''; div.innerHTML = `<div class="set-num">${count}</div><input type="number" class="input-mini set-kg" placeholder="Kg"><input type="text" class="input-mini set-reps" placeholder="Reps" ${repInputValue}>`; container.appendChild(div); }
         
         function cancelWorkout() { document.getElementById('train-active').classList.add('hidden'); document.getElementById('train-main-menu').classList.remove('hidden'); }
         
+        // MODIFIED: Capture Notes
         function finishWorkout() { 
             const duration = Math.round((new Date() - sessionStartTime) / 60000); const blocks = document.querySelectorAll('.exercise-block'); const sessionData = { id: Date.now(), date: new Date().toISOString(), name: state.currentSession.name, duration: duration || 1, exercises: [] }; 
-            blocks.forEach(block => { const name = block.querySelector('h3').innerText; const sets = []; block.querySelectorAll('.set-row').forEach(row => { const kg = row.querySelector('.set-kg').value; const reps = row.querySelector('.set-reps').value; if(kg || reps) sets.push({ kg, reps }); }); if (sets.length > 0) sessionData.exercises.push({ name, sets }); }); 
+            blocks.forEach(block => { 
+                const name = block.querySelector('h3').innerText; 
+                const note = block.querySelector('.exercise-note').value; // Capture note
+                const sets = []; 
+                block.querySelectorAll('.set-row').forEach(row => { const kg = row.querySelector('.set-kg').value; const reps = row.querySelector('.set-reps').value; if(kg || reps) sets.push({ kg, reps }); }); 
+                if (sets.length > 0) sessionData.exercises.push({ name, sets, note }); // Save note
+            }); 
             if(sessionData.exercises.length === 0) { showCustomAlert("Registra al menos una serie."); return; } 
             state.history.unshift(sessionData); localStorage.setItem('kilo_history', JSON.stringify(state.history)); document.getElementById('train-active').classList.add('hidden'); document.getElementById('train-main-menu').classList.remove('hidden'); navTo('history'); 
         }
@@ -561,7 +587,40 @@
                 renderHistory(); renderHome();
             });
         }
-        function showWorkoutDetail(id) { const w = state.history.find(i => i.id === id); const content = document.getElementById('workout-detail-content'); content.innerHTML = `<h2 style="color:var(--primary-color); font-size:24px;">${w.name}</h2><p style="margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:10px;">${new Date(w.date).toLocaleString()}</p>${w.exercises.map(e => `<div style="margin-bottom:15px; background:#111; padding:10px; border-radius:8px;"><h3 style="color:white; margin-bottom:5px;">${e.name}</h3>${e.sets.map((s, i) => `<div style="display:flex; justify-content:space-between; font-size:14px; color:#aaa; margin-top:4px;"><span>Serie ${i+1}</span><span style="color:var(--primary-color); font-weight:bold;">${s.kg}kg x ${s.reps}</span></div>`).join('')}</div>`).join('')}<button class="btn btn-outline" style="border:none; color:var(--danger); margin-top:20px;" onclick="closeModal('workoutDetailModal')">Cerrar</button>`; openModal('workoutDetailModal'); }
+        // MODIFIED: Show Notes and Share Button
+        function showWorkoutDetail(id) { 
+            const w = state.history.find(i => i.id === id); 
+            const dateStr = new Date(w.date).toLocaleString();
+            
+            // Build Share Text
+            let shareText = `🚀 KILO Workout: ${w.name}\n📅 ${dateStr}\n⏱️ ${w.duration} min\n\n`;
+            w.exercises.forEach(e => {
+                shareText += `🔹 ${e.name}: ${e.sets.length} series\n`;
+            });
+            shareText += `\nEntrenado con KILO App.`;
+
+            const content = document.getElementById('workout-detail-content'); 
+            content.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h2 style="color:var(--primary-color); font-size:24px; margin:0;">${w.name}</h2>
+                    <button class="btn-outline" style="border:none; padding:5px;" onclick="copyToClipboard(\`${shareText}\`)"><i class="ph ph-share-network" style="font-size:24px; color:white;"></i></button>
+                </div>
+                <p style="margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:10px; margin-top:5px;">${dateStr}</p>
+                ${w.exercises.map(e => `
+                    <div style="margin-bottom:15px; background:#111; padding:10px; border-radius:8px;">
+                        <h3 style="color:white; margin-bottom:5px;">${e.name}</h3>
+                        ${e.note ? `<p style="font-size:12px; color:#888; font-style:italic; margin-bottom:8px;">📝 ${e.note}</p>` : ''}
+                        ${e.sets.map((s, i) => `<div style="display:flex; justify-content:space-between; font-size:14px; color:#aaa; margin-top:4px;"><span>Serie ${i+1}</span><span style="color:var(--primary-color); font-weight:bold;">${s.kg}kg x ${s.reps}</span></div>`).join('')}
+                    </div>
+                `).join('')}
+                <button class="btn btn-outline" style="border:none; color:var(--danger); margin-top:20px;" onclick="closeModal('workoutDetailModal')">Cerrar</button>
+            `; 
+            openModal('workoutDetailModal'); 
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => showCustomAlert("¡Resumen copiado!")).catch(err => showCustomAlert("Error al copiar"));
+        }
 
         /* --- LIBRARY --- */
         let currentMuscleFilter = null; 
@@ -585,7 +644,7 @@
             if(entry.weight || entry.chest) { state.progress.push(entry); localStorage.setItem('kilo_progress', JSON.stringify(state.progress)); if(entry.weight) { state.weight.push({date: new Date(), val: entry.weight}); localStorage.setItem('kilo_weight', JSON.stringify(state.weight)); } renderHome(); closeModal('progressModal'); }
         }
 
-        /* --- TIMER LOGIC (TIMESTAMP BASED) --- */
+        /* --- TIMER --- */
         function setTimerMode(mode, btn) {
             resetTimer(); state.timerMode = mode;
             document.querySelectorAll('#rest .chip').forEach(c => c.classList.remove('active')); if(btn) btn.classList.add('active');
@@ -597,54 +656,20 @@
             updateTimerDisplay();
         }
         function updateTabataUI() { const ind = document.getElementById('tabata-indicator'); const val = document.getElementById('timer-val'); ind.innerText = `Ronda ${state.tabataRound}/${state.cfgTabataRounds}`; if (state.tabataState === 'work') { ind.className = 'tabata-indicator tabata-work'; val.style.color = 'var(--primary-color)'; ind.innerText += " - WORK"; } else { ind.className = 'tabata-indicator tabata-rest'; val.style.color = 'var(--danger)'; ind.innerText += " - REST"; } }
-        
-        /* THE SLEEPING TIMER FIX (DELTA CORRECTION) */
         function toggleTimer() {
             const iconSvg = document.getElementById('timer-icon-svg').querySelector('path');
             if(state.isRunning) { clearInterval(state.timerInterval); state.isRunning = false; iconSvg.setAttribute('d', 'M8 5V19L19 12L8 5Z'); document.querySelectorAll('.timer-input').forEach(i => i.disabled = false); } 
             else {
-                state.isRunning = true; state.lastTick = Date.now();
-                iconSvg.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z');
+                state.isRunning = true; state.lastTick = Date.now(); iconSvg.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z');
                 document.querySelectorAll('.timer-input').forEach(i => i.disabled = true);
-                
                 state.timerInterval = setInterval(() => {
-                    const now = Date.now();
-                    const delta = (now - state.lastTick) / 1000; // Seconds passed since last tick
-                    state.lastTick = now;
-
-                    if (state.timerMode === 'amrap') { 
-                        if(state.timeLeft > 0) state.timeLeft -= delta; 
-                        else { resetTimer(); showCustomAlert("¡Tiempo!"); return; } 
-                    } 
-                    else if (state.timerMode === 'fortime') { 
-                        state.timeLeft += delta; 
-                        if (state.cfgForTimeCap > 0 && state.timeLeft >= state.cfgForTimeCap * 60) { resetTimer(); showCustomAlert("Time Cap!"); return; } 
-                    }
-                    else if (state.timerMode === 'emom') { 
-                        state.timeLeft -= delta; 
-                        if (state.timeLeft < 0) { 
-                            state.emomCurrentMinute++; 
-                            if (state.emomCurrentMinute > state.cfgEmomTotal) { resetTimer(); showCustomAlert("EMOM Completado"); return; } 
-                            state.timeLeft = 60 + state.timeLeft; // Add negative remainder
-                        } 
-                        document.getElementById('timer-status-label').innerText = `MINUTO ${state.emomCurrentMinute} / ${state.cfgEmomTotal}`; 
-                    }
-                    else if (state.timerMode === 'tabata') { 
-                        state.timeLeft -= delta;
-                        if (state.timeLeft < 0) { 
-                            // Phase switch
-                            const remainder = state.timeLeft;
-                            if (state.tabataState === 'work') { state.tabataState = 'rest'; state.timeLeft = state.cfgTabataRest + remainder; } 
-                            else { 
-                                state.tabataRound++; 
-                                if (state.tabataRound > state.cfgTabataRounds) { resetTimer(); showCustomAlert("Tabata Terminado"); return; } 
-                                state.tabataState = 'work'; state.timeLeft = state.cfgTabataWork + remainder; 
-                            } 
-                            updateTabataUI(); 
-                        } 
-                    }
+                    const now = Date.now(); const delta = (now - state.lastTick) / 1000; state.lastTick = now;
+                    if (state.timerMode === 'amrap') { if(state.timeLeft > 0) state.timeLeft -= delta; else { resetTimer(); showCustomAlert("¡Tiempo!"); return; } } 
+                    else if (state.timerMode === 'fortime') { state.timeLeft += delta; if (state.cfgForTimeCap > 0 && state.timeLeft >= state.cfgForTimeCap * 60) { resetTimer(); showCustomAlert("Time Cap!"); return; } }
+                    else if (state.timerMode === 'emom') { state.timeLeft -= delta; if (state.timeLeft < 0) { state.emomCurrentMinute++; if (state.emomCurrentMinute > state.cfgEmomTotal) { resetTimer(); showCustomAlert("EMOM Completado"); return; } state.timeLeft = 60 + state.timeLeft; } document.getElementById('timer-status-label').innerText = `MINUTO ${state.emomCurrentMinute} / ${state.cfgEmomTotal}`; }
+                    else if (state.timerMode === 'tabata') { state.timeLeft -= delta; if (state.timeLeft < 0) { const remainder = state.timeLeft; if (state.tabataState === 'work') { state.tabataState = 'rest'; state.timeLeft = state.cfgTabataRest + remainder; } else { state.tabataRound++; if (state.tabataRound > state.cfgTabataRounds) { resetTimer(); showCustomAlert("Tabata Terminado"); return; } state.tabataState = 'work'; state.timeLeft = state.cfgTabataWork + remainder; } updateTabataUI(); } }
                     updateTimerDisplay();
-                }, 100); // Check every 100ms for smoothness
+                }, 100);
             }
         }
         function resetTimer() {
@@ -658,8 +683,8 @@
             updateTimerDisplay();
         }
         function updateTimerDisplay() { 
-            let totalSeconds = Math.max(0, Math.ceil(state.timeLeft)); // Round up for display
-            if(state.timerMode === 'fortime') totalSeconds = Math.floor(state.timeLeft); // Round down for elapsed
+            let totalSeconds = Math.max(0, Math.ceil(state.timeLeft)); 
+            if(state.timerMode === 'fortime') totalSeconds = Math.floor(state.timeLeft); 
             let m = Math.floor(totalSeconds / 60), s = totalSeconds % 60; 
             document.getElementById('timer-val').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`; 
         }
