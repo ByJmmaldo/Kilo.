@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KILO">
 
-    <link rel="icon" type="image/png" href="icon.png?v=5">
-    <link rel="apple-touch-icon" href="icon.png?v=5">
+    <link rel="icon" type="image/png" href="icon.png?v=6">
+    <link rel="apple-touch-icon" href="icon.png?v=6">
 
     <title>KILO App</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -31,75 +31,54 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
         
-        /* INPUTS GLOBAL STYLE - ESTÉTICA DARK */
+        /* INPUTS GLOBAL STYLE */
         input { 
             user-select: text; 
-            background-color: #252527 !important; /* Fondo oscuro siempre */
+            background-color: #252527 !important; 
             border: 1px solid #333; 
-            color: white !important; /* Texto blanco */
+            color: white !important; 
             padding: 16px; 
             border-radius: 12px; 
             width: 100%; 
             font-size: 16px; 
             outline: none; 
             -webkit-appearance: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: border-color 0.3s;
         }
-        input::placeholder { color: #555; }
-        input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 1px rgba(0, 255, 148, 0.2); }
+        input:focus { border-color: var(--primary-color); }
 
         /* INPUTS DE MEDIDAS (GRID) */
         .measure-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;
         }
         .measure-item label {
-            display: block;
-            color: var(--text-dim);
-            font-size: 12px;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-            letter-spacing: 0.5px;
+            display: block; color: var(--text-dim); font-size: 12px;
+            text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px;
         }
-        .measure-item input {
-            text-align: center;
-            font-weight: bold;
-            font-size: 18px;
-        }
+        .measure-item input { text-align: center; font-weight: bold; font-size: 18px; }
+        
         /* El input de peso destaca más */
         .weight-hero input {
-            background-color: #000 !important;
-            border: 2px solid #333;
-            color: var(--primary-color) !important;
-            font-size: 32px;
-            height: 60px;
+            background-color: #000 !important; border: 2px solid #333;
+            color: var(--primary-color) !important; font-size: 32px; height: 60px; text-align: center;
         }
 
         /* INPUT BUSCADOR */
-        #library-search, #selector-input {
-            background-color: #111 !important;
-            border-radius: 50px; 
-            padding-left: 20px;
-        }
+        #library-search, #selector-input { background-color: #111 !important; border-radius: 50px; padding-left: 20px; }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            overscroll-behavior-y: none;
+            display: flex; flex-direction: column; overflow: hidden; overscroll-behavior-y: none;
         }
 
         /* UTILS */
         .hidden { display: none !important; }
         .accent { color: var(--primary-color); }
 
-        /* SPLASH & AUTH */
+        /* SPLASH */
         #splash-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: #000000; z-index: 9999;
@@ -110,10 +89,7 @@
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.8; } 100% { opacity: 1; } }
         .fade-out { opacity: 0; visibility: hidden; }
 
-        .auth-container {
-            padding: 40px 30px; display: flex; flex-direction: column; justify-content: center; height: 100%;
-            background: radial-gradient(circle at top right, rgba(0, 255, 148, 0.1), transparent 40%);
-        }
+        .auth-container { padding: 40px 30px; display: flex; flex-direction: column; justify-content: center; height: 100%; background: radial-gradient(circle at top right, rgba(0, 255, 148, 0.1), transparent 40%); }
 
         /* UI ELEMENTS */
         h1 { font-size: 28px; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; }
@@ -123,8 +99,7 @@
             flex: 1; overflow-y: auto; 
             padding: calc(20px + var(--safe-top)) 20px calc(var(--nav-height) + 20px + var(--safe-bottom)) 20px;
             display: none; opacity: 0; transform: translateY(10px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            -webkit-overflow-scrolling: touch;
+            transition: opacity 0.3s ease, transform 0.3s ease; -webkit-overflow-scrolling: touch;
         }
         .screen.active { display: block; opacity: 1; transform: translateY(0); }
         .screen::-webkit-scrollbar { display: none; }
@@ -132,19 +107,13 @@
         .card {
             background-color: var(--card-color); border-radius: 16px; padding: 20px;
             margin-bottom: 15px; cursor: pointer; border: 1px solid transparent;
-            transition: transform 0.1s, background-color 0.2s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            position: relative;
+            transition: transform 0.1s, background-color 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2); position: relative;
         }
         .card:active { transform: scale(0.97); background-color: #252527; }
 
-        /* Stats Grid en Home */
-        .stats-grid {
-            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px;
-        }
-        .stat-box {
-            background: #222; border-radius: 8px; padding: 8px; text-align: center;
-        }
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .stat-box { background: #222; border-radius: 8px; padding: 8px; text-align: center; }
         .stat-label { font-size: 10px; color: #888; text-transform: uppercase; }
         .stat-val { font-size: 14px; font-weight: bold; color: white; }
 
@@ -161,8 +130,7 @@
             background-color: var(--primary-color); color: #000; border: none;
             padding: 16px; width: 100%; border-radius: 14px; font-weight: 800;
             font-size: 15px; cursor: pointer; margin-top: 10px; text-align: center;
-            text-transform: uppercase; letter-spacing: 0.5px;
-            box-shadow: 0 4px 15px rgba(0, 255, 148, 0.2);
+            text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(0, 255, 148, 0.2);
         }
         .btn:active { opacity: 0.8; transform: scale(0.98); }
         .btn-outline { background-color: transparent; border: 1px solid #444; color: var(--text-color); }
@@ -171,46 +139,33 @@
         .exercise-block { background: #0A0A0A; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #333; }
         .set-row { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
         .set-num { width: 25px; height: 25px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #FFF; font-weight: bold; }
-        
-        .input-mini { 
-            width: 70px; text-align: center; background: #1a1a1a !important; 
-            padding: 10px; border-radius: 8px; border: 1px solid #333; 
-            color: white !important; outline: none; 
-        }
+        .input-mini { width: 70px; text-align: center; background: #1a1a1a !important; padding: 10px; border-radius: 8px; border: 1px solid #333; color: white !important; outline: none; }
         .input-mini:focus { border-color: var(--primary-color); }
 
         .delete-btn {
             position: absolute; top: 10px; right: 10px;
             background: rgba(20, 20, 20, 0.95); border: 1px solid var(--danger);
-            color: var(--danger); border-radius: 50%; 
-            width: 44px; height: 44px; 
+            color: var(--danger); border-radius: 50%; width: 44px; height: 44px; 
             display: flex; align-items: center; justify-content: center;
-            z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-            transition: transform 0.1s;
+            z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.5); transition: transform 0.1s;
         }
         .delete-btn:active { background: var(--danger); color: white; transform: scale(0.9); }
 
-        .timer-display { 
-            font-size: 90px; font-weight: 800; color: var(--primary-color); 
-            font-variant-numeric: tabular-nums; text-align: center; margin: 20px 0; 
-            text-shadow: 0 0 20px rgba(0, 255, 148, 0.3); line-height: 1;
-        }
+        .timer-display { font-size: 90px; font-weight: 800; color: var(--primary-color); font-variant-numeric: tabular-nums; text-align: center; margin: 20px 0; text-shadow: 0 0 20px rgba(0, 255, 148, 0.3); line-height: 1; }
         .timer-label { text-align: center; color: var(--text-dim); text-transform: uppercase; font-size: 14px; letter-spacing: 2px; }
         .timer-config { display: flex; gap: 10px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
         .timer-input-group { display: flex; flex-direction: column; align-items: center; }
         .timer-input-group label { font-size: 10px; color: #666; margin-bottom: 5px; text-transform: uppercase; }
-        .timer-input { 
-            width: 80px; background: #222 !important; border: 1px solid #444; color: white !important; 
-            text-align: center; padding: 10px; border-radius: 10px; font-size: 18px; font-weight: bold; 
-        }
+        .timer-input { width: 80px; background: #222 !important; border: 1px solid #444; color: white !important; text-align: center; padding: 10px; border-radius: 10px; font-size: 18px; font-weight: bold; }
         .timer-input:focus { border-color: var(--primary-color); outline: none; }
         .tabata-indicator { font-size: 24px; text-align: center; font-weight: bold; margin-bottom: 10px; padding: 10px; border-radius: 8px; background: #111; }
         .tabata-work { color: var(--primary-color); border: 1px solid var(--primary-color); }
         .tabata-rest { color: var(--danger); border: 1px solid var(--danger); }
 
+        /* MODALS */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 200; display: none;
+            background: rgba(0,0,0,0.9); z-index: 2000; display: none;
             justify-content: center; align-items: flex-end; backdrop-filter: blur(8px);
         }
         .modal-content {
@@ -220,6 +175,15 @@
             max-height: 90vh; display: flex; flex-direction: column;
             border-top: 1px solid #333;
         }
+        /* CUSTOM DIALOG STYLE (Centrado) */
+        .dialog-centered { align-items: center !important; }
+        .dialog-box {
+            background: #1C1C1E; border: 1px solid #333; width: 85%; max-width: 320px;
+            padding: 30px 25px; border-radius: 24px; text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); animation: popIn 0.2s ease-out;
+        }
+        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
         .modal-body { overflow-y: auto; flex: 1; margin-top: 15px; }
         .search-result-item { padding: 18px 10px; border-bottom: 1px solid #2a2a2a; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
 
@@ -231,10 +195,7 @@
             align-items: flex-start; z-index: 100; 
             padding-top: 10px; padding-bottom: var(--safe-bottom);
         }
-        .nav-item {
-            display: flex; flex-direction: column; align-items: center; color: #666;
-            font-size: 10px; background: none; border: none; cursor: pointer; transition: color 0.2s; width: 20%;
-        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #666; font-size: 10px; background: none; border: none; cursor: pointer; transition: color 0.2s; width: 20%; }
         .nav-item i { font-size: 24px; margin-bottom: 4px; }
         .nav-item.active { color: var(--primary-color); }
 
@@ -307,12 +268,8 @@
                 <div><h3 style="color: #FFF; margin: 0;">Medidas</h3><p style="font-size: 12px;">Actualizar datos</p></div>
                 <i class="ph ph-ruler" style="font-size: 32px; color: #555;"></i>
             </div>
-            
             <div class="stats-grid" id="home-stats-display">
-                <div class="stat-box"><div class="stat-label">Peso</div><div class="stat-val">--</div></div>
-                <div class="stat-box"><div class="stat-label">Cintura</div><div class="stat-val">--</div></div>
-                <div class="stat-box"><div class="stat-label">Pecho</div><div class="stat-val">--</div></div>
-            </div>
+                </div>
         </div>
     </div>
 
@@ -355,7 +312,7 @@
         <div id="train-active" class="hidden">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #222;">
                 <div><p style="font-size: 10px; text-transform: uppercase; color: var(--primary-color);">EN CURSO</p><h3 id="active-routine-name" style="font-size: 18px;">Libre</h3></div>
-                <button onclick="cancelWorkout()" style="background: none; border: none; padding: 10px;"><i class="ph ph-x-circle" style="font-size: 32px; color: var(--danger);"></i></button>
+                <button onclick="showCustomConfirm('¿Cancelar entreno?', cancelWorkout)" style="background: none; border: none; padding: 10px;"><i class="ph ph-x-circle" style="font-size: 32px; color: var(--danger);"></i></button>
             </div>
             <div id="active-exercises-list"></div>
             <button class="btn btn-outline" onclick="openExerciseSelector()">+ AÑADIR EJERCICIO</button>
@@ -371,20 +328,17 @@
 
     <div id="rest" class="screen">
         <h1 style="text-align: center; margin-top: 10px;">Reloj Pro</h1>
-        
         <div class="chips" style="justify-content: center; margin-top: 20px; flex-wrap: wrap;">
             <div class="chip active" onclick="setTimerMode('amrap', this)">AMRAP</div>
             <div class="chip" onclick="setTimerMode('fortime', this)">For Time</div>
             <div class="chip" onclick="setTimerMode('emom', this)">EMOM</div>
             <div class="chip" onclick="setTimerMode('tabata', this)">Tabata</div>
         </div>
-
         <div id="timer-ui-container">
             <div id="config-panel" class="timer-config"></div>
             <p class="timer-label" id="timer-status-label">LISTO</p>
             <div id="tabata-indicator" class="tabata-indicator hidden">ROUND 1/8</div>
             <div class="timer-display" id="timer-val">00:00</div>
-            
             <div style="display: flex; gap: 20px; justify-content: center; margin-bottom: 40px;">
                 <button class="btn" style="width: 90px; height: 90px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(0,255,148,0.2); padding: 0;" onclick="toggleTimer()">
                     <svg id="timer-icon-svg" width="36" height="36" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" /></svg>
@@ -443,26 +397,11 @@
             </div>
 
             <div class="measure-grid">
-                <div class="measure-item">
-                    <label>Pecho (cm)</label>
-                    <input type="number" id="prog-chest" placeholder="-">
-                </div>
-                <div class="measure-item">
-                    <label>Cintura (cm)</label>
-                    <input type="number" id="prog-waist" placeholder="-">
-                </div>
-                <div class="measure-item">
-                    <label>Cadera (cm)</label>
-                    <input type="number" id="prog-hips" placeholder="-">
-                </div>
-                <div class="measure-item">
-                    <label>Brazo (cm)</label>
-                    <input type="number" id="prog-arm" placeholder="-">
-                </div>
-                <div class="measure-item">
-                    <label>Muslo (cm)</label>
-                    <input type="number" id="prog-thigh" placeholder="-">
-                </div>
+                <div class="measure-item"><label>Pecho (cm)</label><input type="number" id="prog-chest" placeholder="-"></div>
+                <div class="measure-item"><label>Cintura (cm)</label><input type="number" id="prog-waist" placeholder="-"></div>
+                <div class="measure-item"><label>Cadera (cm)</label><input type="number" id="prog-hips" placeholder="-"></div>
+                <div class="measure-item"><label>Brazo (cm)</label><input type="number" id="prog-arm" placeholder="-"></div>
+                <div class="measure-item"><label>Muslo (cm)</label><input type="number" id="prog-thigh" placeholder="-"></div>
             </div>
 
             <button class="btn" onclick="saveProgress()">Guardar Registro</button>
@@ -473,6 +412,17 @@
 
     <div id="workoutDetailModal" class="modal">
         <div class="modal-content" id="workout-detail-content" style="max-height: 85vh;"></div>
+    </div>
+
+    <div id="customDialog" class="modal dialog-centered">
+        <div class="dialog-box">
+            <h2 id="dialog-title" style="margin-bottom: 10px;">KILO.</h2>
+            <p id="dialog-msg" style="color: #bbb; margin-bottom: 25px; line-height: 1.5;">Mensaje...</p>
+            <div style="display: flex; gap: 10px;">
+                <button id="dialog-cancel" class="btn btn-outline" onclick="closeDialog()">Cancelar</button>
+                <button id="dialog-confirm" class="btn">Aceptar</button>
+            </div>
+        </div>
     </div>
 
     <nav class="bottom-nav" id="main-nav" style="display:none;">
@@ -492,10 +442,8 @@
         /* --- STATE & AUTH --- */
         let state = {
             history: JSON.parse(localStorage.getItem('kilo_history')) || [],
-            // 'kilo_weight' is deprecated but read for backward compatibility if needed.
-            // We use 'kilo_progress' for the full stats object.
             progress: JSON.parse(localStorage.getItem('kilo_progress')) || [],
-            weight: JSON.parse(localStorage.getItem('kilo_weight')) || [], // legacy support
+            weight: JSON.parse(localStorage.getItem('kilo_weight')) || [],
             users: JSON.parse(localStorage.getItem('kilo_users')) || [],
             currentUser: JSON.parse(localStorage.getItem('kilo_current_user')) || null,
             currentSession: null,
@@ -506,15 +454,10 @@
             timeLeft: 600, // Seconds
             isRunning: false,
             // Config values
-            cfgAmrap: 10, // Minutes
-            cfgForTimeCap: 0, // Minutes (0 = no cap)
-            cfgEmomTotal: 10, // Minutes
+            cfgAmrap: 10, cfgForTimeCap: 0, cfgEmomTotal: 10,
             cfgTabataWork: 20, cfgTabataRest: 10, cfgTabataRounds: 8,
             // Runtime tracking
-            emomCurrentMinute: 1,
-            tabataRound: 1,
-            tabataState: 'work',
-            elapsedTime: 0
+            emomCurrentMinute: 1, tabataRound: 1, tabataState: 'work'
         };
 
         window.addEventListener('load', () => {
@@ -522,21 +465,19 @@
                 document.getElementById('splash-screen').classList.add('fade-out');
                 setTimeout(() => { document.getElementById('splash-screen').style.display = 'none'; }, 800);
                 if (state.currentUser) showHome(); else showLogin();
-                // Initialize Timer
                 setTimerMode('amrap', document.querySelector('.chip.active'));
             }, 1500);
         });
 
-        /* --- AUTH LOGIC (Same as before) --- */
+        /* --- AUTH --- */
         function showLogin() { hideAllScreens(); document.getElementById('login-screen').classList.add('active'); }
         function showRegister() { hideAllScreens(); document.getElementById('register-screen').classList.add('active'); }
         function showHome() { hideAllScreens(); document.getElementById('home').classList.add('active'); document.getElementById('main-nav').style.display = 'flex'; document.getElementById('user-name-display').innerText = state.currentUser.name; renderHome(); }
         function hideAllScreens() { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById('main-nav').style.display = 'none'; }
-        function handleRegister() { const name=document.getElementById('reg-name').value, email=document.getElementById('reg-email').value, pass=document.getElementById('reg-pass').value; if(!name||!email||!pass)return alert("Rellena todos"); if(state.users.find(u=>u.email===email))return alert("Existe"); const n={name,email,pass}; state.users.push(n); localStorage.setItem('kilo_users',JSON.stringify(state.users)); state.currentUser=n; localStorage.setItem('kilo_current_user',JSON.stringify(n)); showHome(); }
-        function handleLogin() { const email=document.getElementById('login-email').value, pass=document.getElementById('login-pass').value; const u=state.users.find(x=>x.email===email&&x.pass===pass); if(u){state.currentUser=u;localStorage.setItem('kilo_current_user',JSON.stringify(u));showHome();}else alert("Error"); }
+        function handleRegister() { const name=document.getElementById('reg-name').value, email=document.getElementById('reg-email').value, pass=document.getElementById('reg-pass').value; if(!name||!email||!pass)return showCustomAlert("Rellena todos los campos"); if(state.users.find(u=>u.email===email))return showCustomAlert("El correo ya existe"); const n={name,email,pass}; state.users.push(n); localStorage.setItem('kilo_users',JSON.stringify(state.users)); state.currentUser=n; localStorage.setItem('kilo_current_user',JSON.stringify(n)); showHome(); }
+        function handleLogin() { const email=document.getElementById('login-email').value, pass=document.getElementById('login-pass').value; const u=state.users.find(x=>x.email===email&&x.pass===pass); if(u){state.currentUser=u;localStorage.setItem('kilo_current_user',JSON.stringify(u));showHome();}else showCustomAlert("Credenciales incorrectas"); }
         function handleLogout() { state.currentUser=null; localStorage.removeItem('kilo_current_user'); showLogin(); }
 
-        /* --- NAVEGACIÓN --- */
         function navTo(screenId) {
             document.querySelectorAll('.screen').forEach(s => { if(s.id!=='login-screen' && s.id!=='register-screen') s.classList.remove('active'); });
             document.getElementById(screenId).classList.add('active');
@@ -548,32 +489,36 @@
             if(screenId === 'exercises') renderLibrary();
         }
 
-        /* --- CORE LOGIC --- */
+        /* --- HOME --- */
         function renderHome() { 
             const now = new Date(), oneWeekAgo = new Date(now.getTime() - 7*24*60*60*1000); 
             const count = state.history.filter(w => new Date(w.date) > oneWeekAgo).length; 
             document.getElementById('home-weekly-workouts').innerText = count; 
-            
             const last = state.history[0]; 
             const lastContainer = document.getElementById('home-last-workout'); 
             if (last) lastContainer.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center;"><h3 style="font-size:18px;">${last.name}</h3><span style="font-size:12px; color:var(--text-dim)">${new Date(last.date).toLocaleDateString()}</span></div><p style="margin-top:5px;">${last.duration} min • <span class="accent">${last.exercises.length} Ejercicios</span></p>`; 
             
-            // Render Stats Grid
             const lastEntry = state.progress[state.progress.length - 1] || {};
             const weightVal = lastEntry.weight || (state.weight[state.weight.length-1]?.val) || '--';
-            
-            document.getElementById('home-stats-display').innerHTML = `
-                <div class="stat-box"><div class="stat-label">Peso</div><div class="stat-val">${weightVal}</div></div>
-                <div class="stat-box"><div class="stat-label">Cintura</div><div class="stat-val">${lastEntry.waist || '--'}</div></div>
-                <div class="stat-box"><div class="stat-label">Pecho</div><div class="stat-val">${lastEntry.chest || '--'}</div></div>
-                <div class="stat-box"><div class="stat-label">Cadera</div><div class="stat-val">${lastEntry.hips || '--'}</div></div>
-                <div class="stat-box"><div class="stat-label">Brazo</div><div class="stat-val">${lastEntry.arm || '--'}</div></div>
-                <div class="stat-box"><div class="stat-label">Muslo</div><div class="stat-val">${lastEntry.thigh || '--'}</div></div>
-            `;
-            document.getElementById('home-weight-display').innerText = `${weightVal} kg`;
+            document.getElementById('home-stats-display').innerHTML = `<div class="stat-box"><div class="stat-label">Peso</div><div class="stat-val">${weightVal}</div></div><div class="stat-box"><div class="stat-label">Cintura</div><div class="stat-val">${lastEntry.waist || '--'}</div></div><div class="stat-box"><div class="stat-label">Pecho</div><div class="stat-val">${lastEntry.chest || '--'}</div></div><div class="stat-box"><div class="stat-label">Cadera</div><div class="stat-val">${lastEntry.hips || '--'}</div></div><div class="stat-box"><div class="stat-label">Brazo</div><div class="stat-val">${lastEntry.arm || '--'}</div></div><div class="stat-box"><div class="stat-label">Muslo</div><div class="stat-val">${lastEntry.thigh || '--'}</div></div>`;
         }
-        
-        // Train Folders
+
+        /* --- DIALOGS (CUSTOM) --- */
+        function showCustomAlert(msg) {
+            document.getElementById('dialog-msg').innerText = msg;
+            document.getElementById('dialog-cancel').style.display = 'none';
+            document.getElementById('dialog-confirm').onclick = closeDialog;
+            document.getElementById('customDialog').style.display = 'flex';
+        }
+        function showCustomConfirm(msg, callback) {
+            document.getElementById('dialog-msg').innerText = msg;
+            document.getElementById('dialog-cancel').style.display = 'block';
+            document.getElementById('dialog-confirm').onclick = () => { callback(); closeDialog(); };
+            document.getElementById('customDialog').style.display = 'flex';
+        }
+        function closeDialog() { document.getElementById('customDialog').style.display = 'none'; }
+
+        /* --- TRAIN --- */
         function openTemplateCategory(category) { document.getElementById('train-main-menu').classList.add('hidden'); document.getElementById('train-sub-list').classList.remove('hidden'); const titleMap = { 'crossfit': 'WODs Crossfit', 'gym': 'Rutinas Gym', 'metabolic': 'Circuitos Metabólicos' }; document.getElementById('category-title').innerText = titleMap[category]; const filtered = templates.filter(t => t.category === category); document.getElementById('templates-container').innerHTML = filtered.map(t => `<div class="card" onclick='startWorkout(${JSON.stringify(t)})'><h3 style="color:white;">${t.name}</h3><p>${t.items.length} ejercicios</p></div>`).join(''); }
         function closeTemplateCategory() { document.getElementById('train-sub-list').classList.add('hidden'); document.getElementById('train-main-menu').classList.remove('hidden'); }
         let sessionStartTime;
@@ -584,266 +529,100 @@
         function addExerciseBlock(name, presetReps = null) { const container = document.getElementById('active-exercises-list'); const div = document.createElement('div'); div.className = 'exercise-block'; div.innerHTML = `<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><h3 style="color:var(--primary-color);" contenteditable="true">${name}</h3></div><div class="sets-container"></div><button class="btn-outline" style="width:100%; margin-top:10px; padding:8px; border-style:dashed; color:#666;" onclick="addSet(this)">+ Añadir Serie</button>`; container.appendChild(div); const setsContainer = div.querySelector('.sets-container'); if (presetReps && Array.isArray(presetReps)) { presetReps.forEach(repVal => { addSetRow(setsContainer, repVal); }); } else { addSetRow(setsContainer, null); } div.scrollIntoView({behavior: 'smooth'}); }
         function addSet(btn) { addSetRow(btn.previousElementSibling, null); }
         function addSetRow(container, repValue) { const count = container.children.length + 1; const div = document.createElement('div'); div.className = 'set-row'; const repInputValue = repValue !== null ? `value="${repValue}"` : ''; div.innerHTML = `<div class="set-num">${count}</div><input type="number" class="input-mini set-kg" placeholder="Kg"><input type="text" class="input-mini set-reps" placeholder="Reps" ${repInputValue}>`; container.appendChild(div); }
-        function cancelWorkout() { if(confirm("¿Cancelar?")) { document.getElementById('train-active').classList.add('hidden'); document.getElementById('train-main-menu').classList.remove('hidden'); } }
-        function finishWorkout() { const duration = Math.round((new Date() - sessionStartTime) / 60000); const blocks = document.querySelectorAll('.exercise-block'); const sessionData = { id: Date.now(), date: new Date().toISOString(), name: state.currentSession.name, duration: duration || 1, exercises: [] }; blocks.forEach(block => { const name = block.querySelector('h3').innerText; const sets = []; block.querySelectorAll('.set-row').forEach(row => { const kg = row.querySelector('.set-kg').value; const reps = row.querySelector('.set-reps').value; if(kg || reps) sets.push({ kg, reps }); }); if (sets.length > 0) sessionData.exercises.push({ name, sets }); }); if(sessionData.exercises.length === 0) { alert("Registra al menos una serie."); return; } state.history.unshift(sessionData); localStorage.setItem('kilo_history', JSON.stringify(state.history)); document.getElementById('train-active').classList.add('hidden'); document.getElementById('train-main-menu').classList.remove('hidden'); navTo('history'); }
         
-        // --- HISTORIAL MEJORADO ---
+        function cancelWorkout() { document.getElementById('train-active').classList.add('hidden'); document.getElementById('train-main-menu').classList.remove('hidden'); }
+        
+        function finishWorkout() { 
+            const duration = Math.round((new Date() - sessionStartTime) / 60000); const blocks = document.querySelectorAll('.exercise-block'); const sessionData = { id: Date.now(), date: new Date().toISOString(), name: state.currentSession.name, duration: duration || 1, exercises: [] }; 
+            blocks.forEach(block => { const name = block.querySelector('h3').innerText; const sets = []; block.querySelectorAll('.set-row').forEach(row => { const kg = row.querySelector('.set-kg').value; const reps = row.querySelector('.set-reps').value; if(kg || reps) sets.push({ kg, reps }); }); if (sets.length > 0) sessionData.exercises.push({ name, sets }); }); 
+            if(sessionData.exercises.length === 0) { showCustomAlert("Registra al menos una serie."); return; } 
+            state.history.unshift(sessionData); localStorage.setItem('kilo_history', JSON.stringify(state.history)); document.getElementById('train-active').classList.add('hidden'); document.getElementById('train-main-menu').classList.remove('hidden'); navTo('history'); 
+        }
+        
+        /* --- HISTORY --- */
         function renderHistory() { 
             const list = document.getElementById('history-list'); 
             if (!state.history || state.history.length === 0) { list.innerHTML = '<p style="text-align: center; margin-top: 50px; opacity: 0.5;">Aún no hay entrenamientos.</p>'; return; } 
-            
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            
             list.innerHTML = state.history.map(w => `
                 <div class="card" style="position: relative; overflow: visible;" onclick='showWorkoutDetail(${w.id})'>
-                    <div class="delete-btn" onclick="deleteWorkout('${w.id}', event)">
-                        <i class="ph ph-trash" style="font-size: 20px;"></i>
-                    </div>
-                    
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding-right: 40px;">
-                        <h3 style="color:white; margin: 0;">${w.name}</h3>
-                    </div>
-                    <span style="font-size:12px; color:var(--text-dim); text-transform:capitalize; display:block; margin-top: 4px;">
-                        ${new Date(w.date).toLocaleDateString('es-ES', dateOptions)}
-                    </span>
-                    <p style="margin-top:8px; font-size: 13px;">
-                        <i class="ph ph-clock"></i> <span style="color:white;">${w.duration} min</span> &nbsp;•&nbsp; 
-                        <i class="ph ph-barbell"></i> <span style="color:white;">${w.exercises.length} Ejercicios</span>
-                    </p>
+                    <div class="delete-btn" onclick="deleteWorkout('${w.id}', event)"><i class="ph ph-trash" style="font-size: 20px;"></i></div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding-right: 40px;"><h3 style="color:white; margin: 0;">${w.name}</h3></div>
+                    <span style="font-size:12px; color:var(--text-dim); text-transform:capitalize; display:block; margin-top: 4px;">${new Date(w.date).toLocaleDateString('es-ES', dateOptions)}</span>
+                    <p style="margin-top:8px; font-size: 13px;"><i class="ph ph-clock"></i> <span style="color:white;">${w.duration} min</span> &nbsp;•&nbsp; <i class="ph ph-barbell"></i> <span style="color:white;">${w.exercises.length} Ejercicios</span></p>
                 </div>
             `).join(''); 
         }
-
         function deleteWorkout(idString, event) {
-            if (event) {
-                event.stopPropagation();
-                event.stopImmediatePropagation();
-            }
-            if(confirm("¿Seguro que quieres borrar este entreno para siempre?")) {
+            if (event) { event.stopPropagation(); event.stopImmediatePropagation(); }
+            showCustomConfirm("¿Borrar entrenamiento?", () => {
                 state.history = state.history.filter(w => String(w.id) !== String(idString));
                 localStorage.setItem('kilo_history', JSON.stringify(state.history));
-                renderHistory();
-                renderHome();
-            }
+                renderHistory(); renderHome();
+            });
         }
-
         function showWorkoutDetail(id) { const w = state.history.find(i => i.id === id); const content = document.getElementById('workout-detail-content'); content.innerHTML = `<h2 style="color:var(--primary-color); font-size:24px;">${w.name}</h2><p style="margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:10px;">${new Date(w.date).toLocaleString()}</p>${w.exercises.map(e => `<div style="margin-bottom:15px; background:#111; padding:10px; border-radius:8px;"><h3 style="color:white; margin-bottom:5px;">${e.name}</h3>${e.sets.map((s, i) => `<div style="display:flex; justify-content:space-between; font-size:14px; color:#aaa; margin-top:4px;"><span>Serie ${i+1}</span><span style="color:var(--primary-color); font-weight:bold;">${s.kg}kg x ${s.reps}</span></div>`).join('')}</div>`).join('')}<button class="btn btn-outline" style="border:none; color:var(--danger); margin-top:20px;" onclick="closeModal('workoutDetailModal')">Cerrar</button>`; openModal('workoutDetailModal'); }
-        let currentMuscleFilter = null; function renderLibrary() { const search = document.getElementById('library-search').value.toLowerCase(); const filtered = state.exercises.filter(e => { const matchesSearch = e.name.toLowerCase().includes(search); const matchesMuscle = currentMuscleFilter ? e.muscle === currentMuscleFilter : true; return matchesSearch && matchesMuscle; }); document.getElementById('library-list').innerHTML = filtered.map(e => `<div class="card" style="margin-bottom:10px; padding:15px;" onclick="confirmAddToWorkout('${e.id}')"><div style="display:flex; justify-content:space-between; align-items:center;"><h3 style="font-size:16px;">${e.name}</h3><span style="font-size:10px; background:#333; padding:4px 8px; border-radius:4px; color:var(--primary-color); text-transform:uppercase;">${e.muscle}</span></div><p style="font-size:12px; margin-top:5px;">Nivel: ${e.level}</p></div>`).join(''); } function filterLibrary(muscle, btn) { currentMuscleFilter = muscle; document.querySelectorAll('#muscle-filters .chip').forEach(c => c.classList.remove('active')); btn.classList.add('active'); renderLibrary(); }
-        let tempExerciseToAdd = null; function confirmAddToWorkout(id) { const ex = state.exercises.find(e => e.id === id); if(ex) { tempExerciseToAdd = ex; document.getElementById('confirm-add-name').innerText = ex.name; openModal('confirmAddModal'); } } function executeAddToWorkout() { closeModal('confirmAddModal'); if(!tempExerciseToAdd) return; if (!state.currentSession) { navTo('train'); startWorkout(null); } else { navTo('train'); } addExerciseBlock(tempExerciseToAdd.name); tempExerciseToAdd = null; }
+
+        /* --- LIBRARY --- */
+        let currentMuscleFilter = null; 
+        function renderLibrary() { const search = document.getElementById('library-search').value.toLowerCase(); const filtered = state.exercises.filter(e => { const matchesSearch = e.name.toLowerCase().includes(search); const matchesMuscle = currentMuscleFilter ? e.muscle === currentMuscleFilter : true; return matchesSearch && matchesMuscle; }); document.getElementById('library-list').innerHTML = filtered.map(e => `<div class="card" style="margin-bottom:10px; padding:15px;" onclick="confirmAddToWorkout('${e.id}')"><div style="display:flex; justify-content:space-between; align-items:center;"><h3 style="font-size:16px;">${e.name}</h3><span style="font-size:10px; background:#333; padding:4px 8px; border-radius:4px; color:var(--primary-color); text-transform:uppercase;">${e.muscle}</span></div><p style="font-size:12px; margin-top:5px;">Nivel: ${e.level}</p></div>`).join(''); } 
+        function filterLibrary(muscle, btn) { currentMuscleFilter = muscle; document.querySelectorAll('#muscle-filters .chip').forEach(c => c.classList.remove('active')); btn.classList.add('active'); renderLibrary(); }
+        let tempExerciseToAdd = null; 
+        function confirmAddToWorkout(id) { const ex = state.exercises.find(e => e.id === id); if(ex) { tempExerciseToAdd = ex; document.getElementById('confirm-add-name').innerText = ex.name; openModal('confirmAddModal'); } } 
+        function executeAddToWorkout() { closeModal('confirmAddModal'); if(!tempExerciseToAdd) return; if (!state.currentSession) { navTo('train'); startWorkout(null); } else { navTo('train'); } addExerciseBlock(tempExerciseToAdd.name); tempExerciseToAdd = null; }
         
+        /* --- UTILS --- */
         function openModal(id) { 
-            // Si es el modal de progreso, cargar valores
             if (id === 'progressModal') {
                 const last = state.progress[state.progress.length - 1] || {};
-                document.getElementById('prog-weight').value = last.weight || '';
-                document.getElementById('prog-chest').value = last.chest || '';
-                document.getElementById('prog-waist').value = last.waist || '';
-                document.getElementById('prog-hips').value = last.hips || '';
-                document.getElementById('prog-arm').value = last.arm || '';
-                document.getElementById('prog-thigh').value = last.thigh || '';
+                document.getElementById('prog-weight').value = last.weight || ''; document.getElementById('prog-chest').value = last.chest || ''; document.getElementById('prog-waist').value = last.waist || ''; document.getElementById('prog-hips').value = last.hips || ''; document.getElementById('prog-arm').value = last.arm || ''; document.getElementById('prog-thigh').value = last.thigh || '';
             }
             document.getElementById(id).style.display = 'flex'; 
         } 
         function closeModal(id) { document.getElementById(id).style.display = 'none'; } 
-        
         function saveProgress() {
-            const entry = {
-                date: new Date(),
-                weight: document.getElementById('prog-weight').value,
-                chest: document.getElementById('prog-chest').value,
-                waist: document.getElementById('prog-waist').value,
-                hips: document.getElementById('prog-hips').value,
-                arm: document.getElementById('prog-arm').value,
-                thigh: document.getElementById('prog-thigh').value
-            };
-
-            if(entry.weight || entry.chest) {
-                state.progress.push(entry);
-                localStorage.setItem('kilo_progress', JSON.stringify(state.progress));
-                // Maintain legacy weight key for now
-                if(entry.weight) {
-                    state.weight.push({date: new Date(), val: entry.weight});
-                    localStorage.setItem('kilo_weight', JSON.stringify(state.weight));
-                }
-                renderHome();
-                closeModal('progressModal');
-            }
+            const entry = { date: new Date(), weight: document.getElementById('prog-weight').value, chest: document.getElementById('prog-chest').value, waist: document.getElementById('prog-waist').value, hips: document.getElementById('prog-hips').value, arm: document.getElementById('prog-arm').value, thigh: document.getElementById('prog-thigh').value };
+            if(entry.weight || entry.chest) { state.progress.push(entry); localStorage.setItem('kilo_progress', JSON.stringify(state.progress)); if(entry.weight) { state.weight.push({date: new Date(), val: entry.weight}); localStorage.setItem('kilo_weight', JSON.stringify(state.weight)); } renderHome(); closeModal('progressModal'); }
         }
 
-        /* ================= RELOJ PRO LOGIC (FIXED SVG) ================= */
-        
+        /* --- TIMER --- */
         function setTimerMode(mode, btn) {
-            resetTimer(); // Stop anything running
-            state.timerMode = mode;
-            
-            // UI Switch
-            document.querySelectorAll('#rest .chip').forEach(c => c.classList.remove('active'));
-            if(btn) btn.classList.add('active');
-            
-            const configPanel = document.getElementById('config-panel');
-            const label = document.getElementById('timer-status-label');
-            const tabataInd = document.getElementById('tabata-indicator');
-            tabataInd.classList.add('hidden');
-
-            // Inject Controls
-            if (mode === 'amrap') {
-                label.innerText = "CUENTA ATRÁS";
-                configPanel.innerHTML = `
-                    <div class="timer-input-group"><label>Minutos</label><input type="number" class="timer-input" value="${state.cfgAmrap}" onchange="state.cfgAmrap=this.value; resetTimer()"></div>
-                `;
-                state.timeLeft = state.cfgAmrap * 60;
-            } else if (mode === 'fortime') {
-                label.innerText = "CRONÓMETRO";
-                configPanel.innerHTML = `
-                    <div class="timer-input-group"><label>Time Cap (Min)</label><input type="number" class="timer-input" value="${state.cfgForTimeCap}" placeholder="0" onchange="state.cfgForTimeCap=this.value; resetTimer()"></div>
-                `;
-                state.timeLeft = 0;
-            } else if (mode === 'emom') {
-                label.innerText = "EMOM";
-                configPanel.innerHTML = `
-                    <div class="timer-input-group"><label>Duración (Min)</label><input type="number" class="timer-input" value="${state.cfgEmomTotal}" onchange="state.cfgEmomTotal=this.value; resetTimer()"></div>
-                `;
-                state.timeLeft = 60; 
-                state.emomCurrentMinute = 1;
-            } else if (mode === 'tabata') {
-                label.innerText = "TABATA";
-                configPanel.innerHTML = `
-                    <div class="timer-input-group"><label>Work(s)</label><input type="number" class="timer-input" value="${state.cfgTabataWork}" onchange="state.cfgTabataWork=this.value; resetTimer()"></div>
-                    <div class="timer-input-group"><label>Rest(s)</label><input type="number" class="timer-input" value="${state.cfgTabataRest}" onchange="state.cfgTabataRest=this.value; resetTimer()"></div>
-                    <div class="timer-input-group"><label>Rondas</label><input type="number" class="timer-input" value="${state.cfgTabataRounds}" onchange="state.cfgTabataRounds=this.value; resetTimer()"></div>
-                `;
-                tabataInd.classList.remove('hidden');
-                state.timeLeft = state.cfgTabataWork;
-                state.tabataRound = 1;
-                state.tabataState = 'work';
-                updateTabataUI();
-            }
+            resetTimer(); state.timerMode = mode;
+            document.querySelectorAll('#rest .chip').forEach(c => c.classList.remove('active')); if(btn) btn.classList.add('active');
+            const configPanel = document.getElementById('config-panel'); const label = document.getElementById('timer-status-label'); const tabataInd = document.getElementById('tabata-indicator'); tabataInd.classList.add('hidden');
+            if (mode === 'amrap') { label.innerText = "CUENTA ATRÁS"; configPanel.innerHTML = `<div class="timer-input-group"><label>Minutos</label><input type="number" class="timer-input" value="${state.cfgAmrap}" onchange="state.cfgAmrap=this.value; resetTimer()"></div>`; state.timeLeft = state.cfgAmrap * 60; } 
+            else if (mode === 'fortime') { label.innerText = "CRONÓMETRO"; configPanel.innerHTML = `<div class="timer-input-group"><label>Time Cap</label><input type="number" class="timer-input" value="${state.cfgForTimeCap}" placeholder="0" onchange="state.cfgForTimeCap=this.value; resetTimer()"></div>`; state.timeLeft = 0; } 
+            else if (mode === 'emom') { label.innerText = "EMOM"; configPanel.innerHTML = `<div class="timer-input-group"><label>Minutos</label><input type="number" class="timer-input" value="${state.cfgEmomTotal}" onchange="state.cfgEmomTotal=this.value; resetTimer()"></div>`; state.timeLeft = 60; state.emomCurrentMinute = 1; } 
+            else if (mode === 'tabata') { label.innerText = "TABATA"; configPanel.innerHTML = `<div class="timer-input-group"><label>Work</label><input type="number" class="timer-input" value="${state.cfgTabataWork}" onchange="state.cfgTabataWork=this.value; resetTimer()"></div><div class="timer-input-group"><label>Rest</label><input type="number" class="timer-input" value="${state.cfgTabataRest}" onchange="state.cfgTabataRest=this.value; resetTimer()"></div><div class="timer-input-group"><label>Rondas</label><input type="number" class="timer-input" value="${state.cfgTabataRounds}" onchange="state.cfgTabataRounds=this.value; resetTimer()"></div>`; tabataInd.classList.remove('hidden'); state.timeLeft = state.cfgTabataWork; state.tabataRound = 1; state.tabataState = 'work'; updateTabataUI(); }
             updateTimerDisplay();
         }
-
-        function updateTabataUI() {
-            const ind = document.getElementById('tabata-indicator');
-            const val = document.getElementById('timer-val');
-            ind.innerText = `Ronda ${state.tabataRound}/${state.cfgTabataRounds}`;
-            if (state.tabataState === 'work') {
-                ind.className = 'tabata-indicator tabata-work';
-                val.style.color = 'var(--primary-color)';
-                ind.innerText += " - WORK";
-            } else {
-                ind.className = 'tabata-indicator tabata-rest';
-                val.style.color = 'var(--danger)';
-                ind.innerText += " - REST";
-            }
-        }
-
+        function updateTabataUI() { const ind = document.getElementById('tabata-indicator'); const val = document.getElementById('timer-val'); ind.innerText = `Ronda ${state.tabataRound}/${state.cfgTabataRounds}`; if (state.tabataState === 'work') { ind.className = 'tabata-indicator tabata-work'; val.style.color = 'var(--primary-color)'; ind.innerText += " - WORK"; } else { ind.className = 'tabata-indicator tabata-rest'; val.style.color = 'var(--danger)'; ind.innerText += " - REST"; } }
         function toggleTimer() {
             const iconSvg = document.getElementById('timer-icon-svg').querySelector('path');
-            
-            if(state.isRunning) {
-                // STOP
-                clearInterval(state.timerInterval);
-                state.isRunning = false;
-                // Change back to PLAY icon (Triangle)
-                iconSvg.setAttribute('d', 'M8 5V19L19 12L8 5Z');
-            } else {
-                // START
-                state.isRunning = true;
-                // Change to PAUSE icon (Two bars)
-                iconSvg.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z');
-                
-                // Disable inputs while running
+            if(state.isRunning) { clearInterval(state.timerInterval); state.isRunning = false; iconSvg.setAttribute('d', 'M8 5V19L19 12L8 5Z'); } 
+            else {
+                state.isRunning = true; iconSvg.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z');
                 document.querySelectorAll('.timer-input').forEach(i => i.disabled = true);
-
                 state.timerInterval = setInterval(() => {
-                    // AMRAP (Countdown)
-                    if (state.timerMode === 'amrap') {
-                        if(state.timeLeft > 0) state.timeLeft--;
-                        else { resetTimer(); alert("¡Tiempo!"); return; }
-                    } 
-                    // FOR TIME (Count Up)
-                    else if (state.timerMode === 'fortime') {
-                        state.timeLeft++;
-                        // Check Time Cap
-                        if (state.cfgForTimeCap > 0 && state.timeLeft >= state.cfgForTimeCap * 60) {
-                            resetTimer(); alert("Time Cap Reached!"); return;
-                        }
-                    }
-                    // EMOM
-                    else if (state.timerMode === 'emom') {
-                        state.timeLeft--; // Counting down the minute
-                        if (state.timeLeft < 0) {
-                            // Minute Over
-                            state.emomCurrentMinute++;
-                            if (state.emomCurrentMinute > state.cfgEmomTotal) {
-                                resetTimer(); alert("EMOM Completado"); return;
-                            }
-                            state.timeLeft = 60;
-                            // Beep sound could go here
-                        }
-                        document.getElementById('timer-status-label').innerText = `MINUTO ${state.emomCurrentMinute} / ${state.cfgEmomTotal}`;
-                    }
-                    // TABATA
-                    else if (state.timerMode === 'tabata') {
-                        if (state.timeLeft > 0) {
-                            state.timeLeft--;
-                        } else {
-                            // Switch phase
-                            if (state.tabataState === 'work') {
-                                state.tabataState = 'rest';
-                                state.timeLeft = state.cfgTabataRest;
-                            } else {
-                                state.tabataRound++;
-                                if (state.tabataRound > state.cfgTabataRounds) {
-                                    resetTimer(); alert("Tabata Terminado"); return;
-                                }
-                                state.tabataState = 'work';
-                                state.timeLeft = state.cfgTabataWork;
-                            }
-                            updateTabataUI();
-                        }
-                    }
+                    if (state.timerMode === 'amrap') { if(state.timeLeft > 0) state.timeLeft--; else { resetTimer(); showCustomAlert("¡Tiempo!"); return; } } 
+                    else if (state.timerMode === 'fortime') { state.timeLeft++; if (state.cfgForTimeCap > 0 && state.timeLeft >= state.cfgForTimeCap * 60) { resetTimer(); showCustomAlert("Time Cap!"); return; } }
+                    else if (state.timerMode === 'emom') { state.timeLeft--; if (state.timeLeft < 0) { state.emomCurrentMinute++; if (state.emomCurrentMinute > state.cfgEmomTotal) { resetTimer(); showCustomAlert("EMOM Completado"); return; } state.timeLeft = 60; } document.getElementById('timer-status-label').innerText = `MINUTO ${state.emomCurrentMinute} / ${state.cfgEmomTotal}`; }
+                    else if (state.timerMode === 'tabata') { if (state.timeLeft > 0) { state.timeLeft--; } else { if (state.tabataState === 'work') { state.tabataState = 'rest'; state.timeLeft = state.cfgTabataRest; } else { state.tabataRound++; if (state.tabataRound > state.cfgTabataRounds) { resetTimer(); showCustomAlert("Tabata Terminado"); return; } state.tabataState = 'work'; state.timeLeft = state.cfgTabataWork; } updateTabataUI(); } }
                     updateTimerDisplay();
                 }, 1000);
             }
         }
-
         function resetTimer() {
-            clearInterval(state.timerInterval);
-            state.isRunning = false;
-            
-            // Reset icon to PLAY (Triangle)
+            clearInterval(state.timerInterval); state.isRunning = false;
             document.getElementById('timer-icon-svg').querySelector('path').setAttribute('d', 'M8 5V19L19 12L8 5Z');
-            
             document.querySelectorAll('.timer-input').forEach(i => i.disabled = false);
-
-            if (state.timerMode === 'amrap') {
-                state.timeLeft = state.cfgAmrap * 60;
-            } else if (state.timerMode === 'fortime') {
-                state.timeLeft = 0;
-            } else if (state.timerMode === 'emom') {
-                state.timeLeft = 60;
-                state.emomCurrentMinute = 1;
-                document.getElementById('timer-status-label').innerText = `MINUTO 1 / ${state.cfgEmomTotal}`;
-            } else if (state.timerMode === 'tabata') {
-                state.timeLeft = state.cfgTabataWork;
-                state.tabataRound = 1;
-                state.tabataState = 'work';
-                updateTabataUI();
-            }
+            if (state.timerMode === 'amrap') state.timeLeft = state.cfgAmrap * 60;
+            else if (state.timerMode === 'fortime') state.timeLeft = 0;
+            else if (state.timerMode === 'emom') { state.timeLeft = 60; state.emomCurrentMinute = 1; document.getElementById('timer-status-label').innerText = `MINUTO 1 / ${state.cfgEmomTotal}`; }
+            else if (state.timerMode === 'tabata') { state.timeLeft = state.cfgTabataWork; state.tabataRound = 1; state.tabataState = 'work'; updateTabataUI(); }
             updateTimerDisplay();
         }
-
-        function updateTimerDisplay() {
-            let m, s;
-            if (state.timerMode === 'fortime') {
-                m = Math.floor(state.timeLeft / 60);
-                s = state.timeLeft % 60;
-            } else {
-                m = Math.floor(state.timeLeft / 60);
-                s = state.timeLeft % 60;
-            }
-            document.getElementById('timer-val').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-        }
+        function updateTimerDisplay() { let m = Math.floor(state.timeLeft / 60), s = state.timeLeft % 60; document.getElementById('timer-val').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`; }
     </script>
 </body>
 </html>
