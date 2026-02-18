@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KILO">
 
-    <link rel="icon" type="image/png" href="icon.png?v=3">
-    <link rel="apple-touch-icon" href="icon.png?v=3">
+    <link rel="icon" type="image/png" href="icon.png?v=5">
+    <link rel="apple-touch-icon" href="icon.png?v=5">
 
     <title>KILO App</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -30,7 +30,59 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
-        input { user-select: text; }
+        
+        /* INPUTS GLOBAL STYLE - ESTÉTICA DARK */
+        input { 
+            user-select: text; 
+            background-color: #252527 !important; /* Fondo oscuro siempre */
+            border: 1px solid #333; 
+            color: white !important; /* Texto blanco */
+            padding: 16px; 
+            border-radius: 12px; 
+            width: 100%; 
+            font-size: 16px; 
+            outline: none; 
+            -webkit-appearance: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        input::placeholder { color: #555; }
+        input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 1px rgba(0, 255, 148, 0.2); }
+
+        /* INPUTS DE MEDIDAS (GRID) */
+        .measure-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .measure-item label {
+            display: block;
+            color: var(--text-dim);
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+        .measure-item input {
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        /* El input de peso destaca más */
+        .weight-hero input {
+            background-color: #000 !important;
+            border: 2px solid #333;
+            color: var(--primary-color) !important;
+            font-size: 32px;
+            height: 60px;
+        }
+
+        /* INPUT BUSCADOR */
+        #library-search, #selector-input {
+            background-color: #111 !important;
+            border-radius: 50px; 
+            padding-left: 20px;
+        }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -62,11 +114,6 @@
             padding: 40px 30px; display: flex; flex-direction: column; justify-content: center; height: 100%;
             background: radial-gradient(circle at top right, rgba(0, 255, 148, 0.1), transparent 40%);
         }
-        .auth-input {
-            background: #1C1C1E; border: 1px solid #333; padding: 18px; border-radius: 12px;
-            color: white; width: 100%; margin-bottom: 15px; font-size: 16px; outline: none;
-        }
-        .auth-input:focus { border-color: var(--primary-color); }
 
         /* UI ELEMENTS */
         h1 { font-size: 28px; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; }
@@ -87,9 +134,19 @@
             margin-bottom: 15px; cursor: pointer; border: 1px solid transparent;
             transition: transform 0.1s, background-color 0.2s;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            position: relative; /* Importante para el botón de borrar */
+            position: relative;
         }
         .card:active { transform: scale(0.97); background-color: #252527; }
+
+        /* Stats Grid en Home */
+        .stats-grid {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px;
+        }
+        .stat-box {
+            background: #222; border-radius: 8px; padding: 8px; text-align: center;
+        }
+        .stat-label { font-size: 10px; color: #888; text-transform: uppercase; }
+        .stat-val { font-size: 14px; font-weight: bold; color: white; }
 
         .folder-card {
             background-color: #1C1C1E; border: 1px solid #333; border-radius: 16px;
@@ -114,23 +171,25 @@
         .exercise-block { background: #0A0A0A; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #333; }
         .set-row { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
         .set-num { width: 25px; height: 25px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #FFF; font-weight: bold; }
-        .input-mini { width: 70px; text-align: center; background: #1a1a1a; padding: 10px; border-radius: 8px; border: 1px solid #333; color: white; outline: none; }
+        
+        .input-mini { 
+            width: 70px; text-align: center; background: #1a1a1a !important; 
+            padding: 10px; border-radius: 8px; border: 1px solid #333; 
+            color: white !important; outline: none; 
+        }
         .input-mini:focus { border-color: var(--primary-color); }
 
-        /* BOTON BORRAR MEJORADO */
         .delete-btn {
             position: absolute; top: 10px; right: 10px;
             background: rgba(20, 20, 20, 0.95); border: 1px solid var(--danger);
             color: var(--danger); border-radius: 50%; 
-            width: 44px; height: 44px; /* Área táctil grande */
+            width: 44px; height: 44px; 
             display: flex; align-items: center; justify-content: center;
-            z-index: 100; /* Siempre encima */
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.5);
             transition: transform 0.1s;
         }
         .delete-btn:active { background: var(--danger); color: white; transform: scale(0.9); }
 
-        /* TIMER STYLES */
         .timer-display { 
             font-size: 90px; font-weight: 800; color: var(--primary-color); 
             font-variant-numeric: tabular-nums; text-align: center; margin: 20px 0; 
@@ -141,7 +200,7 @@
         .timer-input-group { display: flex; flex-direction: column; align-items: center; }
         .timer-input-group label { font-size: 10px; color: #666; margin-bottom: 5px; text-transform: uppercase; }
         .timer-input { 
-            width: 80px; background: #222; border: 1px solid #444; color: white; 
+            width: 80px; background: #222 !important; border: 1px solid #444; color: white !important; 
             text-align: center; padding: 10px; border-radius: 10px; font-size: 18px; font-weight: bold; 
         }
         .timer-input:focus { border-color: var(--primary-color); outline: none; }
@@ -149,7 +208,6 @@
         .tabata-work { color: var(--primary-color); border: 1px solid var(--primary-color); }
         .tabata-rest { color: var(--danger); border: 1px solid var(--danger); }
 
-        /* MODALS */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); z-index: 200; display: none;
@@ -165,7 +223,6 @@
         .modal-body { overflow-y: auto; flex: 1; margin-top: 15px; }
         .search-result-item { padding: 18px 10px; border-bottom: 1px solid #2a2a2a; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
 
-        /* NAV */
         .bottom-nav {
             position: fixed; bottom: 0; width: 100%; 
             height: calc(var(--nav-height) + var(--safe-bottom));
@@ -181,7 +238,6 @@
         .nav-item i { font-size: 24px; margin-bottom: 4px; }
         .nav-item.active { color: var(--primary-color); }
 
-        /* CHIPS */
         .chips { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; margin-bottom: 10px; scrollbar-width: none; }
         .chips::-webkit-scrollbar { display: none; }
         .chip { padding: 8px 18px; background: #222; border-radius: 20px; white-space: nowrap; font-size: 13px; color: #888; border: 1px solid transparent; }
@@ -245,11 +301,17 @@
             <p style="text-align: center;">Sin datos recientes.</p>
         </div>
 
-        <h2>Progreso</h2>
+        <h2>Progreso Corporal</h2>
         <div class="card" onclick="openModal('progressModal')" style="border: 1px solid #333;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div><h3 style="color: #FFF; margin: 0;">Registrar Peso</h3><p id="home-weight-display" class="accent" style="font-size: 16px; margin-top: 5px;">-- kg</p></div>
-                <i class="ph ph-chart-line-up" style="font-size: 32px; color: #555;"></i>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <div><h3 style="color: #FFF; margin: 0;">Medidas</h3><p style="font-size: 12px;">Actualizar datos</p></div>
+                <i class="ph ph-ruler" style="font-size: 32px; color: #555;"></i>
+            </div>
+            
+            <div class="stats-grid" id="home-stats-display">
+                <div class="stat-box"><div class="stat-label">Peso</div><div class="stat-val">--</div></div>
+                <div class="stat-box"><div class="stat-label">Cintura</div><div class="stat-val">--</div></div>
+                <div class="stat-box"><div class="stat-label">Pecho</div><div class="stat-val">--</div></div>
             </div>
         </div>
     </div>
@@ -371,11 +433,41 @@
     </div>
 
     <div id="progressModal" class="modal">
-        <div class="modal-content">
-            <h2>Actualizar Peso</h2>
-            <input type="number" id="weight-input" placeholder="0.0" style="font-size: 24px; font-weight: bold; color: var(--primary-color); margin: 20px 0;">
-            <button class="btn" onclick="saveProgress()">Guardar</button>
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
+            <h2>Progreso Corporal</h2>
+            <p style="color: var(--text-dim); margin-bottom: 20px;">Registra tus medidas actuales.</p>
+            
+            <div class="measure-item weight-hero">
+                <label>Peso (kg)</label>
+                <input type="number" id="prog-weight" placeholder="0.0">
+            </div>
+
+            <div class="measure-grid">
+                <div class="measure-item">
+                    <label>Pecho (cm)</label>
+                    <input type="number" id="prog-chest" placeholder="-">
+                </div>
+                <div class="measure-item">
+                    <label>Cintura (cm)</label>
+                    <input type="number" id="prog-waist" placeholder="-">
+                </div>
+                <div class="measure-item">
+                    <label>Cadera (cm)</label>
+                    <input type="number" id="prog-hips" placeholder="-">
+                </div>
+                <div class="measure-item">
+                    <label>Brazo (cm)</label>
+                    <input type="number" id="prog-arm" placeholder="-">
+                </div>
+                <div class="measure-item">
+                    <label>Muslo (cm)</label>
+                    <input type="number" id="prog-thigh" placeholder="-">
+                </div>
+            </div>
+
+            <button class="btn" onclick="saveProgress()">Guardar Registro</button>
             <button class="btn btn-outline" onclick="closeModal('progressModal')">Cancelar</button>
+            <div style="height: 20px;"></div>
         </div>
     </div>
 
@@ -400,7 +492,10 @@
         /* --- STATE & AUTH --- */
         let state = {
             history: JSON.parse(localStorage.getItem('kilo_history')) || [],
-            weight: JSON.parse(localStorage.getItem('kilo_weight')) || [],
+            // 'kilo_weight' is deprecated but read for backward compatibility if needed.
+            // We use 'kilo_progress' for the full stats object.
+            progress: JSON.parse(localStorage.getItem('kilo_progress')) || [],
+            weight: JSON.parse(localStorage.getItem('kilo_weight')) || [], // legacy support
             users: JSON.parse(localStorage.getItem('kilo_users')) || [],
             currentUser: JSON.parse(localStorage.getItem('kilo_current_user')) || null,
             currentSession: null,
@@ -453,8 +548,30 @@
             if(screenId === 'exercises') renderLibrary();
         }
 
-        /* --- CORE LOGIC (Home, Train, Hist) --- */
-        function renderHome() { const now = new Date(), oneWeekAgo = new Date(now.getTime() - 7*24*60*60*1000); const count = state.history.filter(w => new Date(w.date) > oneWeekAgo).length; document.getElementById('home-weekly-workouts').innerText = count; const last = state.history[0]; const lastContainer = document.getElementById('home-last-workout'); if (last) lastContainer.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center;"><h3 style="font-size:18px;">${last.name}</h3><span style="font-size:12px; color:var(--text-dim)">${new Date(last.date).toLocaleDateString()}</span></div><p style="margin-top:5px;">${last.duration} min • <span class="accent">${last.exercises.length} Ejercicios</span></p>`; const lastWeight = state.weight[state.weight.length - 1]; document.getElementById('home-weight-display').innerText = lastWeight ? `${lastWeight.val} kg` : '-- kg'; }
+        /* --- CORE LOGIC --- */
+        function renderHome() { 
+            const now = new Date(), oneWeekAgo = new Date(now.getTime() - 7*24*60*60*1000); 
+            const count = state.history.filter(w => new Date(w.date) > oneWeekAgo).length; 
+            document.getElementById('home-weekly-workouts').innerText = count; 
+            
+            const last = state.history[0]; 
+            const lastContainer = document.getElementById('home-last-workout'); 
+            if (last) lastContainer.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center;"><h3 style="font-size:18px;">${last.name}</h3><span style="font-size:12px; color:var(--text-dim)">${new Date(last.date).toLocaleDateString()}</span></div><p style="margin-top:5px;">${last.duration} min • <span class="accent">${last.exercises.length} Ejercicios</span></p>`; 
+            
+            // Render Stats Grid
+            const lastEntry = state.progress[state.progress.length - 1] || {};
+            const weightVal = lastEntry.weight || (state.weight[state.weight.length-1]?.val) || '--';
+            
+            document.getElementById('home-stats-display').innerHTML = `
+                <div class="stat-box"><div class="stat-label">Peso</div><div class="stat-val">${weightVal}</div></div>
+                <div class="stat-box"><div class="stat-label">Cintura</div><div class="stat-val">${lastEntry.waist || '--'}</div></div>
+                <div class="stat-box"><div class="stat-label">Pecho</div><div class="stat-val">${lastEntry.chest || '--'}</div></div>
+                <div class="stat-box"><div class="stat-label">Cadera</div><div class="stat-val">${lastEntry.hips || '--'}</div></div>
+                <div class="stat-box"><div class="stat-label">Brazo</div><div class="stat-val">${lastEntry.arm || '--'}</div></div>
+                <div class="stat-box"><div class="stat-label">Muslo</div><div class="stat-val">${lastEntry.thigh || '--'}</div></div>
+            `;
+            document.getElementById('home-weight-display').innerText = `${weightVal} kg`;
+        }
         
         // Train Folders
         function openTemplateCategory(category) { document.getElementById('train-main-menu').classList.add('hidden'); document.getElementById('train-sub-list').classList.remove('hidden'); const titleMap = { 'crossfit': 'WODs Crossfit', 'gym': 'Rutinas Gym', 'metabolic': 'Circuitos Metabólicos' }; document.getElementById('category-title').innerText = titleMap[category]; const filtered = templates.filter(t => t.category === category); document.getElementById('templates-container').innerHTML = filtered.map(t => `<div class="card" onclick='startWorkout(${JSON.stringify(t)})'><h3 style="color:white;">${t.name}</h3><p>${t.items.length} ejercicios</p></div>`).join(''); }
@@ -498,25 +615,60 @@
         }
 
         function deleteWorkout(idString, event) {
-            // Detiene la propagación para que no abra el detalle
             if (event) {
                 event.stopPropagation();
                 event.stopImmediatePropagation();
             }
-
             if(confirm("¿Seguro que quieres borrar este entreno para siempre?")) {
-                // Convertimos a string para comparar seguro
                 state.history = state.history.filter(w => String(w.id) !== String(idString));
                 localStorage.setItem('kilo_history', JSON.stringify(state.history));
                 renderHistory();
-                renderHome(); // Actualiza el contador del inicio
+                renderHome();
             }
         }
 
         function showWorkoutDetail(id) { const w = state.history.find(i => i.id === id); const content = document.getElementById('workout-detail-content'); content.innerHTML = `<h2 style="color:var(--primary-color); font-size:24px;">${w.name}</h2><p style="margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:10px;">${new Date(w.date).toLocaleString()}</p>${w.exercises.map(e => `<div style="margin-bottom:15px; background:#111; padding:10px; border-radius:8px;"><h3 style="color:white; margin-bottom:5px;">${e.name}</h3>${e.sets.map((s, i) => `<div style="display:flex; justify-content:space-between; font-size:14px; color:#aaa; margin-top:4px;"><span>Serie ${i+1}</span><span style="color:var(--primary-color); font-weight:bold;">${s.kg}kg x ${s.reps}</span></div>`).join('')}</div>`).join('')}<button class="btn btn-outline" style="border:none; color:var(--danger); margin-top:20px;" onclick="closeModal('workoutDetailModal')">Cerrar</button>`; openModal('workoutDetailModal'); }
         let currentMuscleFilter = null; function renderLibrary() { const search = document.getElementById('library-search').value.toLowerCase(); const filtered = state.exercises.filter(e => { const matchesSearch = e.name.toLowerCase().includes(search); const matchesMuscle = currentMuscleFilter ? e.muscle === currentMuscleFilter : true; return matchesSearch && matchesMuscle; }); document.getElementById('library-list').innerHTML = filtered.map(e => `<div class="card" style="margin-bottom:10px; padding:15px;" onclick="confirmAddToWorkout('${e.id}')"><div style="display:flex; justify-content:space-between; align-items:center;"><h3 style="font-size:16px;">${e.name}</h3><span style="font-size:10px; background:#333; padding:4px 8px; border-radius:4px; color:var(--primary-color); text-transform:uppercase;">${e.muscle}</span></div><p style="font-size:12px; margin-top:5px;">Nivel: ${e.level}</p></div>`).join(''); } function filterLibrary(muscle, btn) { currentMuscleFilter = muscle; document.querySelectorAll('#muscle-filters .chip').forEach(c => c.classList.remove('active')); btn.classList.add('active'); renderLibrary(); }
         let tempExerciseToAdd = null; function confirmAddToWorkout(id) { const ex = state.exercises.find(e => e.id === id); if(ex) { tempExerciseToAdd = ex; document.getElementById('confirm-add-name').innerText = ex.name; openModal('confirmAddModal'); } } function executeAddToWorkout() { closeModal('confirmAddModal'); if(!tempExerciseToAdd) return; if (!state.currentSession) { navTo('train'); startWorkout(null); } else { navTo('train'); } addExerciseBlock(tempExerciseToAdd.name); tempExerciseToAdd = null; }
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; } function closeModal(id) { document.getElementById(id).style.display = 'none'; } function saveProgress() { const val = document.getElementById('weight-input').value; if(val) { state.weight.push({ date: new Date(), val: val }); localStorage.setItem('kilo_weight', JSON.stringify(state.weight)); renderHome(); closeModal('progressModal'); } }
+        
+        function openModal(id) { 
+            // Si es el modal de progreso, cargar valores
+            if (id === 'progressModal') {
+                const last = state.progress[state.progress.length - 1] || {};
+                document.getElementById('prog-weight').value = last.weight || '';
+                document.getElementById('prog-chest').value = last.chest || '';
+                document.getElementById('prog-waist').value = last.waist || '';
+                document.getElementById('prog-hips').value = last.hips || '';
+                document.getElementById('prog-arm').value = last.arm || '';
+                document.getElementById('prog-thigh').value = last.thigh || '';
+            }
+            document.getElementById(id).style.display = 'flex'; 
+        } 
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; } 
+        
+        function saveProgress() {
+            const entry = {
+                date: new Date(),
+                weight: document.getElementById('prog-weight').value,
+                chest: document.getElementById('prog-chest').value,
+                waist: document.getElementById('prog-waist').value,
+                hips: document.getElementById('prog-hips').value,
+                arm: document.getElementById('prog-arm').value,
+                thigh: document.getElementById('prog-thigh').value
+            };
+
+            if(entry.weight || entry.chest) {
+                state.progress.push(entry);
+                localStorage.setItem('kilo_progress', JSON.stringify(state.progress));
+                // Maintain legacy weight key for now
+                if(entry.weight) {
+                    state.weight.push({date: new Date(), val: entry.weight});
+                    localStorage.setItem('kilo_weight', JSON.stringify(state.weight));
+                }
+                renderHome();
+                closeModal('progressModal');
+            }
+        }
 
         /* ================= RELOJ PRO LOGIC (FIXED SVG) ================= */
         
