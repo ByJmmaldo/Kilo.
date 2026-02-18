@@ -31,6 +31,13 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
         
+        /* BLOQUEAR PULL-TO-REFRESH (PRUEBA 2 SUPERADA) */
+        html, body {
+            overscroll-behavior-y: none; /* Esto evita que Chrome/Safari recarguen al deslizar */
+            height: 100%;
+            overflow: hidden; /* Controlamos el scroll en .screen */
+        }
+
         /* INPUTS GLOBAL STYLE */
         input { 
             user-select: text; 
@@ -59,7 +66,7 @@
         .weight-hero input { background-color: #000 !important; border: 2px solid #333; color: var(--primary-color) !important; font-size: 32px; height: 60px; text-align: center; }
         #library-search, #selector-input { background-color: #111 !important; border-radius: 50px; padding-left: 20px; }
 
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); height: 100vh; display: flex; flex-direction: column; overflow: hidden; overscroll-behavior-y: none; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); }
         .hidden { display: none !important; }
         .accent { color: var(--primary-color); }
 
@@ -73,7 +80,9 @@
         /* UI BASE */
         h1 { font-size: 28px; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; }
         h2 { font-size: 14px; font-weight: 700; margin: 25px 0 10px 0; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
-        .screen { flex: 1; overflow-y: auto; padding: calc(20px + var(--safe-top)) 20px calc(var(--nav-height) + 20px + var(--safe-bottom)) 20px; display: none; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; -webkit-overflow-scrolling: touch; }
+        
+        /* SCROLL SOLO AQUÍ */
+        .screen { flex: 1; overflow-y: auto; padding: calc(20px + var(--safe-top)) 20px calc(var(--nav-height) + 20px + var(--safe-bottom)) 20px; display: none; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; -webkit-overflow-scrolling: touch; height: 100%; }
         .screen.active { display: block; opacity: 1; transform: translateY(0); }
         .screen::-webkit-scrollbar { display: none; }
 
@@ -212,47 +221,26 @@
 
     <div id="profile" class="screen">
         <h1 style="margin-top: 10px;">Tu Perfil</h1>
-        
         <div class="card">
             <h3 style="margin-bottom: 15px; color: white;">Datos Personales</h3>
-            <div class="measure-item">
-                <label>Tu Nombre</label>
-                <input type="text" id="profile-name-input" onchange="updateUserName(this.value)">
-            </div>
+            <div class="measure-item"><label>Tu Nombre</label><input type="text" id="profile-name-input" onchange="updateUserName(this.value)"></div>
         </div>
-
         <h2>Calculadora 1RM</h2>
         <div class="card">
             <p style="color: #888; font-size: 12px; margin-bottom: 15px;">Estima tu repetición máxima teórica.</p>
             <div class="measure-grid">
-                <div class="measure-item">
-                    <label>Peso (kg)</label>
-                    <input type="number" id="rm-weight" placeholder="0" onkeyup="calcRM()">
-                </div>
-                <div class="measure-item">
-                    <label>Repeticiones</label>
-                    <input type="number" id="rm-reps" placeholder="0" onkeyup="calcRM()">
-                </div>
+                <div class="measure-item"><label>Peso (kg)</label><input type="number" id="rm-weight" placeholder="0" onkeyup="calcRM()"></div>
+                <div class="measure-item"><label>Repeticiones</label><input type="number" id="rm-reps" placeholder="0" onkeyup="calcRM()"></div>
             </div>
-            <div class="rm-result">
-                <div class="rm-value" id="rm-display">0</div>
-                <div class="rm-label">KG (Estimado)</div>
-            </div>
+            <div class="rm-result"><div class="rm-value" id="rm-display">0</div><div class="rm-label">KG (Estimado)</div></div>
         </div>
-
         <h2>Seguridad de Datos</h2>
         <div class="card">
             <p style="color: #888; font-size: 12px; margin-bottom: 15px;">Guarda tus entrenos en un archivo o recupéralos.</p>
             <button class="btn" onclick="exportBackup()">📥 Exportar Copia</button>
-            <div style="position:relative; margin-top:10px;">
-                <button class="btn btn-outline">📤 Importar Copia</button>
-                <input type="file" id="import-file" onchange="importBackup(this)" style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer;">
-            </div>
+            <div style="position:relative; margin-top:10px;"><button class="btn btn-outline">📤 Importar Copia</button><input type="file" id="import-file" onchange="importBackup(this)" style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer;"></div>
         </div>
-
-        <button class="btn btn-outline" style="margin-top: 40px; border-color: var(--danger); color: var(--danger);" onclick="showCustomConfirm('¿Cerrar sesión?', handleLogout)">
-            <i class="ph ph-sign-out"></i> Cerrar Sesión
-        </button>
+        <button class="btn btn-outline" style="margin-top: 40px; border-color: var(--danger); color: var(--danger);" onclick="showCustomConfirm('¿Cerrar sesión?', handleLogout)"><i class="ph ph-sign-out"></i> Cerrar Sesión</button>
         <div style="height: 50px;"></div>
     </div>
 
@@ -264,25 +252,13 @@
                 <i class="ph ph-plus" style="font-size: 20px; margin-right: 5px; vertical-align: middle;"></i> ENTRENAMIENTO LIBRE
             </div>
             <div class="folder-card" onclick="openTemplateCategory('crossfit')">
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <i class="ph ph-lightning accent" style="font-size: 32px;"></i>
-                    <div><div class="folder-title">WODs Crossfit</div><div class="folder-subtitle">The Girls, Heroes, WODs</div></div>
-                </div>
-                <i class="ph ph-caret-right" style="color: #666; font-size: 20px;"></i>
+                <div style="display: flex; align-items: center; gap: 15px;"><i class="ph ph-lightning accent" style="font-size: 32px;"></i><div><div class="folder-title">WODs Crossfit</div><div class="folder-subtitle">The Girls, Heroes, WODs</div></div></div><i class="ph ph-caret-right" style="color: #666; font-size: 20px;"></i>
             </div>
             <div class="folder-card" onclick="openTemplateCategory('gym')">
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <i class="ph ph-barbell accent" style="font-size: 32px;"></i>
-                    <div><div class="folder-title">Rutinas Gym</div><div class="folder-subtitle">Hipertrofia, Fuerza, Push/Pull</div></div>
-                </div>
-                <i class="ph ph-caret-right" style="color: #666; font-size: 20px;"></i>
+                <div style="display: flex; align-items: center; gap: 15px;"><i class="ph ph-barbell accent" style="font-size: 32px;"></i><div><div class="folder-title">Rutinas Gym</div><div class="folder-subtitle">Hipertrofia, Fuerza, Push/Pull</div></div></div><i class="ph ph-caret-right" style="color: #666; font-size: 20px;"></i>
             </div>
             <div class="folder-card" onclick="openTemplateCategory('metabolic')">
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <i class="ph ph-heartbeat accent" style="font-size: 32px;"></i>
-                    <div><div class="folder-title">Circuitos Metabólicos</div><div class="folder-subtitle">HIIT, Tiempo, Quema-grasa</div></div>
-                </div>
-                <i class="ph ph-caret-right" style="color: #666; font-size: 20px;"></i>
+                <div style="display: flex; align-items: center; gap: 15px;"><i class="ph ph-heartbeat accent" style="font-size: 32px;"></i><div><div class="folder-title">Circuitos Metabólicos</div><div class="folder-subtitle">HIIT, Tiempo, Quema-grasa</div></div></div><i class="ph ph-caret-right" style="color: #666; font-size: 20px;"></i>
             </div>
         </div>
         <div id="train-sub-list" class="hidden">
@@ -352,9 +328,7 @@
 
     <div id="addExerciseModal" class="modal">
         <div class="modal-content" style="height: 85vh;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <h2>Añadir Ejercicio</h2><button class="btn-text" onclick="closeModal('addExerciseModal')">Cancelar</button>
-            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;"><h2>Añadir Ejercicio</h2><button class="btn-text" onclick="closeModal('addExerciseModal')">Cancelar</button></div>
             <input type="text" id="selector-input" placeholder="Buscar o escribir nuevo..." onkeyup="updateExerciseSelector()" autofocus>
             <div id="selector-results" class="modal-body"></div>
         </div>
@@ -373,12 +347,7 @@
         <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
             <h2>Progreso Corporal</h2>
             <p style="color: var(--text-dim); margin-bottom: 20px;">Registra tus medidas actuales.</p>
-            
-            <div class="measure-item weight-hero">
-                <label>Peso (kg)</label>
-                <input type="number" id="prog-weight" placeholder="0.0">
-            </div>
-
+            <div class="measure-item weight-hero"><label>Peso (kg)</label><input type="number" id="prog-weight" placeholder="0.0"></div>
             <div class="measure-grid">
                 <div class="measure-item"><label>Pecho (cm)</label><input type="number" id="prog-chest" placeholder="-"></div>
                 <div class="measure-item"><label>Cintura (cm)</label><input type="number" id="prog-waist" placeholder="-"></div>
@@ -386,7 +355,6 @@
                 <div class="measure-item"><label>Brazo (cm)</label><input type="number" id="prog-arm" placeholder="-"></div>
                 <div class="measure-item"><label>Muslo (cm)</label><input type="number" id="prog-thigh" placeholder="-"></div>
             </div>
-
             <button class="btn" onclick="saveProgress()">Guardar Registro</button>
             <button class="btn btn-outline" onclick="closeModal('progressModal')">Cancelar</button>
             <div style="height: 20px;"></div>
@@ -436,6 +404,7 @@
             timerInterval: null,
             timeLeft: 600, // Seconds
             isRunning: false,
+            lastTick: 0,
             // Config values
             cfgAmrap: 10, cfgForTimeCap: 0, cfgEmomTotal: 10,
             cfgTabataWork: 20, cfgTabataRest: 10, cfgTabataRounds: 8,
@@ -496,7 +465,6 @@
             if(state.currentUser && newName) {
                 state.currentUser.name = newName;
                 localStorage.setItem('kilo_current_user', JSON.stringify(state.currentUser));
-                // Update in users array too
                 const idx = state.users.findIndex(u => u.email === state.currentUser.email);
                 if(idx !== -1) { state.users[idx].name = newName; localStorage.setItem('kilo_users', JSON.stringify(state.users)); }
             }
@@ -617,7 +585,7 @@
             if(entry.weight || entry.chest) { state.progress.push(entry); localStorage.setItem('kilo_progress', JSON.stringify(state.progress)); if(entry.weight) { state.weight.push({date: new Date(), val: entry.weight}); localStorage.setItem('kilo_weight', JSON.stringify(state.weight)); } renderHome(); closeModal('progressModal'); }
         }
 
-        /* --- TIMER --- */
+        /* --- TIMER LOGIC (TIMESTAMP BASED) --- */
         function setTimerMode(mode, btn) {
             resetTimer(); state.timerMode = mode;
             document.querySelectorAll('#rest .chip').forEach(c => c.classList.remove('active')); if(btn) btn.classList.add('active');
@@ -629,19 +597,54 @@
             updateTimerDisplay();
         }
         function updateTabataUI() { const ind = document.getElementById('tabata-indicator'); const val = document.getElementById('timer-val'); ind.innerText = `Ronda ${state.tabataRound}/${state.cfgTabataRounds}`; if (state.tabataState === 'work') { ind.className = 'tabata-indicator tabata-work'; val.style.color = 'var(--primary-color)'; ind.innerText += " - WORK"; } else { ind.className = 'tabata-indicator tabata-rest'; val.style.color = 'var(--danger)'; ind.innerText += " - REST"; } }
+        
+        /* THE SLEEPING TIMER FIX (DELTA CORRECTION) */
         function toggleTimer() {
             const iconSvg = document.getElementById('timer-icon-svg').querySelector('path');
-            if(state.isRunning) { clearInterval(state.timerInterval); state.isRunning = false; iconSvg.setAttribute('d', 'M8 5V19L19 12L8 5Z'); } 
+            if(state.isRunning) { clearInterval(state.timerInterval); state.isRunning = false; iconSvg.setAttribute('d', 'M8 5V19L19 12L8 5Z'); document.querySelectorAll('.timer-input').forEach(i => i.disabled = false); } 
             else {
-                state.isRunning = true; iconSvg.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z');
+                state.isRunning = true; state.lastTick = Date.now();
+                iconSvg.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z');
                 document.querySelectorAll('.timer-input').forEach(i => i.disabled = true);
+                
                 state.timerInterval = setInterval(() => {
-                    if (state.timerMode === 'amrap') { if(state.timeLeft > 0) state.timeLeft--; else { resetTimer(); showCustomAlert("¡Tiempo!"); return; } } 
-                    else if (state.timerMode === 'fortime') { state.timeLeft++; if (state.cfgForTimeCap > 0 && state.timeLeft >= state.cfgForTimeCap * 60) { resetTimer(); showCustomAlert("Time Cap!"); return; } }
-                    else if (state.timerMode === 'emom') { state.timeLeft--; if (state.timeLeft < 0) { state.emomCurrentMinute++; if (state.emomCurrentMinute > state.cfgEmomTotal) { resetTimer(); showCustomAlert("EMOM Completado"); return; } state.timeLeft = 60; } document.getElementById('timer-status-label').innerText = `MINUTO ${state.emomCurrentMinute} / ${state.cfgEmomTotal}`; }
-                    else if (state.timerMode === 'tabata') { if (state.timeLeft > 0) { state.timeLeft--; } else { if (state.tabataState === 'work') { state.tabataState = 'rest'; state.timeLeft = state.cfgTabataRest; } else { state.tabataRound++; if (state.tabataRound > state.cfgTabataRounds) { resetTimer(); showCustomAlert("Tabata Terminado"); return; } state.tabataState = 'work'; state.timeLeft = state.cfgTabataWork; } updateTabataUI(); } }
+                    const now = Date.now();
+                    const delta = (now - state.lastTick) / 1000; // Seconds passed since last tick
+                    state.lastTick = now;
+
+                    if (state.timerMode === 'amrap') { 
+                        if(state.timeLeft > 0) state.timeLeft -= delta; 
+                        else { resetTimer(); showCustomAlert("¡Tiempo!"); return; } 
+                    } 
+                    else if (state.timerMode === 'fortime') { 
+                        state.timeLeft += delta; 
+                        if (state.cfgForTimeCap > 0 && state.timeLeft >= state.cfgForTimeCap * 60) { resetTimer(); showCustomAlert("Time Cap!"); return; } 
+                    }
+                    else if (state.timerMode === 'emom') { 
+                        state.timeLeft -= delta; 
+                        if (state.timeLeft < 0) { 
+                            state.emomCurrentMinute++; 
+                            if (state.emomCurrentMinute > state.cfgEmomTotal) { resetTimer(); showCustomAlert("EMOM Completado"); return; } 
+                            state.timeLeft = 60 + state.timeLeft; // Add negative remainder
+                        } 
+                        document.getElementById('timer-status-label').innerText = `MINUTO ${state.emomCurrentMinute} / ${state.cfgEmomTotal}`; 
+                    }
+                    else if (state.timerMode === 'tabata') { 
+                        state.timeLeft -= delta;
+                        if (state.timeLeft < 0) { 
+                            // Phase switch
+                            const remainder = state.timeLeft;
+                            if (state.tabataState === 'work') { state.tabataState = 'rest'; state.timeLeft = state.cfgTabataRest + remainder; } 
+                            else { 
+                                state.tabataRound++; 
+                                if (state.tabataRound > state.cfgTabataRounds) { resetTimer(); showCustomAlert("Tabata Terminado"); return; } 
+                                state.tabataState = 'work'; state.timeLeft = state.cfgTabataWork + remainder; 
+                            } 
+                            updateTabataUI(); 
+                        } 
+                    }
                     updateTimerDisplay();
-                }, 1000);
+                }, 100); // Check every 100ms for smoothness
             }
         }
         function resetTimer() {
@@ -654,7 +657,12 @@
             else if (state.timerMode === 'tabata') { state.timeLeft = state.cfgTabataWork; state.tabataRound = 1; state.tabataState = 'work'; updateTabataUI(); }
             updateTimerDisplay();
         }
-        function updateTimerDisplay() { let m = Math.floor(state.timeLeft / 60), s = state.timeLeft % 60; document.getElementById('timer-val').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`; }
+        function updateTimerDisplay() { 
+            let totalSeconds = Math.max(0, Math.ceil(state.timeLeft)); // Round up for display
+            if(state.timerMode === 'fortime') totalSeconds = Math.floor(state.timeLeft); // Round down for elapsed
+            let m = Math.floor(totalSeconds / 60), s = totalSeconds % 60; 
+            document.getElementById('timer-val').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`; 
+        }
     </script>
 </body>
 </html>
