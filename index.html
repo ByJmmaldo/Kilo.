@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KILO">
 
-    <link rel="icon" type="image/png" href="icon.png?v=6">
-    <link rel="apple-touch-icon" href="icon.png?v=6">
+    <link rel="icon" type="image/png" href="icon.png?v=7">
+    <link rel="apple-touch-icon" href="icon.png?v=7">
 
     <title>KILO App</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -46,6 +46,18 @@
             transition: border-color 0.3s;
         }
         input:focus { border-color: var(--primary-color); }
+
+        /* ELIMINAR FLECHAS DE INPUT NUMBER */
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
 
         /* INPUTS DE MEDIDAS (GRID) */
         .measure-grid {
