@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KILO">
 
-    <link rel="icon" type="image/png" href="icon.png?v=7">
-    <link rel="apple-touch-icon" href="icon.png?v=7">
+    <link rel="icon" type="image/png" href="icon.png?v=8">
+    <link rel="apple-touch-icon" href="icon.png?v=8">
 
     <title>KILO App</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -47,103 +47,50 @@
         }
         input:focus { border-color: var(--primary-color); }
 
-        /* ELIMINAR FLECHAS DE INPUT NUMBER */
-        /* Chrome, Safari, Edge, Opera */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        /* Firefox */
-        input[type=number] {
-            -moz-appearance: textfield;
-        }
+        /* ELIMINAR FLECHAS NUMÉRICAS */
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
 
-        /* INPUTS DE MEDIDAS (GRID) */
-        .measure-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;
-        }
-        .measure-item label {
-            display: block; color: var(--text-dim); font-size: 12px;
-            text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px;
-        }
+        /* ESTILOS ESPECÍFICOS */
+        .measure-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .measure-item label { display: block; color: var(--text-dim); font-size: 12px; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; }
         .measure-item input { text-align: center; font-weight: bold; font-size: 18px; }
         
-        /* El input de peso destaca más */
-        .weight-hero input {
-            background-color: #000 !important; border: 2px solid #333;
-            color: var(--primary-color) !important; font-size: 32px; height: 60px; text-align: center;
-        }
-
-        /* INPUT BUSCADOR */
+        .weight-hero input { background-color: #000 !important; border: 2px solid #333; color: var(--primary-color) !important; font-size: 32px; height: 60px; text-align: center; }
         #library-search, #selector-input { background-color: #111 !important; border-radius: 50px; padding-left: 20px; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            height: 100vh;
-            display: flex; flex-direction: column; overflow: hidden; overscroll-behavior-y: none;
-        }
-
-        /* UTILS */
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); height: 100vh; display: flex; flex-direction: column; overflow: hidden; overscroll-behavior-y: none; }
         .hidden { display: none !important; }
         .accent { color: var(--primary-color); }
 
-        /* SPLASH */
-        #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000000; z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
-            transition: opacity 0.8s ease-in-out, visibility 0.8s;
-        }
+        /* SPLASH & AUTH */
+        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000000; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.8s ease-in-out, visibility 0.8s; }
         .splash-logo { font-size: 60px; font-weight: 900; color: var(--primary-color); letter-spacing: -2px; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.8; } 100% { opacity: 1; } }
         .fade-out { opacity: 0; visibility: hidden; }
-
         .auth-container { padding: 40px 30px; display: flex; flex-direction: column; justify-content: center; height: 100%; background: radial-gradient(circle at top right, rgba(0, 255, 148, 0.1), transparent 40%); }
 
-        /* UI ELEMENTS */
+        /* UI BASE */
         h1 { font-size: 28px; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; }
         h2 { font-size: 14px; font-weight: 700; margin: 25px 0 10px 0; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
-        
-        .screen {
-            flex: 1; overflow-y: auto; 
-            padding: calc(20px + var(--safe-top)) 20px calc(var(--nav-height) + 20px + var(--safe-bottom)) 20px;
-            display: none; opacity: 0; transform: translateY(10px);
-            transition: opacity 0.3s ease, transform 0.3s ease; -webkit-overflow-scrolling: touch;
-        }
+        .screen { flex: 1; overflow-y: auto; padding: calc(20px + var(--safe-top)) 20px calc(var(--nav-height) + 20px + var(--safe-bottom)) 20px; display: none; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; -webkit-overflow-scrolling: touch; }
         .screen.active { display: block; opacity: 1; transform: translateY(0); }
         .screen::-webkit-scrollbar { display: none; }
 
-        .card {
-            background-color: var(--card-color); border-radius: 16px; padding: 20px;
-            margin-bottom: 15px; cursor: pointer; border: 1px solid transparent;
-            transition: transform 0.1s, background-color 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2); position: relative;
-        }
+        .card { background-color: var(--card-color); border-radius: 16px; padding: 20px; margin-bottom: 15px; cursor: pointer; border: 1px solid transparent; transition: transform 0.1s, background-color 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2); position: relative; }
         .card:active { transform: scale(0.97); background-color: #252527; }
 
-        /* Stats Grid */
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
         .stat-box { background: #222; border-radius: 8px; padding: 8px; text-align: center; }
         .stat-label { font-size: 10px; color: #888; text-transform: uppercase; }
         .stat-val { font-size: 14px; font-weight: bold; color: white; }
 
-        .folder-card {
-            background-color: #1C1C1E; border: 1px solid #333; border-radius: 16px;
-            padding: 30px 20px; margin-bottom: 15px; cursor: pointer;
-            display: flex; align-items: center; justify-content: space-between;
-        }
+        .folder-card { background-color: #1C1C1E; border: 1px solid #333; border-radius: 16px; padding: 30px 20px; margin-bottom: 15px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
         .folder-card:active { background-color: #252527; }
         .folder-title { font-size: 18px; font-weight: 700; color: #FFF; }
         .folder-subtitle { color: var(--text-dim); font-size: 12px; margin-top: 4px; }
 
-        .btn {
-            background-color: var(--primary-color); color: #000; border: none;
-            padding: 16px; width: 100%; border-radius: 14px; font-weight: 800;
-            font-size: 15px; cursor: pointer; margin-top: 10px; text-align: center;
-            text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(0, 255, 148, 0.2);
-        }
+        .btn { background-color: var(--primary-color); color: #000; border: none; padding: 16px; width: 100%; border-radius: 14px; font-weight: 800; font-size: 15px; cursor: pointer; margin-top: 10px; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(0, 255, 148, 0.2); }
         .btn:active { opacity: 0.8; transform: scale(0.98); }
         .btn-outline { background-color: transparent; border: 1px solid #444; color: var(--text-color); }
         .btn-text { background: none; border: none; color: var(--primary-color); font-weight: bold; cursor: pointer; padding: 10px; }
@@ -154,15 +101,16 @@
         .input-mini { width: 70px; text-align: center; background: #1a1a1a !important; padding: 10px; border-radius: 8px; border: 1px solid #333; color: white !important; outline: none; }
         .input-mini:focus { border-color: var(--primary-color); }
 
-        .delete-btn {
-            position: absolute; top: 10px; right: 10px;
-            background: rgba(20, 20, 20, 0.95); border: 1px solid var(--danger);
-            color: var(--danger); border-radius: 50%; width: 44px; height: 44px; 
-            display: flex; align-items: center; justify-content: center;
-            z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.5); transition: transform 0.1s;
-        }
+        .delete-btn { position: absolute; top: 10px; right: 10px; background: rgba(20, 20, 20, 0.95); border: 1px solid var(--danger); color: var(--danger); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.5); transition: transform 0.1s; }
         .delete-btn:active { background: var(--danger); color: white; transform: scale(0.9); }
 
+        /* CALCULADORA 1RM STYLES */
+        .rm-grid { display: flex; gap: 15px; margin-bottom: 20px; }
+        .rm-result { text-align: center; margin: 20px 0; padding: 20px; background: #000; border-radius: 16px; border: 1px solid #333; }
+        .rm-value { font-size: 48px; font-weight: 900; color: var(--primary-color); line-height: 1; }
+        .rm-label { font-size: 12px; text-transform: uppercase; color: #666; margin-top: 5px; }
+
+        /* TIMER STYLES */
         .timer-display { font-size: 90px; font-weight: 800; color: var(--primary-color); font-variant-numeric: tabular-nums; text-align: center; margin: 20px 0; text-shadow: 0 0 20px rgba(0, 255, 148, 0.3); line-height: 1; }
         .timer-label { text-align: center; color: var(--text-dim); text-transform: uppercase; font-size: 14px; letter-spacing: 2px; }
         .timer-config { display: flex; gap: 10px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
@@ -175,38 +123,15 @@
         .tabata-rest { color: var(--danger); border: 1px solid var(--danger); }
 
         /* MODALS */
-        .modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 2000; display: none;
-            justify-content: center; align-items: flex-end; backdrop-filter: blur(8px);
-        }
-        .modal-content {
-            background: #1C1C1E; width: 100%; 
-            padding: 25px 20px calc(20px + var(--safe-bottom)) 20px;
-            border-radius: 24px 24px 0 0; animation: slideUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-            max-height: 90vh; display: flex; flex-direction: column;
-            border-top: 1px solid #333;
-        }
-        /* CUSTOM DIALOG STYLE (Centrado) */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: flex-end; backdrop-filter: blur(8px); }
+        .modal-content { background: #1C1C1E; width: 100%; padding: 25px 20px calc(20px + var(--safe-bottom)) 20px; border-radius: 24px 24px 0 0; animation: slideUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); max-height: 90vh; display: flex; flex-direction: column; border-top: 1px solid #333; }
         .dialog-centered { align-items: center !important; }
-        .dialog-box {
-            background: #1C1C1E; border: 1px solid #333; width: 85%; max-width: 320px;
-            padding: 30px 25px; border-radius: 24px; text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5); animation: popIn 0.2s ease-out;
-        }
+        .dialog-box { background: #1C1C1E; border: 1px solid #333; width: 85%; max-width: 320px; padding: 30px 25px; border-radius: 24px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5); animation: popIn 0.2s ease-out; }
         @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
         .modal-body { overflow-y: auto; flex: 1; margin-top: 15px; }
         .search-result-item { padding: 18px 10px; border-bottom: 1px solid #2a2a2a; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
 
-        .bottom-nav {
-            position: fixed; bottom: 0; width: 100%; 
-            height: calc(var(--nav-height) + var(--safe-bottom));
-            background-color: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px);
-            border-top: 1px solid #222; display: flex; justify-content: space-around;
-            align-items: flex-start; z-index: 100; 
-            padding-top: 10px; padding-bottom: var(--safe-bottom);
-        }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; height: calc(var(--nav-height) + var(--safe-bottom)); background-color: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); border-top: 1px solid #222; display: flex; justify-content: space-around; align-items: flex-start; z-index: 100; padding-top: 10px; padding-bottom: var(--safe-bottom); }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: #666; font-size: 10px; background: none; border: none; cursor: pointer; transition: color 0.2s; width: 20%; }
         .nav-item i { font-size: 24px; margin-bottom: 4px; }
         .nav-item.active { color: var(--primary-color); }
@@ -250,8 +175,8 @@
     <div id="home" class="screen">
         <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; margin-top: 10px;">
             <div><h1 class="accent">KILO.</h1><p>Hola, <span id="user-name-display" style="color:white; font-weight:bold;">Atleta</span></p></div>
-            <div onclick="handleLogout()" style="width: 40px; height: 40px; background: #222; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid #333;">
-                <i class="ph ph-sign-out" style="font-size: 20px; color: var(--danger);"></i>
+            <div onclick="navTo('profile')" style="width: 40px; height: 40px; background: #222; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid #333;">
+                <i class="ph ph-user" style="font-size: 20px; color: var(--primary-color);"></i>
             </div>
         </header>
 
@@ -283,6 +208,52 @@
             <div class="stats-grid" id="home-stats-display">
                 </div>
         </div>
+    </div>
+
+    <div id="profile" class="screen">
+        <h1 style="margin-top: 10px;">Tu Perfil</h1>
+        
+        <div class="card">
+            <h3 style="margin-bottom: 15px; color: white;">Datos Personales</h3>
+            <div class="measure-item">
+                <label>Tu Nombre</label>
+                <input type="text" id="profile-name-input" onchange="updateUserName(this.value)">
+            </div>
+        </div>
+
+        <h2>Calculadora 1RM</h2>
+        <div class="card">
+            <p style="color: #888; font-size: 12px; margin-bottom: 15px;">Estima tu repetición máxima teórica.</p>
+            <div class="measure-grid">
+                <div class="measure-item">
+                    <label>Peso (kg)</label>
+                    <input type="number" id="rm-weight" placeholder="0" onkeyup="calcRM()">
+                </div>
+                <div class="measure-item">
+                    <label>Repeticiones</label>
+                    <input type="number" id="rm-reps" placeholder="0" onkeyup="calcRM()">
+                </div>
+            </div>
+            <div class="rm-result">
+                <div class="rm-value" id="rm-display">0</div>
+                <div class="rm-label">KG (Estimado)</div>
+            </div>
+        </div>
+
+        <h2>Seguridad de Datos</h2>
+        <div class="card">
+            <p style="color: #888; font-size: 12px; margin-bottom: 15px;">Guarda tus entrenos en un archivo o recupéralos.</p>
+            <button class="btn" onclick="exportBackup()">📥 Exportar Copia</button>
+            <div style="position:relative; margin-top:10px;">
+                <button class="btn btn-outline">📤 Importar Copia</button>
+                <input type="file" id="import-file" onchange="importBackup(this)" style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer;">
+            </div>
+        </div>
+
+        <button class="btn btn-outline" style="margin-top: 40px; border-color: var(--danger); color: var(--danger);" onclick="showCustomConfirm('¿Cerrar sesión?', handleLogout)">
+            <i class="ph ph-sign-out"></i> Cerrar Sesión
+        </button>
+        <div style="height: 50px;"></div>
     </div>
 
     <div id="train" class="screen">
@@ -484,7 +455,12 @@
         /* --- AUTH --- */
         function showLogin() { hideAllScreens(); document.getElementById('login-screen').classList.add('active'); }
         function showRegister() { hideAllScreens(); document.getElementById('register-screen').classList.add('active'); }
-        function showHome() { hideAllScreens(); document.getElementById('home').classList.add('active'); document.getElementById('main-nav').style.display = 'flex'; document.getElementById('user-name-display').innerText = state.currentUser.name; renderHome(); }
+        function showHome() { 
+            hideAllScreens(); document.getElementById('home').classList.add('active'); document.getElementById('main-nav').style.display = 'flex'; 
+            document.getElementById('user-name-display').innerText = state.currentUser.name; 
+            document.getElementById('profile-name-input').value = state.currentUser.name;
+            renderHome(); 
+        }
         function hideAllScreens() { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById('main-nav').style.display = 'none'; }
         function handleRegister() { const name=document.getElementById('reg-name').value, email=document.getElementById('reg-email').value, pass=document.getElementById('reg-pass').value; if(!name||!email||!pass)return showCustomAlert("Rellena todos los campos"); if(state.users.find(u=>u.email===email))return showCustomAlert("El correo ya existe"); const n={name,email,pass}; state.users.push(n); localStorage.setItem('kilo_users',JSON.stringify(state.users)); state.currentUser=n; localStorage.setItem('kilo_current_user',JSON.stringify(n)); showHome(); }
         function handleLogin() { const email=document.getElementById('login-email').value, pass=document.getElementById('login-pass').value; const u=state.users.find(x=>x.email===email&&x.pass===pass); if(u){state.currentUser=u;localStorage.setItem('kilo_current_user',JSON.stringify(u));showHome();}else showCustomAlert("Credenciales incorrectas"); }
@@ -513,6 +489,50 @@
             const lastEntry = state.progress[state.progress.length - 1] || {};
             const weightVal = lastEntry.weight || (state.weight[state.weight.length-1]?.val) || '--';
             document.getElementById('home-stats-display').innerHTML = `<div class="stat-box"><div class="stat-label">Peso</div><div class="stat-val">${weightVal}</div></div><div class="stat-box"><div class="stat-label">Cintura</div><div class="stat-val">${lastEntry.waist || '--'}</div></div><div class="stat-box"><div class="stat-label">Pecho</div><div class="stat-val">${lastEntry.chest || '--'}</div></div><div class="stat-box"><div class="stat-label">Cadera</div><div class="stat-val">${lastEntry.hips || '--'}</div></div><div class="stat-box"><div class="stat-label">Brazo</div><div class="stat-val">${lastEntry.arm || '--'}</div></div><div class="stat-box"><div class="stat-label">Muslo</div><div class="stat-val">${lastEntry.thigh || '--'}</div></div>`;
+        }
+
+        /* --- PROFILE FUNCTIONS --- */
+        function updateUserName(newName) {
+            if(state.currentUser && newName) {
+                state.currentUser.name = newName;
+                localStorage.setItem('kilo_current_user', JSON.stringify(state.currentUser));
+                // Update in users array too
+                const idx = state.users.findIndex(u => u.email === state.currentUser.email);
+                if(idx !== -1) { state.users[idx].name = newName; localStorage.setItem('kilo_users', JSON.stringify(state.users)); }
+            }
+        }
+        function calcRM() {
+            const w = parseFloat(document.getElementById('rm-weight').value) || 0;
+            const r = parseFloat(document.getElementById('rm-reps').value) || 0;
+            if(w > 0 && r > 0) {
+                const rm = Math.round(w * (1 + r/30));
+                document.getElementById('rm-display').innerText = rm;
+            } else {
+                document.getElementById('rm-display').innerText = "0";
+            }
+        }
+        function exportBackup() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(localStorage));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "kilo_backup.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+        function importBackup(input) {
+            const file = input.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    Object.keys(data).forEach(k => localStorage.setItem(k, data[k]));
+                    showCustomAlert("Datos importados correctamente. Se recargará la app.");
+                    setTimeout(() => location.reload(), 2000);
+                } catch(err) { showCustomAlert("Error al importar el archivo."); }
+            };
+            reader.readAsText(file);
         }
 
         /* --- DIALOGS (CUSTOM) --- */
