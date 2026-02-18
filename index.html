@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KILO">
 
-    <link rel="icon" type="image/png" href="icon.png?v=11">
-    <link rel="apple-touch-icon" href="icon.png?v=11">
+    <link rel="icon" type="image/png" href="icon.png?v=12">
+    <link rel="apple-touch-icon" href="icon.png?v=12">
 
     <title>KILO App</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -24,7 +24,7 @@
             --text-color: #FFFFFF;
             --text-dim: #8E8E93;
             --danger: #FF453A;
-            --nav-height: 65px;
+            --nav-height: 75px; /* Más altura para la barra */
             --safe-top: env(safe-area-inset-top);
             --safe-bottom: env(safe-area-inset-bottom);
         }
@@ -50,10 +50,7 @@
         input:focus, textarea:focus { border-color: var(--primary-color); }
         
         input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0; 
-        }
+        input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
         /* ESTILOS ESPECÍFICOS */
         .measure-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
@@ -107,14 +104,34 @@
         .rm-result { text-align: center; margin: 20px 0; padding: 20px; background: #000; border-radius: 16px; border: 1px solid #333; }
         .rm-value { font-size: 48px; font-weight: 900; color: var(--primary-color); line-height: 1; }
 
-        .timer-display { font-size: 90px; font-weight: 800; color: var(--primary-color); font-variant-numeric: tabular-nums; text-align: center; margin: 20px 0; text-shadow: 0 0 20px rgba(0, 255, 148, 0.3); line-height: 1; }
-        .timer-config { display: flex; gap: 10px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
+        /* TIMER STYLES REFINED */
+        .timer-display { 
+            font-size: 90px; font-weight: 800; color: var(--primary-color); 
+            font-variant-numeric: tabular-nums; text-align: center; 
+            margin: 20px 0; 
+            text-shadow: 0 0 20px rgba(0, 255, 148, 0.3); 
+            line-height: 1;
+        }
+        .timer-config { 
+            display: flex; gap: 15px; justify-content: center; margin: 30px 0 20px 0; 
+        }
         .timer-input-group { display: flex; flex-direction: column; align-items: center; }
-        .timer-input { width: 80px; background: #222 !important; border: 1px solid #444; color: white !important; text-align: center; padding: 10px; border-radius: 10px; font-size: 18px; font-weight: bold; }
+        .timer-input-group label { font-size: 11px; color: #888; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
+        .timer-input { 
+            width: 80px; background: #1C1C1E !important; 
+            border: 1px solid #444; color: white !important; 
+            text-align: center; padding: 12px; border-radius: 12px; 
+            font-size: 20px; font-weight: bold; 
+        }
         .timer-input:focus { border-color: var(--primary-color); outline: none; }
-        .tabata-indicator { font-size: 24px; text-align: center; font-weight: bold; margin-bottom: 10px; padding: 10px; border-radius: 8px; background: #111; }
-        .tabata-work { color: var(--primary-color); border: 1px solid var(--primary-color); }
-        .tabata-rest { color: var(--danger); border: 1px solid var(--danger); }
+        
+        .tabata-indicator { 
+            font-size: 18px; text-align: center; font-weight: bold; 
+            margin-bottom: 15px; padding: 8px 20px; border-radius: 20px; 
+            background: #111; display: inline-block;
+        }
+        .tabata-work { color: var(--primary-color); border: 1px solid var(--primary-color); background: rgba(0,255,148,0.1); }
+        .tabata-rest { color: var(--danger); border: 1px solid var(--danger); background: rgba(255,69,58,0.1); }
 
         /* MODALS */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: flex-end; backdrop-filter: blur(8px); }
@@ -128,9 +145,36 @@
         .dialog-box { background: #1C1C1E; border: 1px solid #333; width: 85%; max-width: 320px; padding: 30px 25px; border-radius: 24px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5); animation: popIn 0.2s ease-out; }
         .search-result-item { padding: 18px 10px; border-bottom: 1px solid #2a2a2a; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
 
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; height: calc(var(--nav-height) + var(--safe-bottom)); background-color: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); border-top: 1px solid #222; display: flex; justify-content: space-around; align-items: flex-start; z-index: 100; padding-top: 10px; padding-bottom: var(--safe-bottom); }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #666; font-size: 10px; background: none; border: none; cursor: pointer; transition: color 0.2s; width: 20%; }
+        /* NAVIGATION BAR - MEJORADA */
+        .bottom-nav { 
+            position: fixed; bottom: 0; width: 100%; 
+            height: calc(var(--nav-height) + var(--safe-bottom));
+            background-color: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); 
+            border-top: 1px solid #222; display: flex; justify-content: space-around; 
+            align-items: flex-start; z-index: 100; 
+            padding-top: 12px; padding-bottom: var(--safe-bottom);
+        }
+        .nav-item { 
+            display: flex; flex-direction: column; align-items: center; 
+            color: #666; background: none; border: none; cursor: pointer; 
+            width: 20%; 
+            transition: color 0.2s;
+        }
+        .nav-item i { 
+            font-size: 28px; /* Iconos más grandes */
+            margin-bottom: 5px; 
+            transition: transform 0.2s, text-shadow 0.2s;
+        }
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 500;
+        }
         .nav-item.active { color: var(--primary-color); }
+        .nav-item.active i { 
+            transform: translateY(-2px);
+            text-shadow: 0 0 12px rgba(0, 255, 148, 0.5); /* Glow effect */
+        }
+
         .chips { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; margin-bottom: 10px; scrollbar-width: none; }
         .chip { padding: 8px 18px; background: #222; border-radius: 20px; white-space: nowrap; font-size: 13px; color: #888; border: 1px solid transparent; }
         .chip.active { background: rgba(0, 255, 148, 0.1); color: var(--primary-color); border-color: var(--primary-color); font-weight: bold; }
@@ -146,8 +190,6 @@
     <div id="login-screen" class="screen">
         <div class="auth-container">
             <h1 style="font-size: 48px; color: var(--primary-color); text-align: center; margin-bottom: 30px;">KILO.</h1>
-            <div style="font-size: 36px; font-weight: 900; color: var(--primary-color); margin-bottom: 10px;">Bienvenido</div>
-            <p style="color: var(--text-dim); margin-bottom: 40px;">Inicia sesión para entrenar.</p>
             <input type="email" id="login-email" class="auth-input" placeholder="Correo electrónico" style="margin-bottom:15px;">
             <input type="password" id="login-pass" class="auth-input" placeholder="Contraseña">
             <button class="btn" onclick="handleLogin()">INICIAR SESIÓN</button>
@@ -260,15 +302,17 @@
         </div>
         <div id="timer-ui-container">
             <div id="config-panel" class="timer-config"></div>
-            <p class="timer-label" id="timer-status-label">LISTO</p>
-            <div id="tabata-indicator" class="tabata-indicator hidden">ROUND 1/8</div>
+            <div style="text-align: center; min-height: 30px;">
+                <p class="timer-label" id="timer-status-label">LISTO</p>
+                <div id="tabata-indicator" class="tabata-indicator hidden">ROUND 1/8</div>
+            </div>
             <div class="timer-display" id="timer-val">00:00</div>
             <div style="display: flex; gap: 20px; justify-content: center; margin-bottom: 40px;">
-                <button class="btn" style="width: 90px; height: 90px; border-radius: 50%; padding: 0; display:flex; align-items:center; justify-content:center;" onclick="toggleTimer()">
-                    <svg id="timer-icon-svg" width="36" height="36" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" /></svg>
+                <button class="btn" style="width: 100px; height: 100px; border-radius: 50%; padding: 0; display:flex; align-items:center; justify-content:center; box-shadow: 0 0 25px rgba(0,255,148,0.3);" onclick="toggleTimer()">
+                    <svg id="timer-icon-svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" /></svg>
                 </button>
-                <button class="btn btn-outline" style="width: 90px; height: 90px; border-radius: 50%; border-color: #333; display: flex; align-items: center; justify-content: center;" onclick="resetTimer()">
-                    <i class="ph ph-arrow-counter-clockwise" style="font-size: 32px;"></i>
+                <button class="btn btn-outline" style="width: 100px; height: 100px; border-radius: 50%; border-color: #333; display: flex; align-items: center; justify-content: center;" onclick="resetTimer()">
+                    <i class="ph ph-arrow-counter-clockwise" style="font-size: 36px;"></i>
                 </button>
             </div>
         </div>
@@ -322,11 +366,11 @@
     <div id="customDialog" class="modal dialog-centered"><div class="dialog-box"><h2 id="dialog-title" style="margin-bottom: 10px; color: var(--primary-color);">KILO.</h2><p id="dialog-msg" style="color: #ccc; margin-bottom: 25px;">Mensaje</p><div style="display: flex; gap: 10px;"><button id="dialog-cancel" class="btn btn-outline" onclick="closeDialog()">Cancelar</button><button id="dialog-confirm" class="btn">Aceptar</button></div></div></div>
 
     <nav class="bottom-nav" id="main-nav" style="display:none;">
-        <button class="nav-item active" onclick="navTo('home')"><i class="ph ph-house"></i> Inicio</button>
-        <button class="nav-item" onclick="navTo('train')"><i class="ph ph-barbell"></i> Entrenar</button>
-        <button class="nav-item" onclick="navTo('history')"><i class="ph ph-calendar-check"></i> Historial</button>
-        <button class="nav-item" onclick="navTo('rest')"><i class="ph ph-timer"></i> Reloj</button>
-        <button class="nav-item" onclick="navTo('exercises')"><i class="ph ph-list-dashes"></i> Ejercicios</button>
+        <button class="nav-item active" onclick="navTo('home')"><i class="ph ph-house"></i><span>Inicio</span></button>
+        <button class="nav-item" onclick="navTo('train')"><i class="ph ph-barbell"></i><span>Entrenar</span></button>
+        <button class="nav-item" onclick="navTo('history')"><i class="ph ph-calendar-check"></i><span>Historial</span></button>
+        <button class="nav-item" onclick="navTo('rest')"><i class="ph ph-timer"></i><span>Reloj</span></button>
+        <button class="nav-item" onclick="navTo('exercises')"><i class="ph ph-list-dashes"></i><span>Ejercicios</span></button>
     </nav>
 
     <script>
@@ -408,7 +452,7 @@
                 <div class="modal-header">
                     <h2 style="color:var(--primary-color); font-size:24px; margin:0;">${w.name}</h2>
                     <div style="display:flex; gap:10px;">
-                        <button class="btn-outline" style="border:none; padding:5px;" onclick="shareWorkout(\`${shareText}\`)"><i class="ph ph-share-network" style="font-size:24px; color:white;"></i></button>
+                        <button class="modal-close-icon" onclick="shareWorkout(\`${shareText}\`)"><i class="ph ph-share-network" style="font-size:20px;"></i></button>
                         <button class="modal-close-icon" onclick="closeModal('workoutDetailModal')"><i class="ph ph-x" style="font-size:20px;"></i></button>
                     </div>
                 </div>
