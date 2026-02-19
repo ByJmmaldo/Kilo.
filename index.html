@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KILO">
 
-    <link rel="icon" type="image/png" href="icon.png?v=13">
-    <link rel="apple-touch-icon" href="icon.png?v=13">
+    <link rel="icon" type="image/png" href="icon.png?v=14">
+    <link rel="apple-touch-icon" href="icon.png?v=14">
 
     <title>KILO App</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -32,7 +32,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
         
         /* INPUTS - ELIMINAR FLECHAS Y ESTILO DARK */
-        input, textarea { 
+        input, textarea, select { 
             user-select: text; 
             background-color: #252527 !important; 
             border: 1px solid #333; 
@@ -47,10 +47,8 @@
             transition: border-color 0.3s;
             font-family: 'Inter', sans-serif;
         }
-        input:focus, textarea:focus { border-color: var(--primary-color); }
-        
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        input:focus, textarea:focus, select:focus { border-color: var(--primary-color); }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
         /* ESTILOS ESPECÍFICOS */
         .measure-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
@@ -75,11 +73,26 @@
         h1 { font-size: 28px; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; }
         h2 { font-size: 14px; font-weight: 700; margin: 25px 0 10px 0; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
         
+        /* PANTALLAS */
         .screen { flex: 1; overflow-y: auto; padding: calc(20px + var(--safe-top)) 20px calc(var(--nav-height) + 20px + var(--safe-bottom)) 20px; display: none; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; -webkit-overflow-scrolling: touch; height: 100%; }
         .screen.active { display: block; opacity: 1; transform: translateY(0); }
         
-        /* FIX PARA CENTRAR EL RELOJ SIN AFECTAR AL RESTO */
-        #rest.screen.active { display: flex !important; flex-direction: column; }
+        /* CENTRADO PERFECTO SOLO PARA EL RELOJ */
+        #rest.screen.active { 
+            display: flex !important; 
+            flex-direction: column; 
+            justify-content: center; /* Centrado vertical absoluto */
+            align-items: center;     /* Centrado horizontal */
+            padding-bottom: calc(var(--nav-height) + 20px); /* Compensa visualmente la navbar */
+        }
+        
+        .timer-container-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: -5vh; /* Pequeño ajuste óptico para quedar perfecto */
+        }
 
         .card { background-color: var(--card-color); border-radius: 16px; padding: 20px; margin-bottom: 15px; cursor: pointer; border: 1px solid transparent; transition: transform 0.1s, background-color 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2); position: relative; }
         .card:active { transform: scale(0.97); background-color: #252527; }
@@ -109,16 +122,50 @@
         .rm-result { text-align: center; margin: 20px 0; padding: 20px; background: #000; border-radius: 16px; border: 1px solid #333; }
         .rm-value { font-size: 48px; font-weight: 900; color: var(--primary-color); line-height: 1; }
 
+        /* NUEVO SELECTOR DESPLEGABLE PARA EL RELOJ */
+        .timer-select-wrapper {
+            position: relative;
+            width: 200px;
+            margin-bottom: 20px;
+        }
+        .timer-select-wrapper select {
+            width: 100%;
+            background-color: #111 !important;
+            border: 1px solid #333;
+            color: var(--primary-color) !important;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 14px 40px 14px 20px;
+            border-radius: 30px;
+            text-align: center;
+            text-align-last: center; /* Centra el texto seleccionado */
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .timer-select-wrapper select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(0, 255, 148, 0.2);
+        }
+        .timer-select-wrapper i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            pointer-events: none;
+            font-size: 20px;
+        }
+
         /* TIMER STYLES REFINED */
         .timer-display { 
-            font-size: clamp(70px, 22vw, 95px); /* Dinámico y siempre perfecto */
+            font-size: clamp(70px, 22vw, 95px); 
             font-weight: 800; color: var(--primary-color); 
             font-variant-numeric: tabular-nums; text-align: center; 
             margin: 10px 0 30px 0; 
             text-shadow: 0 0 30px rgba(0, 255, 148, 0.25); 
             line-height: 1;
         }
-        .timer-config { display: flex; gap: 15px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
+        .timer-config { display: flex; gap: 15px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
         .timer-input-group { display: flex; flex-direction: column; align-items: center; }
         .timer-input-group label { font-size: 11px; color: #666; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
         .timer-input { width: 80px; background: #1C1C1E !important; border: 1px solid #333; color: white !important; text-align: center; padding: 12px; border-radius: 14px; font-size: 22px; font-weight: bold; }
@@ -138,8 +185,8 @@
         .dialog-centered { align-items: center !important; }
         .dialog-box { background: #1C1C1E; border: 1px solid #333; width: 85%; max-width: 320px; padding: 30px 25px; border-radius: 24px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5); animation: popIn 0.2s ease-out; }
         .search-result-item { padding: 18px 10px; border-bottom: 1px solid #2a2a2a; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-
-        /* NAV */
+        
+        /* NAV - CHUNKY STYLE */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; height: calc(var(--nav-height) + var(--safe-bottom)); background-color: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); border-top: 1px solid #222; display: flex; justify-content: space-around; align-items: flex-start; z-index: 100; padding-top: 12px; padding-bottom: var(--safe-bottom); }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: #666; background: none; border: none; cursor: pointer; width: 20%; transition: color 0.2s; }
         .nav-item i { font-size: 28px; margin-bottom: 5px; transition: transform 0.2s, text-shadow 0.2s; }
@@ -147,9 +194,9 @@
         .nav-item.active { color: var(--primary-color); }
         .nav-item.active i { transform: translateY(-2px); text-shadow: 0 0 15px rgba(0, 255, 148, 0.4); }
 
-        .chips { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; margin-bottom: 10px; scrollbar-width: none; }
-        .chip { padding: 8px 18px; background: #222; border-radius: 20px; white-space: nowrap; font-size: 13px; color: #888; border: 1px solid transparent; }
-        .chip.active { background: rgba(0, 255, 148, 0.1); color: var(--primary-color); border-color: var(--primary-color); font-weight: bold; }
+        .chips { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; margin-bottom: 20px; scrollbar-width: none; width: 100%; justify-content: center; }
+        .chip { padding: 10px 20px; background: #1C1C1E; border-radius: 30px; white-space: nowrap; font-size: 14px; color: #888; border: 1px solid #333; transition: all 0.2s; }
+        .chip.active { background: rgba(0, 255, 148, 0.1); color: var(--primary-color); border-color: var(--primary-color); font-weight: bold; transform: scale(1.05); }
 
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -267,24 +314,28 @@
     </div>
 
     <div id="rest" class="screen">
-        <div class="chips" style="justify-content: center; flex-shrink: 0; margin-bottom: 0;">
-            <div class="chip active" onclick="setTimerMode('amrap', this)">AMRAP</div>
-            <div class="chip" onclick="setTimerMode('fortime', this)">For Time</div>
-            <div class="chip" onclick="setTimerMode('emom', this)">EMOM</div>
-            <div class="chip" onclick="setTimerMode('tabata', this)">Tabata</div>
-        </div>
-        
-        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; margin-top: -30px;">
+        <div class="timer-container-wrapper">
+            
+            <div class="timer-select-wrapper">
+                <select id="timer-mode-select" onchange="setTimerMode(this.value)">
+                    <option value="amrap">AMRAP</option>
+                    <option value="fortime">For Time</option>
+                    <option value="emom">EMOM</option>
+                    <option value="tabata">Tabata</option>
+                </select>
+                <i class="ph ph-caret-down"></i>
+            </div>
+
             <div id="config-panel" class="timer-config"></div>
             
-            <div style="text-align: center; min-height: 40px; margin-bottom: 10px;">
+            <div style="text-align: center; min-height: 40px; margin-bottom: 5px;">
                 <p class="timer-label" id="timer-status-label">LISTO</p>
                 <div id="tabata-indicator" class="tabata-indicator hidden">ROUND 1/8</div>
             </div>
             
             <div class="timer-display" id="timer-val">00:00</div>
             
-            <div style="display: flex; gap: 25px; justify-content: center; margin-top: 20px;">
+            <div style="display: flex; gap: 25px; justify-content: center; margin-top: 10px;">
                 <button class="btn" style="width: 90px; height: 90px; border-radius: 50%; padding: 0; display:flex; align-items:center; justify-content:center; box-shadow: 0 0 30px rgba(0,255,148,0.25);" onclick="toggleTimer()">
                     <svg id="timer-icon-svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" /></svg>
                 </button>
@@ -371,7 +422,7 @@
         };
 
         window.onload = () => {
-            setTimeout(() => { document.getElementById('splash-screen').classList.add('fade-out'); setTimeout(() => document.getElementById('splash-screen').style.display='none',800); if(state.currentUser) showHome(); else showLogin(); setTimerMode('amrap',document.querySelector('.chip.active')); }, 1500);
+            setTimeout(() => { document.getElementById('splash-screen').classList.add('fade-out'); setTimeout(() => document.getElementById('splash-screen').style.display='none',800); if(state.currentUser) showHome(); else showLogin(); setTimerMode('amrap'); }, 1500);
         };
 
         /* AUTH & NAV */
@@ -461,17 +512,21 @@
         function closeModal(id) { document.getElementById(id).style.display='none'; }
         function saveProgress() { const e={date:new Date(), weight:document.getElementById('prog-weight').value, chest:document.getElementById('prog-chest').value, waist:document.getElementById('prog-waist').value, hips:document.getElementById('prog-hips').value, arm:document.getElementById('prog-arm').value, thigh:document.getElementById('prog-thigh').value}; if(e.weight||e.chest){state.progress.push(e); localStorage.setItem('kilo_progress',JSON.stringify(state.progress)); if(e.weight){state.weight.push({date:e.date,val:e.weight}); localStorage.setItem('kilo_weight',JSON.stringify(state.weight));} renderHome(); closeModal('progressModal');} }
 
-        /* TIMER LOGIC */
-        function setTimerMode(m,b) {
-            resetTimer(); state.timerMode=m; document.querySelectorAll('#rest .chip').forEach(c=>c.classList.remove('active')); if(b)b.classList.add('active'); const p=document.getElementById('config-panel'); const l=document.getElementById('timer-status-label'); document.getElementById('tabata-indicator').classList.add('hidden');
-            if(m==='amrap') { l.innerText="CUENTA ATRÁS"; p.innerHTML=`<div class="timer-input-group"><label>Min</label><input type="number" class="timer-input" value="${state.cfgAmrap}" onchange="state.cfgAmrap=this.value; resetTimer()"></div>`; state.initialDuration=state.cfgAmrap*60; state.timeLeft=state.initialDuration; }
-            else if(m==='fortime') { l.innerText="CRONÓMETRO"; p.innerHTML=`<div class="timer-input-group"><label>Cap</label><input type="number" class="timer-input" value="${state.cfgForTimeCap}" placeholder="0" onchange="state.cfgForTimeCap=this.value; resetTimer()"></div>`; state.timeLeft=0; }
-            else if(m==='emom') { l.innerText="EMOM"; p.innerHTML=`<div class="timer-input-group"><label>Min</label><input type="number" class="timer-input" value="${state.cfgEmomTotal}" onchange="state.cfgEmomTotal=this.value; resetTimer()"></div>`; state.initialDuration=60; state.timeLeft=60; state.emomCurrentMinute=1; }
-            else if(m==='tabata') { l.innerText="TABATA"; p.innerHTML=`<div class="timer-input-group"><label>Work</label><input type="number" class="timer-input" value="${state.cfgTabataWork}" onchange="state.cfgTabataWork=this.value; resetTimer()"></div><div class="timer-input-group"><label>Rest</label><input type="number" class="timer-input" value="${state.cfgTabataRest}" onchange="state.cfgTabataRest=this.value; resetTimer()"></div><div class="timer-input-group"><label>Rnd</label><input type="number" class="timer-input" value="${state.cfgTabataRounds}" onchange="state.cfgTabataRounds=this.value; resetTimer()"></div>`; document.getElementById('tabata-indicator').classList.remove('hidden'); state.initialDuration=state.cfgTabataWork; state.timeLeft=state.cfgTabataWork; state.tabataRound=1; state.tabataState='work'; updateTabataUI(); }
+        /* TIMER LOGIC - CON DESPLEGABLE */
+        function setTimerMode(m) {
+            resetTimer(); state.timerMode=m; 
+            const p=document.getElementById('config-panel'); const l=document.getElementById('timer-status-label'); document.getElementById('tabata-indicator').classList.add('hidden');
+            if(m==='amrap') { l.innerText="CUENTA ATRÁS"; p.innerHTML=`<div class="timer-input-group"><label>Minutos</label><input type="number" class="timer-input" value="${state.cfgAmrap}" onchange="state.cfgAmrap=this.value; resetTimer()"></div>`; state.initialDuration=state.cfgAmrap*60; state.timeLeft=state.initialDuration; }
+            else if(m==='fortime') { l.innerText="CRONÓMETRO"; p.innerHTML=`<div class="timer-input-group"><label>Time Cap</label><input type="number" class="timer-input" value="${state.cfgForTimeCap}" placeholder="0" onchange="state.cfgForTimeCap=this.value; resetTimer()"></div>`; state.timeLeft=0; }
+            else if(m==='emom') { l.innerText="EMOM"; p.innerHTML=`<div class="timer-input-group"><label>Minutos</label><input type="number" class="timer-input" value="${state.cfgEmomTotal}" onchange="state.cfgEmomTotal=this.value; resetTimer()"></div>`; state.initialDuration=60; state.timeLeft=60; state.emomCurrentMinute=1; }
+            else if(m==='tabata') { l.innerText="TABATA"; p.innerHTML=`<div class="timer-input-group"><label>Work</label><input type="number" class="timer-input" value="${state.cfgTabataWork}" onchange="state.cfgTabataWork=this.value; resetTimer()"></div><div class="timer-input-group"><label>Rest</label><input type="number" class="timer-input" value="${state.cfgTabataRest}" onchange="state.cfgTabataRest=this.value; resetTimer()"></div><div class="timer-input-group"><label>Rondas</label><input type="number" class="timer-input" value="${state.cfgTabataRounds}" onchange="state.cfgTabataRounds=this.value; resetTimer()"></div>`; document.getElementById('tabata-indicator').classList.remove('hidden'); state.initialDuration=state.cfgTabataWork; state.timeLeft=state.cfgTabataWork; state.tabataRound=1; state.tabataState='work'; updateTabataUI(); }
             updateTimerDisplay();
         }
         function toggleTimer() {
             const svg=document.getElementById('timer-icon-svg').querySelector('path');
+            // Deshabilitar select mientras corre el reloj
+            document.getElementById('timer-mode-select').disabled = !state.isRunning;
+
             if(state.isRunning) { clearInterval(state.timerInterval); state.isRunning=false; svg.setAttribute('d','M8 5V19L19 12L8 5Z'); document.querySelectorAll('.timer-input').forEach(i=>i.disabled=false); }
             else {
                 state.isRunning=true; state.startTime=Date.now(); state.accumulatedTime=0; svg.setAttribute('d','M6 19h4V5H6v14zm8-14v14h4V5h-4z'); document.querySelectorAll('.timer-input').forEach(i=>i.disabled=true);
@@ -509,7 +564,15 @@
             }
             updateTimerDisplay();
         }
-        function resetTimer() { clearInterval(state.timerInterval); state.isRunning=false; document.getElementById('timer-icon-svg').querySelector('path').setAttribute('d','M8 5V19L19 12L8 5Z'); document.querySelectorAll('.timer-input').forEach(i=>i.disabled=false); if(state.timerMode==='amrap') state.timeLeft=state.cfgAmrap*60; else if(state.timerMode==='fortime') state.timeLeft=0; else if(state.timerMode==='emom') { state.timeLeft=60; state.emomCurrentMinute=1; document.getElementById('timer-status-label').innerText=`MINUTO 1/${state.cfgEmomTotal}`; } else if(state.timerMode==='tabata') { state.timeLeft=state.cfgTabataWork; state.tabataRound=1; state.tabataState='work'; updateTabataUI(); } updateTimerDisplay(); }
+        function resetTimer() { 
+            clearInterval(state.timerInterval); state.isRunning=false; 
+            document.getElementById('timer-icon-svg').querySelector('path').setAttribute('d','M8 5V19L19 12L8 5Z'); 
+            document.querySelectorAll('.timer-input').forEach(i=>i.disabled=false); 
+            document.getElementById('timer-mode-select').disabled = false; // Rehabilita select
+            
+            if(state.timerMode==='amrap') state.timeLeft=state.cfgAmrap*60; else if(state.timerMode==='fortime') state.timeLeft=0; else if(state.timerMode==='emom') { state.timeLeft=60; state.emomCurrentMinute=1; document.getElementById('timer-status-label').innerText=`MINUTO 1/${state.cfgEmomTotal}`; } else if(state.timerMode==='tabata') { state.timeLeft=state.cfgTabataWork; state.tabataRound=1; state.tabataState='work'; updateTabataUI(); } 
+            updateTimerDisplay(); 
+        }
         function updateTabataUI() { const i=document.getElementById('tabata-indicator'), v=document.getElementById('timer-val'); i.innerText=`Ronda ${state.tabataRound}/${state.cfgTabataRounds}`; if(state.tabataState==='work'){i.className='tabata-indicator tabata-work'; v.style.color='var(--primary-color)'; i.innerText+=' - WORK';} else {i.className='tabata-indicator tabata-rest'; v.style.color='var(--danger)'; i.innerText+=' - REST';} }
         function updateTimerDisplay() { let t=Math.abs(state.timeLeft); if(state.timerMode!=='fortime') t=Math.ceil(t); else t=Math.floor(t); let m=Math.floor(t/60), s=t%60; document.getElementById('timer-val').innerText=`${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`; }
     </script>
