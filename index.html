@@ -135,6 +135,12 @@
         .tabata-work { color: var(--primary-color); border-color: var(--primary-color); background: rgba(0,255,148,0.05); }
         .tabata-rest { color: var(--danger); border-color: var(--danger); background: rgba(255,69,58,0.05); }
 
+        /* ESTILOS DE CHIPS (ARREGLADOS PARA LA BIBLIOTECA) */
+        .chips { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; margin-bottom: 10px; scrollbar-width: none; width: 100%; -webkit-overflow-scrolling: touch; }
+        .chips::-webkit-scrollbar { display: none; }
+        .chip { padding: 8px 18px; background: #1C1C1E; border-radius: 20px; white-space: nowrap; font-size: 13px; color: #888; border: 1px solid #333; cursor: pointer; transition: all 0.2s; }
+        .chip.active { background: rgba(0, 255, 148, 0.1); color: var(--primary-color); border-color: var(--primary-color); font-weight: bold; }
+
         /* MODALS */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: flex-end; backdrop-filter: blur(8px); }
         .modal-content { background: #1C1C1E; width: 100%; padding: 25px 20px calc(20px + var(--safe-bottom)) 20px; border-radius: 24px 24px 0 0; animation: slideUp 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); max-height: 90vh; display: flex; flex-direction: column; border-top: 1px solid #333; position: relative; }
@@ -306,7 +312,8 @@
         <h1 style="margin-top: 10px;">Biblioteca</h1>
         <div style="position: sticky; top: -1px; background: var(--bg-color); padding: 10px 0; z-index: 10;">
             <input type="text" id="library-search" placeholder="Buscar..." onkeyup="renderLibrary()">
-            <div class="chips" id="muscle-filters" style="margin-top: 15px; justify-content: flex-start;">
+            
+            <div class="chips" id="muscle-filters" style="margin-top: 15px;">
                 <div class="chip active" onclick="filterLibrary(null, this)">Todos</div>
                 <div class="chip" onclick="filterLibrary('Crossfit', this)">Crossfit</div>
                 <div class="chip" onclick="filterLibrary('Piernas', this)">Piernas</div>
@@ -315,6 +322,7 @@
                 <div class="chip" onclick="filterLibrary('Brazos', this)">Brazos</div>
                 <div class="chip" onclick="filterLibrary('Hombros', this)">Hombros</div>
             </div>
+
         </div>
         <div id="library-list" style="padding-bottom: 50px;"></div>
     </div>
@@ -377,7 +385,7 @@
         };
 
         window.onload = () => {
-            setTimeout(() => { document.getElementById('splash-screen').classList.add('fade-out'); setTimeout(() => document.getElementById('splash-screen').style.display='none',800); if(state.currentUser) showHome(); else showLogin(); setTimerMode('amrap',document.querySelector('.chip.active')); }, 1500);
+            setTimeout(() => { document.getElementById('splash-screen').classList.add('fade-out'); setTimeout(() => document.getElementById('splash-screen').style.display='none',800); if(state.currentUser) showHome(); else showLogin(); setTimerMode('amrap'); }, 1500);
         };
 
         /* AUTH & NAV */
@@ -418,17 +426,10 @@
         function openExerciseSelector() { document.getElementById('selector-input').value=''; updateExerciseSelector(); openModal('addExerciseModal'); }
         function updateExerciseSelector() { const q=document.getElementById('selector-input').value.toLowerCase(); const html=state.exercises.filter(e=>e.name.toLowerCase().includes(q)).map(e=>`<div class="search-result-item" onclick="selectExercise('${e.name}')"><div><h3>${e.name}</h3><p>${e.muscle}</p></div><i class="ph ph-plus-circle" style="font-size:24px; color:#555;"></i></div>`).join(''); document.getElementById('selector-results').innerHTML=html + (q.length>0 && !state.exercises.find(e=>e.name.toLowerCase()===q) ? `<div class="search-result-item" onclick="selectExercise('${document.getElementById('selector-input').value}')" style="border-left:3px solid var(--primary-color);"><div><h3 class="accent">Crear "${document.getElementById('selector-input').value}"</h3></div></div>`:''); }
         function selectExercise(n) { addExerciseBlock(n.charAt(0).toUpperCase()+n.slice(1)); closeModal('addExerciseModal'); }
-        
-        /* BLOQUE NORMAL (EJERCICIO GYM) */
-        function addExerciseBlock(n,r=null) { 
-            const d=document.createElement('div'); d.className='exercise-block block-item'; 
-            d.innerHTML=`<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><h3 style="color:var(--primary-color);" contenteditable="true">${n}</h3><button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; color:#666; padding:0 5px;"><i class="ph ph-trash" style="font-size:20px;"></i></button></div><div class="sets-container"></div><button class="btn-outline" style="width:100%; margin-top:10px; padding:8px; border-style:dashed; color:#666;" onclick="addSet(this)">+ Añadir Serie</button><textarea class="exercise-note" placeholder="Notas (ej: banco al 30%)..." rows="1"></textarea>`; 
-            document.getElementById('active-exercises-list').appendChild(d); const c=d.querySelector('.sets-container'); if(r)r.forEach(v=>addSetRow(c,v)); else addSetRow(c,null); d.scrollIntoView({behavior:'smooth'}); 
-        }
+        function addExerciseBlock(n,r=null) { const d=document.createElement('div'); d.className='exercise-block block-item'; d.innerHTML=`<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><h3 style="color:var(--primary-color);" contenteditable="true">${n}</h3><button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; color:#666; padding:0 5px;"><i class="ph ph-trash" style="font-size:20px;"></i></button></div><div class="sets-container"></div><button class="btn-outline" style="width:100%; margin-top:10px; padding:8px; border-style:dashed; color:#666;" onclick="addSet(this)">+ Añadir Serie</button><textarea class="exercise-note" placeholder="Notas (ej: banco al 30%)..." rows="1"></textarea>`; document.getElementById('active-exercises-list').appendChild(d); const c=d.querySelector('.sets-container'); if(r)r.forEach(v=>addSetRow(c,v)); else addSetRow(c,null); d.scrollIntoView({behavior:'smooth'}); }
         function addSet(b) { addSetRow(b.previousElementSibling,null); }
         function addSetRow(c,v) { const n=c.children.length+1, d=document.createElement('div'); d.className='set-row'; d.innerHTML=`<div class="set-num">${n}</div><input type="number" class="input-mini set-kg" placeholder="Kg"><input type="text" class="input-mini set-reps" placeholder="Reps" ${v?`value="${v}"`:''}>`; c.appendChild(d); }
         
-        /* BLOQUE WOD (PIZARRA) - CON CAMPO ÚNICO PARA RESULTADO FINAL */
         function addWodBlock() {
             const container = document.getElementById('active-exercises-list');
             const div = document.createElement('div');
@@ -439,9 +440,7 @@
                     <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; color:#666; padding:0 5px;"><i class="ph ph-trash" style="font-size:20px;"></i></button>
                 </div>
                 <textarea class="wod-desc" placeholder="Apunta aquí la pizarra (ej: 21-15-9 Thrusters y Dominadas)..." rows="3"></textarea>
-                
                 <input type="text" class="wod-score-input wod-result" placeholder="🏆 Tu Score (ej: 14:30, 5 Rnd+3, CAP...)" style="margin-bottom: 10px; font-weight:bold;">
-                
                 <div class="rx-toggle">
                     <div class="rx-btn active rx" onclick="toggleRx(this, 'RX')">RX</div>
                     <div class="rx-btn sc" onclick="toggleRx(this, 'SCALED')">SCALED</div>
@@ -459,8 +458,6 @@
         }
 
         function cancelWorkout() { document.getElementById('train-active').classList.add('hidden'); document.getElementById('train-main-menu').classList.remove('hidden'); }
-        
-        /* GUARDAR (DISCRIMINA ENTRE GYM Y WOD) */
         function finishWorkout() { 
             const d=Math.round((new Date()-sessionStartTime)/60000); 
             const s={id:Date.now(),date:new Date().toISOString(),name:state.currentSession.name,duration:d||1,exercises:[]}; 
@@ -474,7 +471,7 @@
                 } else if (block.classList.contains('wod-block')) {
                     const n=block.querySelector('.wod-title').innerText;
                     const desc=block.querySelector('.wod-desc').value;
-                    const result=block.querySelector('.wod-result').value; // Toma el resultado
+                    const result=block.querySelector('.wod-result').value;
                     const rxElement=block.querySelector('.rx-btn.active');
                     const rx=rxElement ? rxElement.innerText : 'RX';
                     if(desc || result) s.exercises.push({type:'wod', name:n, desc, result, rx});
@@ -496,7 +493,7 @@
             w.exercises.forEach(e => {
                 if(e.type === 'wod' || e.desc !== undefined) {
                     shareText += `⚡ WOD: ${e.name} (${e.rx||'RX'})\n`;
-                    if(e.result) shareText += `   🏆 Score: ${e.result}\n`; // Añade el resultado al copiar
+                    if(e.result) shareText += `   🏆 Score: ${e.result}\n`; 
                 } else {
                     shareText += `🔹 ${e.name}: ${e.sets.length} series${e.note ? ' ('+e.note+')' : ''}\n`;
                 }
@@ -521,11 +518,7 @@
                                 <span style="background:${e.rx==='RX'?'var(--primary-color)':'#555'}; color:${e.rx==='RX'?'#000':'#FFF'}; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:bold;">${e.rx||'RX'}</span>
                             </div>
                             ${e.desc ? `<p style="font-size:13px; color:#ddd; white-space:pre-wrap; margin-bottom:10px;">${e.desc}</p>` : ''}
-                            
                             ${e.result ? `<div style="background:#222; padding:8px 12px; border-radius:8px; border:1px solid #333; margin-top:5px;"><span style="color:var(--primary-color); font-weight:bold;"><i class="ph ph-trophy"></i> Score:</span> <span style="color:white; margin-left:5px;">${e.result}</span></div>` : ''}
-                            
-                            ${e.time ? `<div style="background:#222; padding:8px 12px; border-radius:8px; border:1px solid #333; margin-top:5px;"><span style="color:var(--primary-color); font-weight:bold;"><i class="ph ph-clock"></i> Tiempo:</span> <span style="color:white; margin-left:5px;">${e.time}</span></div>` : ''}
-                            ${e.reps ? `<div style="background:#222; padding:8px 12px; border-radius:8px; border:1px solid #333; margin-top:5px;"><span style="color:var(--primary-color); font-weight:bold;"><i class="ph ph-arrows-clockwise"></i> Reps:</span> <span style="color:white; margin-left:5px;">${e.reps}</span></div>` : ''}
                         </div>`;
                     } else {
                         return `
