@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KILO">
 
-    <link rel="icon" type="image/png" href="icon.png?v=14">
-    <link rel="apple-touch-icon" href="icon.png?v=14">
+    <link rel="icon" type="image/png" href="icon.png?v=15">
+    <link rel="apple-touch-icon" href="icon.png?v=15">
 
     <title>KILO App</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -73,26 +73,11 @@
         h1 { font-size: 28px; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; }
         h2 { font-size: 14px; font-weight: 700; margin: 25px 0 10px 0; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
         
-        /* PANTALLAS */
         .screen { flex: 1; overflow-y: auto; padding: calc(20px + var(--safe-top)) 20px calc(var(--nav-height) + 20px + var(--safe-bottom)) 20px; display: none; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; -webkit-overflow-scrolling: touch; height: 100%; }
         .screen.active { display: block; opacity: 1; transform: translateY(0); }
         
-        /* CENTRADO PERFECTO SOLO PARA EL RELOJ */
-        #rest.screen.active { 
-            display: flex !important; 
-            flex-direction: column; 
-            justify-content: center; /* Centrado vertical absoluto */
-            align-items: center;     /* Centrado horizontal */
-            padding-bottom: calc(var(--nav-height) + 20px); /* Compensa visualmente la navbar */
-        }
-        
-        .timer-container-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            margin-top: -5vh; /* Pequeño ajuste óptico para quedar perfecto */
-        }
+        #rest.screen.active { display: flex !important; flex-direction: column; justify-content: center; align-items: center; padding-bottom: calc(var(--nav-height) + 20px); }
+        .timer-container-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: -5vh; }
 
         .card { background-color: var(--card-color); border-radius: 16px; padding: 20px; margin-bottom: 15px; cursor: pointer; border: 1px solid transparent; transition: transform 0.1s, background-color 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2); position: relative; }
         .card:active { transform: scale(0.97); background-color: #252527; }
@@ -108,7 +93,8 @@
         .btn-outline { background-color: transparent; border: 1px solid #444; color: var(--text-color); }
         .btn-text { background: none; border: none; color: var(--primary-color); font-weight: bold; cursor: pointer; padding: 10px; }
 
-        .exercise-block { background: #0A0A0A; padding: 15px 15px 0 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #333; overflow: hidden; }
+        /* GYM BLOCK */
+        .exercise-block { background: #0A0A0A; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #333; overflow: hidden; }
         .set-row { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
         .set-num { width: 25px; height: 25px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #FFF; font-weight: bold; }
         .input-mini { width: 70px; text-align: center; background: #1a1a1a !important; padding: 10px; border-radius: 8px; border: 1px solid #333; color: white !important; outline: none; }
@@ -116,61 +102,35 @@
         .exercise-note { background: #111 !important; border: none; border-top: 1px solid #333; border-radius: 0 0 12px 12px; padding: 12px; font-size: 13px; color: #aaa !important; margin-top: 5px; resize: none; height: 45px; width: 100%; transition: height 0.2s; }
         .exercise-note:focus { height: 80px; color: white !important; }
 
+        /* WOD BLOCK (PIZARRA) */
+        .wod-block { background: #0A0A0A; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--primary-color); position: relative; }
+        .wod-desc { background: #111 !important; border: 1px solid #333 !important; color: white !important; padding: 12px; border-radius: 8px; width: 100%; font-size: 14px; resize: none; margin-bottom: 10px; font-family: 'Inter', sans-serif; height: 80px;}
+        .wod-score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .wod-score-input { background: #1a1a1a !important; border: 1px solid #333 !important; color: white !important; padding: 10px; border-radius: 8px; text-align: center; width: 100%; font-size: 14px; }
+        .rx-toggle { display: flex; background: #111; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
+        .rx-btn { flex: 1; padding: 10px; text-align: center; font-size: 12px; font-weight: bold; color: #666; cursor: pointer; transition: 0.2s; }
+        .rx-btn.active.rx { background: var(--primary-color); color: #000; }
+        .rx-btn.active.sc { background: #555; color: #FFF; }
+
         .delete-btn { position: absolute; top: 10px; right: 10px; background: rgba(20, 20, 20, 0.95); border: 1px solid var(--danger); color: var(--danger); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.5); transition: transform 0.1s; }
         .delete-btn:active { background: var(--danger); color: white; transform: scale(0.9); }
 
         .rm-result { text-align: center; margin: 20px 0; padding: 20px; background: #000; border-radius: 16px; border: 1px solid #333; }
         .rm-value { font-size: 48px; font-weight: 900; color: var(--primary-color); line-height: 1; }
 
-        /* NUEVO SELECTOR DESPLEGABLE PARA EL RELOJ */
-        .timer-select-wrapper {
-            position: relative;
-            width: 200px;
-            margin-bottom: 20px;
-        }
-        .timer-select-wrapper select {
-            width: 100%;
-            background-color: #111 !important;
-            border: 1px solid #333;
-            color: var(--primary-color) !important;
-            font-size: 18px;
-            font-weight: bold;
-            padding: 14px 40px 14px 20px;
-            border-radius: 30px;
-            text-align: center;
-            text-align-last: center; /* Centra el texto seleccionado */
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-        .timer-select-wrapper select:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 15px rgba(0, 255, 148, 0.2);
-        }
-        .timer-select-wrapper i {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #888;
-            pointer-events: none;
-            font-size: 20px;
-        }
+        /* SELECTOR RELOJ */
+        .timer-select-wrapper { position: relative; width: 200px; margin-bottom: 20px; }
+        .timer-select-wrapper select { width: 100%; background-color: #111 !important; border: 1px solid #333; color: var(--primary-color) !important; font-size: 18px; font-weight: bold; padding: 14px 40px 14px 20px; border-radius: 30px; text-align: center; text-align-last: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .timer-select-wrapper select:focus { border-color: var(--primary-color); box-shadow: 0 0 15px rgba(0, 255, 148, 0.2); }
+        .timer-select-wrapper i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #888; pointer-events: none; font-size: 20px; }
 
-        /* TIMER STYLES REFINED */
-        .timer-display { 
-            font-size: clamp(70px, 22vw, 95px); 
-            font-weight: 800; color: var(--primary-color); 
-            font-variant-numeric: tabular-nums; text-align: center; 
-            margin: 10px 0 30px 0; 
-            text-shadow: 0 0 30px rgba(0, 255, 148, 0.25); 
-            line-height: 1;
-        }
+        /* TIMER STYLES */
+        .timer-display { font-size: clamp(70px, 22vw, 95px); font-weight: 800; color: var(--primary-color); font-variant-numeric: tabular-nums; text-align: center; margin: 10px 0 30px 0; text-shadow: 0 0 30px rgba(0, 255, 148, 0.25); line-height: 1; }
         .timer-config { display: flex; gap: 15px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
         .timer-input-group { display: flex; flex-direction: column; align-items: center; }
         .timer-input-group label { font-size: 11px; color: #666; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
         .timer-input { width: 80px; background: #1C1C1E !important; border: 1px solid #333; color: white !important; text-align: center; padding: 12px; border-radius: 14px; font-size: 22px; font-weight: bold; }
         .timer-input:focus { border-color: var(--primary-color); outline: none; }
-        
         .tabata-indicator { font-size: 16px; text-align: center; font-weight: bold; margin-bottom: 5px; padding: 6px 16px; border-radius: 20px; background: #111; display: inline-block; border: 1px solid #333; color: #888; }
         .tabata-work { color: var(--primary-color); border-color: var(--primary-color); background: rgba(0,255,148,0.05); }
         .tabata-rest { color: var(--danger); border-color: var(--danger); background: rgba(255,69,58,0.05); }
@@ -185,18 +145,15 @@
         .dialog-centered { align-items: center !important; }
         .dialog-box { background: #1C1C1E; border: 1px solid #333; width: 85%; max-width: 320px; padding: 30px 25px; border-radius: 24px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5); animation: popIn 0.2s ease-out; }
         .search-result-item { padding: 18px 10px; border-bottom: 1px solid #2a2a2a; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        
-        /* NAV - CHUNKY STYLE */
+
+        /* NAV */
         .bottom-nav { position: fixed; bottom: 0; width: 100%; height: calc(var(--nav-height) + var(--safe-bottom)); background-color: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); border-top: 1px solid #222; display: flex; justify-content: space-around; align-items: flex-start; z-index: 100; padding-top: 12px; padding-bottom: var(--safe-bottom); }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: #666; background: none; border: none; cursor: pointer; width: 20%; transition: color 0.2s; }
         .nav-item i { font-size: 28px; margin-bottom: 5px; transition: transform 0.2s, text-shadow 0.2s; }
         .nav-item span { font-size: 11px; font-weight: 500; }
         .nav-item.active { color: var(--primary-color); }
         .nav-item.active i { transform: translateY(-2px); text-shadow: 0 0 15px rgba(0, 255, 148, 0.4); }
-
-        .chips { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; margin-bottom: 20px; scrollbar-width: none; width: 100%; justify-content: center; }
-        .chip { padding: 10px 20px; background: #1C1C1E; border-radius: 30px; white-space: nowrap; font-size: 14px; color: #888; border: 1px solid #333; transition: all 0.2s; }
-        .chip.active { background: rgba(0, 255, 148, 0.1); color: var(--primary-color); border-color: var(--primary-color); font-weight: bold; transform: scale(1.05); }
+        .chips { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; margin-bottom: 10px; scrollbar-width: none; width: 100%; justify-content: center; }
 
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -302,7 +259,12 @@
                 <button onclick="showCustomConfirm('¿Cancelar entreno?', cancelWorkout)" style="background: none; border: none; padding: 10px;"><i class="ph ph-x-circle" style="font-size: 32px; color: var(--danger);"></i></button>
             </div>
             <div id="active-exercises-list"></div>
-            <button class="btn btn-outline" onclick="openExerciseSelector()">+ AÑADIR EJERCICIO</button>
+            
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button class="btn btn-outline" style="flex: 1; padding: 12px; font-size: 12px;" onclick="openExerciseSelector()">+ EJERCICIO</button>
+                <button class="btn btn-outline" style="flex: 1; padding: 12px; font-size: 12px; border-color: var(--primary-color); color: var(--primary-color);" onclick="addWodBlock()">+ WOD / METCON</button>
+            </div>
+
             <button class="btn" style="margin-top: 30px;" onclick="finishWorkout()">TERMINAR SESIÓN</button>
             <div style="height: 50px;"></div>
         </div>
@@ -315,7 +277,6 @@
 
     <div id="rest" class="screen">
         <div class="timer-container-wrapper">
-            
             <div class="timer-select-wrapper">
                 <select id="timer-mode-select" onchange="setTimerMode(this.value)">
                     <option value="amrap">AMRAP</option>
@@ -325,16 +286,12 @@
                 </select>
                 <i class="ph ph-caret-down"></i>
             </div>
-
             <div id="config-panel" class="timer-config"></div>
-            
             <div style="text-align: center; min-height: 40px; margin-bottom: 5px;">
                 <p class="timer-label" id="timer-status-label">LISTO</p>
                 <div id="tabata-indicator" class="tabata-indicator hidden">ROUND 1/8</div>
             </div>
-            
             <div class="timer-display" id="timer-val">00:00</div>
-            
             <div style="display: flex; gap: 25px; justify-content: center; margin-top: 10px;">
                 <button class="btn" style="width: 90px; height: 90px; border-radius: 50%; padding: 0; display:flex; align-items:center; justify-content:center; box-shadow: 0 0 30px rgba(0,255,148,0.25);" onclick="toggleTimer()">
                     <svg id="timer-icon-svg" width="40" height="40" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" /></svg>
@@ -350,7 +307,7 @@
         <h1 style="margin-top: 10px;">Biblioteca</h1>
         <div style="position: sticky; top: -1px; background: var(--bg-color); padding: 10px 0; z-index: 10;">
             <input type="text" id="library-search" placeholder="Buscar..." onkeyup="renderLibrary()">
-            <div class="chips" id="muscle-filters" style="margin-top: 15px;">
+            <div class="chips" id="muscle-filters" style="margin-top: 15px; justify-content: flex-start;">
                 <div class="chip active" onclick="filterLibrary(null, this)">Todos</div>
                 <div class="chip" onclick="filterLibrary('Crossfit', this)">Crossfit</div>
                 <div class="chip" onclick="filterLibrary('Piernas', this)">Piernas</div>
@@ -404,7 +361,6 @@
     <script>
         /* DATA */
         const initialExercises=[{id:'c1',name:"Arch Rock",muscle:"Crossfit",level:"Principiante"},{id:'c2',name:"Back Squat",muscle:"Crossfit",level:"Avanzado"},{id:'c3',name:"Bench Press",muscle:"Crossfit",level:"Intermedio"},{id:'c4',name:"Box Jump",muscle:"Crossfit",level:"Principiante"},{id:'c5',name:"Burpee",muscle:"Crossfit",level:"Principiante"},{id:'c6',name:"Clean",muscle:"Crossfit",level:"Avanzado"},{id:'c7',name:"Clean and Jerk",muscle:"Crossfit",level:"Avanzado"},{id:'c8',name:"Chest to Bar",muscle:"Crossfit",level:"Intermedio"},{id:'c9',name:"Deadlift",muscle:"Crossfit",level:"Avanzado"},{id:'c10',name:"Double Unders",muscle:"Crossfit",level:"Intermedio"},{id:'c11',name:"Front Squat",muscle:"Crossfit",level:"Intermedio"},{id:'c12',name:"Hollow",muscle:"Crossfit",level:"Principiante"},{id:'c13',name:"Hollow Rock",muscle:"Crossfit",level:"Intermedio"},{id:'c14',name:"HSPU (Handstand Push Up)",muscle:"Crossfit",level:"Avanzado"},{id:'c15',name:"Knees to Elbows",muscle:"Crossfit",level:"Intermedio"},{id:'c16',name:"Muscle Up",muscle:"Crossfit",level:"Avanzado"},{id:'c17',name:"Over Head Squat",muscle:"Crossfit",level:"Avanzado"},{id:'c18',name:"Pistol",muscle:"Crossfit",level:"Avanzado"},{id:'c19',name:"Push Press",muscle:"Crossfit",level:"Intermedio"},{id:'c20',name:"Push Jerk",muscle:"Crossfit",level:"Avanzado"},{id:'c21',name:"Pull Up",muscle:"Crossfit",level:"Intermedio"},{id:'c22',name:"Ring dips",muscle:"Crossfit",level:"Intermedio"},{id:'c23',name:"Rope climb",muscle:"Crossfit",level:"Intermedio"},{id:'c24',name:"Sumo Deadlift",muscle:"Crossfit",level:"Intermedio"},{id:'c25',name:"Sumo Deadlift High Pull",muscle:"Crossfit",level:"Intermedio"},{id:'c26',name:"Shoulder Press",muscle:"Crossfit",level:"Principiante"},{id:'c27',name:"Snatch",muscle:"Crossfit",level:"Avanzado"},{id:'c28',name:"Split Jerk",muscle:"Crossfit",level:"Avanzado"},{id:'c29',name:"Squat",muscle:"Crossfit",level:"Principiante"},{id:'c30',name:"SIT-ups",muscle:"Crossfit",level:"Principiante"},{id:'c31',name:"Single Unders",muscle:"Crossfit",level:"Principiante"},{id:'c32',name:"Superman",muscle:"Crossfit",level:"Principiante"},{id:'c33',name:"Toes to Bar",muscle:"Crossfit",level:"Intermedio"},{id:'c34',name:"V-ups",muscle:"Crossfit",level:"Intermedio"},{id:'c35',name:"Wall Ball",muscle:"Crossfit",level:"Principiante"},{id:'c36',name:"PushUp",muscle:"Crossfit",level:"Principiante"},{id:'c37',name:"Correr (Run)",muscle:"Crossfit",level:"Principiante"},{id:'c38',name:"Thruster",muscle:"Crossfit",level:"Avanzado"},{id:'c39',name:"Kettlebell Swing",muscle:"Crossfit",level:"Intermedio"},{id:'c40',name:"Hang Power Clean",muscle:"Crossfit",level:"Intermedio"},{id:'c41',name:"Squat Clean",muscle:"Crossfit",level:"Avanzado"},{id:'c42',name:"Remo (Rowing)",muscle:"Crossfit",level:"Principiante"},{id:'l1',name:"Sentadilla (Barra)",muscle:"Piernas",level:"Avanzado"},{id:'l2',name:"Prensa de piernas",muscle:"Piernas",level:"Principiante"},{id:'l3',name:"Extensión de piernas",muscle:"Piernas",level:"Principiante"},{id:'l4',name:"Zancada",muscle:"Piernas",level:"Intermedio"},{id:'l5',name:"Curl de pierna tumbado",muscle:"Piernas",level:"Principiante"},{id:'l6',name:"Sentadilla Hack",muscle:"Piernas",level:"Intermedio"},{id:'l7',name:"Curl de piernas sentado",muscle:"Piernas",level:"Principiante"},{id:'l8',name:"Extensión a una pierna",muscle:"Piernas",level:"Principiante"},{id:'l9',name:"Sentadilla frontal",muscle:"Piernas",level:"Avanzado"},{id:'l10',name:"Peso muerto rumano (mancuernas)",muscle:"Piernas",level:"Intermedio"},{id:'l11',name:"Peso muerto rumano (barra)",muscle:"Piernas",level:"Avanzado"},{id:'l12',name:"Sentadilla Goblet",muscle:"Piernas",level:"Principiante"},{id:'l13',name:"Salto Rodillas al Pecho",muscle:"Piernas",level:"Intermedio"},{id:'l14',name:"Sentadillas con propio peso",muscle:"Piernas",level:"Principiante"},{id:'l15',name:"Sentadillas con balón medicinal",muscle:"Piernas",level:"Principiante"},{id:'l16',name:"Sentadilla búlgara con barra",muscle:"Piernas",level:"Avanzado"},{id:'l17',name:"Sentadilla búlgara propio peso",muscle:"Piernas",level:"Intermedio"},{id:'l18',name:"Sentadilla con mini banda",muscle:"Piernas",level:"Principiante"},{id:'l19',name:"Sentadilla con salto",muscle:"Piernas",level:"Intermedio"},{id:'l20',name:"Sentadilla isométrica (Pared)",muscle:"Piernas",level:"Principiante"},{id:'l21',name:"Peso muerto con balón medicinal",muscle:"Piernas",level:"Principiante"},{id:'l22',name:"Peso muerto a una pierna",muscle:"Piernas",level:"Intermedio"},{id:'l23',name:"Sentadilla sumo con kettlebell",muscle:"Piernas",level:"Intermedio"},{id:'l24',name:"Ejercicio “buenos días”",muscle:"Piernas",level:"Intermedio"},{id:'l25',name:"Puente de glúteo",muscle:"Piernas",level:"Principiante"},{id:'l26',name:"Puentes a una pierna",muscle:"Piernas",level:"Intermedio"},{id:'l27',name:"Puente con bandas",muscle:"Piernas",level:"Principiante"},{id:'l28',name:"Hip Thrust (Máquina Smith)",muscle:"Piernas",level:"Intermedio"},{id:'l29',name:"Hip Thrust (Barra)",muscle:"Piernas",level:"Avanzado"},{id:'l30',name:"Abducciones sentado con banda",muscle:"Piernas",level:"Principiante"},{id:'l31',name:"Máquina de abducción de cadera",muscle:"Piernas",level:"Principiante"},{id:'l32',name:"Abducción con polea",muscle:"Piernas",level:"Intermedio"},{id:'l33',name:"Elevaciones rana (Frog Pumps)",muscle:"Piernas",level:"Principiante"},{id:'l34',name:"Frog Pumps en Smith",muscle:"Piernas",level:"Intermedio"},{id:'l35',name:"Levantamiento pierna de lado",muscle:"Piernas",level:"Principiante"},{id:'l36',name:"Elevaciones GHD (Glute Ham Raise)",muscle:"Piernas",level:"Avanzado"},{id:'l37',name:"Step Up con mancuernas",muscle:"Piernas",level:"Intermedio"},{id:'l38',name:"Caminata lateral con minibanda",muscle:"Piernas",level:"Principiante"},{id:'l39',name:"Elevaciones de rodilla",muscle:"Piernas",level:"Principiante"},{id:'l40',name:"Elevaciones cadera lateral",muscle:"Piernas",level:"Intermedio"},{id:'l41',name:"Elevación de talones (Gemelos)",muscle:"Piernas",level:"Principiante"},{id:'ab1',name:"Giros Rusos",muscle:"Core",level:"Intermedio"},{id:'p1',name:"Press de banca con barra",muscle:"Pecho",level:"Intermedio"},{id:'p2',name:"Press banca inclinado con mancuernas",muscle:"Pecho",level:"Intermedio"},{id:'p3',name:"Aperturas en máquina (Peck Deck)",muscle:"Pecho",level:"Principiante"},{id:'p4',name:"Cruce de poleas",muscle:"Pecho",level:"Intermedio"},{id:'p5',name:"Press de banca inclinado con barra",muscle:"Pecho",level:"Intermedio"},{id:'p6',name:"Press de banca con mancuernas",muscle:"Pecho",level:"Intermedio"},{id:'p7',name:"Aperturas con mancuernas",muscle:"Pecho",level:"Intermedio"},{id:'p8',name:"Aperturas Inclinadas con mancuernas",muscle:"Pecho",level:"Intermedio"},{id:'p9',name:"Press de banca en máquina sentado",muscle:"Pecho",level:"Principiante"},{id:'p10',name:"Press de banca declinado con barra",muscle:"Pecho",level:"Intermedio"},{id:'p11',name:"Press de banca declinado con mancuernas",muscle:"Pecho",level:"Intermedio"},{id:'p12',name:"Flexiones",muscle:"Pecho",level:"Principiante"},{id:'e1',name:"Remo con mancuerna a una mano",muscle:"Espalda",level:"Intermedio"},{id:'e2',name:"Jalón con agarre ancho",muscle:"Espalda",level:"Principiante"},{id:'e3',name:"Remo en máquina",muscle:"Espalda",level:"Principiante"},{id:'e4',name:"Jalón al pecho con agarre cerrado",muscle:"Espalda",level:"Principiante"},{id:'e5',name:"Remo con barra",muscle:"Espalda",level:"Avanzado"},{id:'e6',name:"Jalón tras nuca",muscle:"Espalda",level:"Intermedio"},{id:'e7',name:"Jalón al pecho con agarre invertido",muscle:"Espalda",level:"Principiante"},{id:'e8',name:"Jalón en polea con cuerda",muscle:"Espalda",level:"Principiante"},{id:'e9',name:"Remo en barra T",muscle:"Espalda",level:"Intermedio"},{id:'e10',name:"Remo inclinado con barra supinado",muscle:"Espalda",level:"Avanzado"},{id:'e11',name:"Elevaciones en barra fija (Dominadas)",muscle:"Espalda",level:"Avanzado"},{id:'e12',name:"Elevaciones tras nuca en barra fija",muscle:"Espalda",level:"Avanzado"},{id:'e13',name:"Dominadas agarre supinado (Chin-ups)",muscle:"Espalda",level:"Intermedio"},{id:'e14',name:"Jalón dorsal con brazos rectos",muscle:"Espalda",level:"Principiante"},{id:'e15',name:"Remo inclinado con mancuernas",muscle:"Espalda",level:"Intermedio"},{id:'e16',name:"Pullover con mancuerna",muscle:"Espalda",level:"Intermedio"},{id:'e17',name:"Pullover con barra",muscle:"Espalda",level:"Intermedio"},{id:'e18',name:"Peso muerto con barra",muscle:"Espalda",level:"Avanzado"},{id:'e19',name:"Peso muerto sumo con barra",muscle:"Espalda",level:"Avanzado"},{id:'e20',name:"Peso muerto con barra hexagonal",muscle:"Espalda",level:"Intermedio"},{id:'e21',name:"Peso muerto con mancuernas",muscle:"Espalda",level:"Intermedio"},{id:'e22',name:"Encogimiento de hombros con barra",muscle:"Espalda",level:"Principiante"},{id:'e23',name:"Encogimiento de hombros con mancuernas",muscle:"Espalda",level:"Principiante"},{id:'s1',name:"Press de hombro con mancuernas",muscle:"Hombros",level:"Intermedio"},{id:'s2',name:"Elevación lateral con mancuernas",muscle:"Hombros",level:"Principiante"},{id:'s3',name:"Elevación frontal con mancuernas",muscle:"Hombros",level:"Principiante"},{id:'s4',name:"Cruces inversos en polea alta",muscle:"Hombros",level:"Intermedio"},{id:'s5',name:"Press de hombros en Máquina Smith",muscle:"Hombros",level:"Intermedio"},{id:'s6',name:"Remo alto con barra",muscle:"Hombros",level:"Avanzado"},{id:'s7',name:"Elevaciones posteriores (Pájaro)",muscle:"Hombros",level:"Intermedio"},{id:'s8',name:"Elevación lateral con cable a una mano",muscle:"Hombros",level:"Intermedio"},{id:'s9',name:"Press Militar con mancuernas",muscle:"Hombros",level:"Intermedio"},{id:'s10',name:"Press Militar (Barra de pie)",muscle:"Hombros",level:"Avanzado"},{id:'s11',name:"Elevaciones frontales con cable a una mano",muscle:"Hombros",level:"Principiante"},{id:'s12',name:"Elevaciones frontales con barra",muscle:"Hombros",level:"Principiante"},{id:'s13',name:"Press militar sentado con barra",muscle:"Hombros",level:"Intermedio"},{id:'s14',name:"Press tras nuca sentado",muscle:"Hombros",level:"Avanzado"},{id:'s15',name:"Press militar de pie tras nuca",muscle:"Hombros",level:"Avanzado"},{id:'s16',name:"Elevación frontal alterna (agarre neutro)",muscle:"Hombros",level:"Principiante"},{id:'s17',name:"Elevación frontal 1 brazo polea (neutro)",muscle:"Hombros",level:"Principiante"},{id:'s18',name:"Elevación frontal con mancuerna a dos manos",muscle:"Hombros",level:"Principiante"},{id:'s19',name:"Face Pull",muscle:"Hombros",level:"Intermedio"},{id:'a1',name:"Extensión de tríceps tumbado",muscle:"Brazos",level:"Intermedio"},{id:'a2',name:"Extensión de tríceps en polea",muscle:"Brazos",level:"Principiante"},{id:'a3',name:"Extensión de tríceps en polea con cuerda",muscle:"Brazos",level:"Principiante"},{id:'a4',name:"Extensión con mancuernas tras nuca",muscle:"Brazos",level:"Intermedio"},{id:'a5',name:"Press Banca con agarre cerrado",muscle:"Brazos",level:"Intermedio"},{id:'a6',name:"Patadas traseras",muscle:"Brazos",level:"Principiante"},{id:'a7',name:"Extensión de tríceps agarre inverso",muscle:"Brazos",level:"Avanzado"},{id:'a8',name:"Extensión de tríceps a una mano",muscle:"Brazos",level:"Principiante"},{id:'a9',name:"Extensión de tríceps supinado a una mano",muscle:"Brazos",level:"Intermedio"},{id:'a10',name:"Extensión de tríceps mancuernas tumbado",muscle:"Brazos",level:"Intermedio"},{id:'a11',name:"Press francés sentado con barra",muscle:"Brazos",level:"Intermedio"},{id:'a12',name:"Fondos en banco",muscle:"Brazos",level:"Principiante"},{id:'a13',name:"Fondos en barras paralelas",muscle:"Brazos",level:"Avanzado"},{id:'a14',name:"Curl con barra",muscle:"Brazos",level:"Principiante"},{id:'a15',name:"Curl alterno con mancuernas",muscle:"Brazos",level:"Principiante"},{id:'a16',name:"Curl con cuerda en polea",muscle:"Brazos",level:"Principiante"},{id:'a17',name:"Curl con barra EZ",muscle:"Brazos",level:"Principiante"},{id:'a18',name:"Curl de predicador con barra EZ",muscle:"Brazos",level:"Intermedio"},{id:'a19',name:"Curl martillo con mancuernas",muscle:"Brazos",level:"Principiante"},{id:'a20',name:"Curl inclinado con mancuernas",muscle:"Brazos",level:"Intermedio"},{id:'a21',name:"Curl concentrado con mancuernas",muscle:"Brazos",level:"Intermedio"},{id:'a22',name:"Curl polea baja a una mano",muscle:"Brazos",level:"Principiante"},{id:'a23',name:"Curl polea baja barra recta",muscle:"Brazos",level:"Principiante"},{id:'a24',name:"Curl polea alta de pie",muscle:"Brazos",level:"Intermedio"},{id:'a25',name:"Curl de muñeca con barra",muscle:"Brazos",level:"Principiante"},{id:'a26',name:"Extensión de muñeca con barra",muscle:"Brazos",level:"Principiante"},{id:'a27',name:"Curl de barra invertido",muscle:"Brazos",level:"Intermedio"},{id:'m1',name:"Mountain Climbers",muscle:"Crossfit",level:"Intermedio"},{id:'m2',name:"Plancha Abdominal",muscle:"Crossfit",level:"Principiante"},{id:'m3',name:"Jumping Jacks",muscle:"Crossfit",level:"Principiante"},{id:'m4',name:"Battle Ropes",muscle:"Crossfit",level:"Intermedio"},{id:'m5',name:"Sentadilla con Mancuernas",muscle:"Piernas",level:"Principiante"}];
-
         const templates=[{category:'crossfit',name:"WOD: JT",items:[{id:'c14',reps:[21,15,9]},{id:'c22',reps:[21,15,9]},{id:'c36',reps:[21,15,9]}]},{category:'crossfit',name:"WOD: Murph",items:[{id:'c37',reps:[1600]},{id:'c21',reps:[100]},{id:'c36',reps:[200]},{id:'c29',reps:[300]},{id:'c37',reps:[1600]}]},{category:'crossfit',name:"WOD: DT (5 Rondas)",items:[{id:'c9',reps:[12,12,12,12,12]},{id:'c40',reps:[9,9,9,9,9]},{id:'c20',reps:[6,6,6,6,6]}]},{category:'crossfit',name:"WOD: Fran",items:[{id:'c38',reps:[21,15,9]},{id:'c21',reps:[21,15,9]}]},{category:'crossfit',name:"WOD: Grace",items:[{id:'c7',reps:[30]}]},{category:'crossfit',name:"WOD: Helen (3 Rondas)",items:[{id:'c37',reps:[400,400,400]},{id:'c39',reps:[21,21,21]},{id:'c21',reps:[12,12,12]}]},{category:'crossfit',name:"WOD: Diane",items:[{id:'c9',reps:[21,15,9]},{id:'c14',reps:[21,15,9]}]},{category:'crossfit',name:"WOD: Annie",items:[{id:'c10',reps:[50,40,30,20,10]},{id:'c30',reps:[50,40,30,20,10]}]},{category:'crossfit',name:"WOD: Elizabeth",items:[{id:'c41',reps:[21,15,9]},{id:'c22',reps:[21,15,9]}]},{category:'crossfit',name:"WOD: Isabel",items:[{id:'c27',reps:[30]}]},{category:'crossfit',name:"WOD: Karen",items:[{id:'c35',reps:[150]}]},{category:'crossfit',name:"WOD: Nancy (5 Rondas)",items:[{id:'c37',reps:[400,400,400,400,400]},{id:'c17',reps:[15,15,15,15,15]}]},{category:'crossfit',name:"WOD: Kelly (5 Rondas)",items:[{id:'c37',reps:[400,400,400,400,400]},{id:'c4',reps:[30,30,30,30,30]},{id:'c35',reps:[30,30,30,30,30]}]},{category:'crossfit',name:"WOD: Jackie",items:[{id:'c42',reps:[1000]},{id:'c38',reps:[50]},{id:'c21',reps:[30]}]},{category:'gym',name:"Weider Pecho",items:[{id:'p1',reps:["6-10","6-10","6-10","6-10"]},{id:'p2',reps:["8-12","8-12","8-12","8-12"]},{id:'a13',reps:["8-12","8-12","8-12","8-12"]},{id:'p7',reps:["12-15","12-15","12-15"]},{id:'e16',reps:[12,12,12]}]},{category:'gym',name:"Weider Hombros",items:[{id:'s9',reps:["8-10","8-10","8-10","8-10"]},{id:'s2',reps:["12-15","12-15","12-15","12-15"]},{id:'s7',reps:["12-15","12-15","12-15"]},{id:'s3',reps:["12-15","12-15","12-15"]}]},{category:'gym',name:"Torso (Torso-Pierna)",items:[{id:'p1',reps:[6,6,6,6]},{id:'e5',reps:[8,8,8,8]},{id:'s10',reps:[8,8,8]},{id:'e11',reps:[10,10,10]},{id:'a14',reps:[10,10,10]},{id:'a2',reps:[12,12,12]}]},{category:'gym',name:"Pierna (Torso-Pierna)",items:[{id:'l1',reps:[6,6,6,6]},{id:'l11',reps:[8,8,8,8]},{id:'l2',reps:[10,10,10]},{id:'l4',reps:[10,10,10]},{id:'l41',reps:[15,15,15,15]},{id:'ab1',reps:[15,15,15]}]},{category:'gym',name:"6-12-25 Pecho",items:[{id:'p1',reps:[6,6,6]},{id:'p2',reps:[12,12,12]},{id:'a13',reps:[25,25,25]}]},{category:'gym',name:"6-12-25 Espalda",items:[{id:'e11',reps:[6,6,6]},{id:'e5',reps:[12,12,12]},{id:'s19',reps:[25,25,25]}]},{category:'gym',name:"6-12-25 Pierna",items:[{id:'l1',reps:[6,6,6]},{id:'l4',reps:[12,12,12]},{id:'l2',reps:[25,25,25]}]},{category:'metabolic',name:"Circuito Full Body (3 Rondas)",items:[{id:'c5',reps:["20\"","20\"","20\""]},{id:'l14',reps:["20\"","20\"","20\""]},{id:'p12',reps:["20\"","20\"","20\""]},{id:'m1',reps:["20\"","20\"","20\""]},{id:'e15',reps:["20\"","20\"","20\""]},{id:'m2',reps:["20\"","20\"","20\""]}]},{category:'metabolic',name:"Alta Intensidad (5 Rondas)",items:[{id:'c38',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'l19',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'c29',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'m3',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'c5',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'c30',reps:["30\"","30\"","30\"","30\"","30\""]}]},{category:'metabolic',name:"Circuito con Material (3 Rondas)",items:[{id:'m4',reps:["20\"","20\"","20\""]},{id:'c4',reps:["20\"","20\"","20\""]},{id:'c35',reps:["20\"","20\"","20\""]},{id:'c10',reps:["20\"","20\"","20\""]}]},{category:'metabolic',name:"Circuito Funcional Fitness (3 Rondas)",items:[{id:'c5',reps:["20\"","20\"","20\""]},{id:'m5',reps:["20\"","20\"","20\""]},{id:'l10',reps:["20\"","20\"","20\""]},{id:'e15',reps:["20\"","20\"","20\""]},{id:'s1',reps:["20\"","20\"","20\""]},{id:'p12',reps:["20\"","20\"","20\""]},{id:'l29',reps:["20\"","20\"","20\""]},{id:'c30',reps:["20\"","20\"","20\""]}]}];
 
         /* STATE */
@@ -422,7 +378,7 @@
         };
 
         window.onload = () => {
-            setTimeout(() => { document.getElementById('splash-screen').classList.add('fade-out'); setTimeout(() => document.getElementById('splash-screen').style.display='none',800); if(state.currentUser) showHome(); else showLogin(); setTimerMode('amrap'); }, 1500);
+            setTimeout(() => { document.getElementById('splash-screen').classList.add('fade-out'); setTimeout(() => document.getElementById('splash-screen').style.display='none',800); if(state.currentUser) showHome(); else showLogin(); setTimerMode('amrap',document.querySelector('.chip.active')); }, 1500);
         };
 
         /* AUTH & NAV */
@@ -440,7 +396,7 @@
             const now=new Date(), week=new Date(now.getTime()-604800000);
             document.getElementById('home-weekly-workouts').innerText = state.history.filter(w=>new Date(w.date)>week).length;
             const last=state.history[0];
-            document.getElementById('home-last-workout').innerHTML = last ? `<div style="display:flex; justify-content:space-between; align-items:center;"><h3 style="font-size:18px;">${last.name}</h3><span style="font-size:12px; color:var(--text-dim)">${new Date(last.date).toLocaleDateString()}</span></div><p style="margin-top:5px;">${last.duration} min • <span class="accent">${last.exercises.length} Ejercicios</span></p>` : '<p style="text-align: center;">Sin datos recientes.</p>';
+            document.getElementById('home-last-workout').innerHTML = last ? `<div style="display:flex; justify-content:space-between; align-items:center;"><h3 style="font-size:18px;">${last.name}</h3><span style="font-size:12px; color:var(--text-dim)">${new Date(last.date).toLocaleDateString()}</span></div><p style="margin-top:5px;">${last.duration} min • <span class="accent">${last.exercises.length} Bloques</span></p>` : '<p style="text-align: center;">Sin datos recientes.</p>';
             const p=state.progress[state.progress.length-1]||{}; const w=p.weight||(state.weight[state.weight.length-1]?.val)||'--';
             document.getElementById('home-stats-display').innerHTML=`<div class="stat-box"><div class="stat-label">Peso</div><div class="stat-val">${w}</div></div><div class="stat-box"><div class="stat-label">Cintura</div><div class="stat-val">${p.waist||'--'}</div></div><div class="stat-box"><div class="stat-label">Pecho</div><div class="stat-val">${p.chest||'--'}</div></div><div class="stat-box"><div class="stat-label">Cadera</div><div class="stat-val">${p.hips||'--'}</div></div><div class="stat-box"><div class="stat-label">Brazo</div><div class="stat-val">${p.arm||'--'}</div></div><div class="stat-box"><div class="stat-label">Muslo</div><div class="stat-val">${p.thigh||'--'}</div></div>`;
         }
@@ -456,25 +412,100 @@
         function showCustomConfirm(m,cb) { document.getElementById('dialog-msg').innerText=m; document.getElementById('dialog-cancel').style.display='block'; document.getElementById('dialog-confirm').onclick=()=>{cb();closeDialog();}; document.getElementById('customDialog').style.display='flex'; }
         function closeDialog() { document.getElementById('customDialog').style.display='none'; }
 
-        /* TRAINING LOGIC */
+        /* TRAINING LOGIC (NUEVO WOD BLOCK AÑADIDO) */
         function openTemplateCategory(c) { document.getElementById('train-main-menu').classList.add('hidden'); document.getElementById('train-sub-list').classList.remove('hidden'); document.getElementById('category-title').innerText={crossfit:'WODs Crossfit',gym:'Rutinas Gym',metabolic:'Circuitos Metabólicos'}[c]; document.getElementById('templates-container').innerHTML=templates.filter(t=>t.category===c).map(t=>`<div class="card" onclick='startWorkout(${JSON.stringify(t)})'><h3 style="color:white;">${t.name}</h3><p>${t.items.length} ejercicios</p></div>`).join(''); }
         function closeTemplateCategory() { document.getElementById('train-sub-list').classList.add('hidden'); document.getElementById('train-main-menu').classList.remove('hidden'); }
         function startWorkout(t) { document.getElementById('train-main-menu').classList.add('hidden'); document.getElementById('train-sub-list').classList.add('hidden'); document.getElementById('train-active').classList.remove('hidden'); sessionStartTime=new Date(); state.currentSession={name:t?t.name:"Entrenamiento Libre",exercises:[]}; document.getElementById('active-routine-name').innerText=state.currentSession.name; document.getElementById('active-exercises-list').innerHTML=''; if(t)t.items.forEach(i=>{const e=state.exercises.find(x=>x.id===i.id);if(e)addExerciseBlock(e.name,i.reps)}); }
         function openExerciseSelector() { document.getElementById('selector-input').value=''; updateExerciseSelector(); openModal('addExerciseModal'); }
         function updateExerciseSelector() { const q=document.getElementById('selector-input').value.toLowerCase(); const html=state.exercises.filter(e=>e.name.toLowerCase().includes(q)).map(e=>`<div class="search-result-item" onclick="selectExercise('${e.name}')"><div><h3>${e.name}</h3><p>${e.muscle}</p></div><i class="ph ph-plus-circle" style="font-size:24px; color:#555;"></i></div>`).join(''); document.getElementById('selector-results').innerHTML=html + (q.length>0 && !state.exercises.find(e=>e.name.toLowerCase()===q) ? `<div class="search-result-item" onclick="selectExercise('${document.getElementById('selector-input').value}')" style="border-left:3px solid var(--primary-color);"><div><h3 class="accent">Crear "${document.getElementById('selector-input').value}"</h3></div></div>`:''); }
         function selectExercise(n) { addExerciseBlock(n.charAt(0).toUpperCase()+n.slice(1)); closeModal('addExerciseModal'); }
-        function addExerciseBlock(n,r=null) { const d=document.createElement('div'); d.className='exercise-block'; d.innerHTML=`<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><h3 style="color:var(--primary-color);" contenteditable="true">${n}</h3></div><div class="sets-container"></div><button class="btn-outline" style="width:100%; margin-top:10px; padding:8px; border-style:dashed; color:#666;" onclick="addSet(this)">+ Añadir Serie</button><textarea class="exercise-note" placeholder="Notas (ej: banco al 30%)..." rows="1"></textarea>`; document.getElementById('active-exercises-list').appendChild(d); const c=d.querySelector('.sets-container'); if(r)r.forEach(v=>addSetRow(c,v)); else addSetRow(c,null); d.scrollIntoView({behavior:'smooth'}); }
+        
+        /* BLOQUE NORMAL (EJERCICIO GYM) */
+        function addExerciseBlock(n,r=null) { 
+            const d=document.createElement('div'); d.className='exercise-block block-item'; 
+            d.innerHTML=`<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><h3 style="color:var(--primary-color);" contenteditable="true">${n}</h3><button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; color:#666; padding:0 5px;"><i class="ph ph-trash" style="font-size:20px;"></i></button></div><div class="sets-container"></div><button class="btn-outline" style="width:100%; margin-top:10px; padding:8px; border-style:dashed; color:#666;" onclick="addSet(this)">+ Añadir Serie</button><textarea class="exercise-note" placeholder="Notas (ej: banco al 30%)..." rows="1"></textarea>`; 
+            document.getElementById('active-exercises-list').appendChild(d); const c=d.querySelector('.sets-container'); if(r)r.forEach(v=>addSetRow(c,v)); else addSetRow(c,null); d.scrollIntoView({behavior:'smooth'}); 
+        }
         function addSet(b) { addSetRow(b.previousElementSibling,null); }
         function addSetRow(c,v) { const n=c.children.length+1, d=document.createElement('div'); d.className='set-row'; d.innerHTML=`<div class="set-num">${n}</div><input type="number" class="input-mini set-kg" placeholder="Kg"><input type="text" class="input-mini set-reps" placeholder="Reps" ${v?`value="${v}"`:''}>`; c.appendChild(d); }
+        
+        /* NUEVO: BLOQUE WOD (PIZARRA) */
+        function addWodBlock() {
+            const container = document.getElementById('active-exercises-list');
+            const div = document.createElement('div');
+            div.className = 'wod-block block-item';
+            div.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                    <h3 class="wod-title" style="color:var(--primary-color); font-size:18px; margin:0;" contenteditable="true">Nuevo WOD</h3>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; color:#666; padding:0 5px;"><i class="ph ph-trash" style="font-size:20px;"></i></button>
+                </div>
+                <textarea class="wod-desc" placeholder="Apunta aquí la pizarra (ej: 21-15-9 Thrusters y Dominadas)..." rows="3"></textarea>
+                <div class="wod-score-grid">
+                    <input type="text" class="wod-score-input wod-time" placeholder="Tiempo (ej: 04:30)">
+                    <input type="text" class="wod-score-input wod-reps" placeholder="Rondas / Reps">
+                </div>
+                <div class="rx-toggle">
+                    <div class="rx-btn active rx" onclick="toggleRx(this, 'RX')">RX</div>
+                    <div class="rx-btn sc" onclick="toggleRx(this, 'SCALED')">SCALED</div>
+                </div>
+            `;
+            container.appendChild(div);
+            div.scrollIntoView({behavior: 'smooth'});
+        }
+        function toggleRx(btn, type) {
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.rx-btn').forEach(b => b.classList.remove('active', 'rx', 'sc'));
+            btn.classList.add('active');
+            if (type === 'RX') btn.classList.add('rx');
+            else btn.classList.add('sc');
+        }
+
         function cancelWorkout() { document.getElementById('train-active').classList.add('hidden'); document.getElementById('train-main-menu').classList.remove('hidden'); }
-        function finishWorkout() { const d=Math.round((new Date()-sessionStartTime)/60000); const bs=document.querySelectorAll('.exercise-block'); const s={id:Date.now(),date:new Date().toISOString(),name:state.currentSession.name,duration:d||1,exercises:[]}; bs.forEach(b=>{const n=b.querySelector('h3').innerText; const nt=b.querySelector('.exercise-note').value; const sets=[]; b.querySelectorAll('.set-row').forEach(r=>{const k=r.querySelector('.set-kg').value; const p=r.querySelector('.set-reps').value; if(k||p)sets.push({kg:k,reps:p})}); if(sets.length)s.exercises.push({name:n,sets,note:nt})}); if(!s.exercises.length)return showCustomAlert("Añade series"); state.history.unshift(s); localStorage.setItem('kilo_history',JSON.stringify(state.history)); cancelWorkout(); navTo('history'); }
+        
+        /* GUARDAR (DISCRIMINA ENTRE GYM Y WOD) */
+        function finishWorkout() { 
+            const d=Math.round((new Date()-sessionStartTime)/60000); 
+            const s={id:Date.now(),date:new Date().toISOString(),name:state.currentSession.name,duration:d||1,exercises:[]}; 
+            
+            const blocks = document.querySelectorAll('#active-exercises-list .block-item');
+            blocks.forEach(block => {
+                if (block.classList.contains('exercise-block')) {
+                    const n=block.querySelector('h3').innerText; const nt=block.querySelector('.exercise-note').value; const sets=[]; 
+                    block.querySelectorAll('.set-row').forEach(r=>{const k=r.querySelector('.set-kg').value; const p=r.querySelector('.set-reps').value; if(k||p)sets.push({kg:k,reps:p})}); 
+                    if(sets.length)s.exercises.push({type:'exercise', name:n, sets, note:nt});
+                } else if (block.classList.contains('wod-block')) {
+                    const n=block.querySelector('.wod-title').innerText;
+                    const desc=block.querySelector('.wod-desc').value;
+                    const time=block.querySelector('.wod-time').value;
+                    const reps=block.querySelector('.wod-reps').value;
+                    const rxElement=block.querySelector('.rx-btn.active');
+                    const rx=rxElement ? rxElement.innerText : 'RX';
+                    if(desc || time || reps) s.exercises.push({type:'wod', name:n, desc, time, reps, rx});
+                }
+            }); 
+            
+            if(!s.exercises.length)return showCustomAlert("Añade algún ejercicio o WOD."); 
+            state.history.unshift(s); localStorage.setItem('kilo_history',JSON.stringify(state.history)); cancelWorkout(); navTo('history'); 
+        }
 
         /* HISTORY & LIB */
-        function renderHistory() { const l=document.getElementById('history-list'); if(!state.history.length){l.innerHTML='<p style="text-align:center; margin-top:50px; opacity:0.5">Sin datos.</p>'; return;} l.innerHTML=state.history.map(w=>`<div class="card" onclick='showWorkoutDetail(${w.id})'><div class="delete-btn" onclick="deleteWorkout('${w.id}',event)"><i class="ph ph-trash" style="font-size:20px"></i></div><h3 style="color:white; margin:0;">${w.name}</h3><span style="font-size:12px; color:var(--text-dim)">${new Date(w.date).toLocaleDateString()}</span><p style="margin-top:8px; font-size:13px;"><i class="ph ph-clock"></i> ${w.duration} min • ${w.exercises.length} Ejercicios</p></div>`).join(''); }
+        function renderHistory() { const l=document.getElementById('history-list'); if(!state.history.length){l.innerHTML='<p style="text-align:center; margin-top:50px; opacity:0.5">Sin datos.</p>'; return;} l.innerHTML=state.history.map(w=>`<div class="card" onclick='showWorkoutDetail(${w.id})'><div class="delete-btn" onclick="deleteWorkout('${w.id}',event)"><i class="ph ph-trash" style="font-size:20px"></i></div><h3 style="color:white; margin:0;">${w.name}</h3><span style="font-size:12px; color:var(--text-dim)">${new Date(w.date).toLocaleDateString()}</span><p style="margin-top:8px; font-size:13px;"><i class="ph ph-clock"></i> ${w.duration} min • ${w.exercises.length} Bloques</p></div>`).join(''); }
         function deleteWorkout(id,e) { if(e){e.stopPropagation(); e.stopImmediatePropagation();} showCustomConfirm("¿Borrar entreno?",()=>{state.history=state.history.filter(w=>String(w.id)!==String(id)); localStorage.setItem('kilo_history',JSON.stringify(state.history)); renderHistory(); renderHome();}); }
+        
         function showWorkoutDetail(id) { 
             const w=state.history.find(i=>i.id===id); 
-            const shareText = `🚀 KILO Workout: ${w.name}\n📅 ${new Date(w.date).toLocaleDateString()}\n⏱️ ${w.duration} min\n\n` + w.exercises.map(e => `🔹 ${e.name}: ${e.sets.length} series${e.note ? ' ('+e.note+')' : ''}`).join('\n');
+            
+            let shareText = `🚀 KILO Workout: ${w.name}\n📅 ${new Date(w.date).toLocaleDateString()}\n⏱️ ${w.duration} min\n\n`;
+            w.exercises.forEach(e => {
+                if(e.type === 'wod' || e.desc !== undefined) {
+                    shareText += `⚡ WOD: ${e.name} (${e.rx||'RX'})\n`;
+                    if(e.time) shareText += `   ⏱️ ${e.time}\n`;
+                    if(e.reps) shareText += `   🔄 ${e.reps}\n`;
+                } else {
+                    shareText += `🔹 ${e.name}: ${e.sets.length} series${e.note ? ' ('+e.note+')' : ''}\n`;
+                }
+            });
+
             const c=document.getElementById('workout-detail-content'); 
             c.innerHTML=`
                 <div class="modal-header">
@@ -485,13 +516,29 @@
                     </div>
                 </div>
                 <p style="margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:10px; margin-top:0;">${new Date(w.date).toLocaleString()}</p>
-                ${w.exercises.map(e=>`
-                    <div style="margin-bottom:15px; background:#111; padding:10px; border-radius:8px;">
-                        <h3 style="color:white; margin-bottom:5px;">${e.name}</h3>
-                        ${e.note?`<p style="font-size:12px; color:#888; font-style:italic; margin-bottom:8px;">📝 ${e.note}</p>`:''}
-                        ${e.sets.map((s,i)=>`<div style="display:flex; justify-content:space-between; font-size:14px; color:#aaa; margin-top:4px;"><span>Serie ${i+1}</span><span style="color:var(--primary-color); font-weight:bold;">${s.kg}kg x ${s.reps}</span></div>`).join('')}
-                    </div>
-                `).join('')}
+                ${w.exercises.map(e=>{
+                    if(e.type === 'wod' || e.desc !== undefined) {
+                        return `
+                        <div style="margin-bottom:15px; background:#111; padding:15px; border-radius:12px; border-left: 4px solid var(--primary-color);">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <h3 style="color:var(--primary-color); margin:0; text-transform:uppercase;">${e.name}</h3>
+                                <span style="background:${e.rx==='RX'?'var(--primary-color)':'#555'}; color:${e.rx==='RX'?'#000':'#FFF'}; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:bold;">${e.rx||'RX'}</span>
+                            </div>
+                            ${e.desc ? `<p style="font-size:13px; color:#ddd; white-space:pre-wrap; margin-bottom:10px;">${e.desc}</p>` : ''}
+                            <div style="display:flex; gap:10px; font-size:14px;">
+                                ${e.time ? `<span style="background:#222; padding:5px 10px; border-radius:6px; color:white;"><i class="ph ph-clock"></i> ${e.time}</span>` : ''}
+                                ${e.reps ? `<span style="background:#222; padding:5px 10px; border-radius:6px; color:white;"><i class="ph ph-arrows-clockwise"></i> ${e.reps}</span>` : ''}
+                            </div>
+                        </div>`;
+                    } else {
+                        return `
+                        <div style="margin-bottom:15px; background:#111; padding:10px; border-radius:8px;">
+                            <h3 style="color:white; margin-bottom:5px;">${e.name}</h3>
+                            ${e.note?`<p style="font-size:12px; color:#888; font-style:italic; margin-bottom:8px;">📝 ${e.note}</p>`:''}
+                            ${e.sets.map((s,i)=>`<div style="display:flex; justify-content:space-between; font-size:14px; color:#aaa; margin-top:4px;"><span>Serie ${i+1}</span><span style="color:var(--primary-color); font-weight:bold;">${s.kg}kg x ${s.reps}</span></div>`).join('')}
+                        </div>`;
+                    }
+                }).join('')}
                 <div style="height:30px;"></div>`; 
             openModal('workoutDetailModal'); 
         }
@@ -512,7 +559,7 @@
         function closeModal(id) { document.getElementById(id).style.display='none'; }
         function saveProgress() { const e={date:new Date(), weight:document.getElementById('prog-weight').value, chest:document.getElementById('prog-chest').value, waist:document.getElementById('prog-waist').value, hips:document.getElementById('prog-hips').value, arm:document.getElementById('prog-arm').value, thigh:document.getElementById('prog-thigh').value}; if(e.weight||e.chest){state.progress.push(e); localStorage.setItem('kilo_progress',JSON.stringify(state.progress)); if(e.weight){state.weight.push({date:e.date,val:e.weight}); localStorage.setItem('kilo_weight',JSON.stringify(state.weight));} renderHome(); closeModal('progressModal');} }
 
-        /* TIMER LOGIC - CON DESPLEGABLE */
+        /* TIMER LOGIC */
         function setTimerMode(m) {
             resetTimer(); state.timerMode=m; 
             const p=document.getElementById('config-panel'); const l=document.getElementById('timer-status-label'); document.getElementById('tabata-indicator').classList.add('hidden');
@@ -524,7 +571,6 @@
         }
         function toggleTimer() {
             const svg=document.getElementById('timer-icon-svg').querySelector('path');
-            // Deshabilitar select mientras corre el reloj
             document.getElementById('timer-mode-select').disabled = !state.isRunning;
 
             if(state.isRunning) { clearInterval(state.timerInterval); state.isRunning=false; svg.setAttribute('d','M8 5V19L19 12L8 5Z'); document.querySelectorAll('.timer-input').forEach(i=>i.disabled=false); }
@@ -568,7 +614,7 @@
             clearInterval(state.timerInterval); state.isRunning=false; 
             document.getElementById('timer-icon-svg').querySelector('path').setAttribute('d','M8 5V19L19 12L8 5Z'); 
             document.querySelectorAll('.timer-input').forEach(i=>i.disabled=false); 
-            document.getElementById('timer-mode-select').disabled = false; // Rehabilita select
+            document.getElementById('timer-mode-select').disabled = false; 
             
             if(state.timerMode==='amrap') state.timeLeft=state.cfgAmrap*60; else if(state.timerMode==='fortime') state.timeLeft=0; else if(state.timerMode==='emom') { state.timeLeft=60; state.emomCurrentMinute=1; document.getElementById('timer-status-label').innerText=`MINUTO 1/${state.cfgEmomTotal}`; } else if(state.timerMode==='tabata') { state.timeLeft=state.cfgTabataWork; state.tabataRound=1; state.tabataState='work'; updateTabataUI(); } 
             updateTimerDisplay(); 
