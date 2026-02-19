@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KILO">
 
-    <link rel="icon" type="image/png" href="icon.png?v=15">
-    <link rel="apple-touch-icon" href="icon.png?v=15">
+    <link rel="icon" type="image/png" href="icon.png?v=16">
+    <link rel="apple-touch-icon" href="icon.png?v=16">
 
     <title>KILO App</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -94,7 +94,7 @@
         .btn-text { background: none; border: none; color: var(--primary-color); font-weight: bold; cursor: pointer; padding: 10px; }
 
         /* GYM BLOCK */
-        .exercise-block { background: #0A0A0A; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #333; overflow: hidden; }
+        .exercise-block { background: #0A0A0A; padding: 15px 15px 0 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #333; overflow: hidden; }
         .set-row { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
         .set-num { width: 25px; height: 25px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #FFF; font-weight: bold; }
         .input-mini { width: 70px; text-align: center; background: #1a1a1a !important; padding: 10px; border-radius: 8px; border: 1px solid #333; color: white !important; outline: none; }
@@ -105,8 +105,8 @@
         /* WOD BLOCK (PIZARRA) */
         .wod-block { background: #0A0A0A; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--primary-color); position: relative; }
         .wod-desc { background: #111 !important; border: 1px solid #333 !important; color: white !important; padding: 12px; border-radius: 8px; width: 100%; font-size: 14px; resize: none; margin-bottom: 10px; font-family: 'Inter', sans-serif; height: 80px;}
-        .wod-score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-        .wod-score-input { background: #1a1a1a !important; border: 1px solid #333 !important; color: white !important; padding: 10px; border-radius: 8px; text-align: center; width: 100%; font-size: 14px; }
+        .wod-score-input { background: #1a1a1a !important; border: 1px dashed var(--primary-color) !important; color: white !important; padding: 12px; border-radius: 8px; width: 100%; font-size: 14px; margin-bottom: 10px; }
+        .wod-score-input:focus { border-style: solid !important; }
         .rx-toggle { display: flex; background: #111; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
         .rx-btn { flex: 1; padding: 10px; text-align: center; font-size: 12px; font-weight: bold; color: #666; cursor: pointer; transition: 0.2s; }
         .rx-btn.active.rx { background: var(--primary-color); color: #000; }
@@ -153,7 +153,6 @@
         .nav-item span { font-size: 11px; font-weight: 500; }
         .nav-item.active { color: var(--primary-color); }
         .nav-item.active i { transform: translateY(-2px); text-shadow: 0 0 15px rgba(0, 255, 148, 0.4); }
-        .chips { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 10px; margin-bottom: 10px; scrollbar-width: none; width: 100%; justify-content: center; }
 
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -412,7 +411,7 @@
         function showCustomConfirm(m,cb) { document.getElementById('dialog-msg').innerText=m; document.getElementById('dialog-cancel').style.display='block'; document.getElementById('dialog-confirm').onclick=()=>{cb();closeDialog();}; document.getElementById('customDialog').style.display='flex'; }
         function closeDialog() { document.getElementById('customDialog').style.display='none'; }
 
-        /* TRAINING LOGIC (NUEVO WOD BLOCK AÑADIDO) */
+        /* TRAINING LOGIC */
         function openTemplateCategory(c) { document.getElementById('train-main-menu').classList.add('hidden'); document.getElementById('train-sub-list').classList.remove('hidden'); document.getElementById('category-title').innerText={crossfit:'WODs Crossfit',gym:'Rutinas Gym',metabolic:'Circuitos Metabólicos'}[c]; document.getElementById('templates-container').innerHTML=templates.filter(t=>t.category===c).map(t=>`<div class="card" onclick='startWorkout(${JSON.stringify(t)})'><h3 style="color:white;">${t.name}</h3><p>${t.items.length} ejercicios</p></div>`).join(''); }
         function closeTemplateCategory() { document.getElementById('train-sub-list').classList.add('hidden'); document.getElementById('train-main-menu').classList.remove('hidden'); }
         function startWorkout(t) { document.getElementById('train-main-menu').classList.add('hidden'); document.getElementById('train-sub-list').classList.add('hidden'); document.getElementById('train-active').classList.remove('hidden'); sessionStartTime=new Date(); state.currentSession={name:t?t.name:"Entrenamiento Libre",exercises:[]}; document.getElementById('active-routine-name').innerText=state.currentSession.name; document.getElementById('active-exercises-list').innerHTML=''; if(t)t.items.forEach(i=>{const e=state.exercises.find(x=>x.id===i.id);if(e)addExerciseBlock(e.name,i.reps)}); }
@@ -429,7 +428,7 @@
         function addSet(b) { addSetRow(b.previousElementSibling,null); }
         function addSetRow(c,v) { const n=c.children.length+1, d=document.createElement('div'); d.className='set-row'; d.innerHTML=`<div class="set-num">${n}</div><input type="number" class="input-mini set-kg" placeholder="Kg"><input type="text" class="input-mini set-reps" placeholder="Reps" ${v?`value="${v}"`:''}>`; c.appendChild(d); }
         
-        /* NUEVO: BLOQUE WOD (PIZARRA) */
+        /* BLOQUE WOD (PIZARRA) - CON CAMPO ÚNICO PARA RESULTADO FINAL */
         function addWodBlock() {
             const container = document.getElementById('active-exercises-list');
             const div = document.createElement('div');
@@ -440,10 +439,9 @@
                     <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; color:#666; padding:0 5px;"><i class="ph ph-trash" style="font-size:20px;"></i></button>
                 </div>
                 <textarea class="wod-desc" placeholder="Apunta aquí la pizarra (ej: 21-15-9 Thrusters y Dominadas)..." rows="3"></textarea>
-                <div class="wod-score-grid">
-                    <input type="text" class="wod-score-input wod-time" placeholder="Tiempo (ej: 04:30)">
-                    <input type="text" class="wod-score-input wod-reps" placeholder="Rondas / Reps">
-                </div>
+                
+                <input type="text" class="wod-score-input wod-result" placeholder="🏆 Tu Score (ej: 14:30, 5 Rnd+3, CAP...)" style="margin-bottom: 10px; font-weight:bold;">
+                
                 <div class="rx-toggle">
                     <div class="rx-btn active rx" onclick="toggleRx(this, 'RX')">RX</div>
                     <div class="rx-btn sc" onclick="toggleRx(this, 'SCALED')">SCALED</div>
@@ -476,11 +474,10 @@
                 } else if (block.classList.contains('wod-block')) {
                     const n=block.querySelector('.wod-title').innerText;
                     const desc=block.querySelector('.wod-desc').value;
-                    const time=block.querySelector('.wod-time').value;
-                    const reps=block.querySelector('.wod-reps').value;
+                    const result=block.querySelector('.wod-result').value; // Toma el resultado
                     const rxElement=block.querySelector('.rx-btn.active');
                     const rx=rxElement ? rxElement.innerText : 'RX';
-                    if(desc || time || reps) s.exercises.push({type:'wod', name:n, desc, time, reps, rx});
+                    if(desc || result) s.exercises.push({type:'wod', name:n, desc, result, rx});
                 }
             }); 
             
@@ -499,8 +496,7 @@
             w.exercises.forEach(e => {
                 if(e.type === 'wod' || e.desc !== undefined) {
                     shareText += `⚡ WOD: ${e.name} (${e.rx||'RX'})\n`;
-                    if(e.time) shareText += `   ⏱️ ${e.time}\n`;
-                    if(e.reps) shareText += `   🔄 ${e.reps}\n`;
+                    if(e.result) shareText += `   🏆 Score: ${e.result}\n`; // Añade el resultado al copiar
                 } else {
                     shareText += `🔹 ${e.name}: ${e.sets.length} series${e.note ? ' ('+e.note+')' : ''}\n`;
                 }
@@ -525,10 +521,11 @@
                                 <span style="background:${e.rx==='RX'?'var(--primary-color)':'#555'}; color:${e.rx==='RX'?'#000':'#FFF'}; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:bold;">${e.rx||'RX'}</span>
                             </div>
                             ${e.desc ? `<p style="font-size:13px; color:#ddd; white-space:pre-wrap; margin-bottom:10px;">${e.desc}</p>` : ''}
-                            <div style="display:flex; gap:10px; font-size:14px;">
-                                ${e.time ? `<span style="background:#222; padding:5px 10px; border-radius:6px; color:white;"><i class="ph ph-clock"></i> ${e.time}</span>` : ''}
-                                ${e.reps ? `<span style="background:#222; padding:5px 10px; border-radius:6px; color:white;"><i class="ph ph-arrows-clockwise"></i> ${e.reps}</span>` : ''}
-                            </div>
+                            
+                            ${e.result ? `<div style="background:#222; padding:8px 12px; border-radius:8px; border:1px solid #333; margin-top:5px;"><span style="color:var(--primary-color); font-weight:bold;"><i class="ph ph-trophy"></i> Score:</span> <span style="color:white; margin-left:5px;">${e.result}</span></div>` : ''}
+                            
+                            ${e.time ? `<div style="background:#222; padding:8px 12px; border-radius:8px; border:1px solid #333; margin-top:5px;"><span style="color:var(--primary-color); font-weight:bold;"><i class="ph ph-clock"></i> Tiempo:</span> <span style="color:white; margin-left:5px;">${e.time}</span></div>` : ''}
+                            ${e.reps ? `<div style="background:#222; padding:8px 12px; border-radius:8px; border:1px solid #333; margin-top:5px;"><span style="color:var(--primary-color); font-weight:bold;"><i class="ph ph-arrows-clockwise"></i> Reps:</span> <span style="color:white; margin-left:5px;">${e.reps}</span></div>` : ''}
                         </div>`;
                     } else {
                         return `
@@ -544,7 +541,7 @@
         }
         function shareWorkout(t) {
             if (navigator.share) { navigator.share({ title: 'KILO Workout', text: t }).catch(console.error); }
-            else { navigator.clipboard.writeText(t).then(()=>showCustomAlert("¡Copiado!")).catch(()=>showCustomAlert("Error")); }
+            else { navigator.clipboard.writeText(t).then(()=>showCustomAlert("¡Copiado!")).catch(()=>showCustomAlert("Error copia")); }
         }
         function renderLibrary() { const q=document.getElementById('library-search').value.toLowerCase(); const f=state.exercises.filter(e=>e.name.toLowerCase().includes(q) && (!currentMuscleFilter || e.muscle===currentMuscleFilter)); document.getElementById('library-list').innerHTML=f.map(e=>`<div class="card" style="margin-bottom:10px; padding:15px;" onclick="confirmAddToWorkout('${e.id}')"><div style="display:flex; justify-content:space-between; align-items:center;"><h3 style="font-size:16px;">${e.name}</h3><span style="font-size:10px; background:#333; padding:4px 8px; border-radius:4px; color:var(--primary-color); text-transform:uppercase;">${e.muscle}</span></div><p style="font-size:12px; margin-top:5px;">Nivel: ${e.level}</p></div>`).join(''); }
         function filterLibrary(m,b) { currentMuscleFilter=m; document.querySelectorAll('#muscle-filters .chip').forEach(c=>c.classList.remove('active')); b.classList.add('active'); renderLibrary(); }
