@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KILO">
 
-    <link rel="icon" type="image/png" href="icon.png?v=20">
-    <link rel="apple-touch-icon" href="icon.png?v=20">
+    <link rel="icon" type="image/png" href="icon.png?v=30">
+    <link rel="apple-touch-icon" href="icon.png?v=30">
 
     <title>KILO App</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -91,7 +91,6 @@
         .btn { background-color: var(--primary-color); color: #000; border: none; padding: 16px; width: 100%; border-radius: 14px; font-weight: 800; font-size: 15px; cursor: pointer; margin-top: 10px; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(0, 255, 148, 0.2); }
         .btn:active { opacity: 0.8; transform: scale(0.98); }
         .btn-outline { background-color: transparent; border: 1px solid #444; color: var(--text-color); }
-        .btn-text { background: none; border: none; color: var(--primary-color); font-weight: bold; cursor: pointer; padding: 10px; }
 
         /* GYM BLOCK */
         .exercise-block { background: #0A0A0A; padding: 15px 15px 0 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #333; overflow: hidden; }
@@ -104,7 +103,7 @@
 
         /* WOD BLOCK (PIZARRA) */
         .wod-block { background: #0A0A0A; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--primary-color); position: relative; }
-        .wod-desc { background: #111 !important; border: 1px solid #333 !important; color: white !important; padding: 12px; border-radius: 8px; width: 100%; font-size: 14px; resize: none; margin-bottom: 10px; font-family: 'Inter', sans-serif; height: 80px;}
+        .wod-desc { background: #111 !important; border: 1px solid #333 !important; color: white !important; padding: 12px; border-radius: 8px; width: 100%; font-size: 14px; resize: none; margin-bottom: 10px; font-family: 'Inter', sans-serif; height: 100px;}
         .wod-score-input { background: #1a1a1a !important; border: 1px dashed var(--primary-color) !important; color: white !important; padding: 12px; border-radius: 8px; width: 100%; font-size: 14px; margin-bottom: 10px; }
         .wod-score-input:focus { border-style: solid !important; }
         .rx-toggle { display: flex; background: #111; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
@@ -118,14 +117,43 @@
         .rm-result { text-align: center; margin: 20px 0; padding: 20px; background: #000; border-radius: 16px; border: 1px solid #333; }
         .rm-value { font-size: 48px; font-weight: 900; color: var(--primary-color); line-height: 1; }
 
-        /* SELECTOR RELOJ */
-        .timer-select-wrapper { position: relative; width: 200px; margin-bottom: 20px; }
-        .timer-select-wrapper select { width: 100%; background-color: #111 !important; border: 1px solid #333; color: var(--primary-color) !important; font-size: 18px; font-weight: bold; padding: 14px 40px 14px 20px; border-radius: 30px; text-align: center; text-align-last: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        /* CALCULADORA DISCOS SIMÉTRICA V30.0 */
+        .bar-toggle { display: flex; background: #111; border-radius: 8px; overflow: hidden; border: 1px solid #333; margin-bottom: 15px; }
+        .bar-btn { flex: 1; padding: 10px; text-align: center; font-size: 12px; font-weight: bold; color: #666; cursor: pointer; transition: 0.2s; }
+        .bar-btn.active { background: #333; color: white; }
+
+        .barbell-visual { position: relative; display: flex; align-items: center; justify-content: center; height: 120px; background: #0A0A0A; border: 1px solid #333; border-radius: 12px; margin-bottom: 15px; overflow: hidden; }
+        .bar-line { position: absolute; left: 5%; right: 5%; height: 10px; background: linear-gradient(to bottom, #888, #ccc, #555); z-index: 1; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .bar-items { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; width: 100%; padding: 0 5%; }
+        .sleeve-group { display: flex; flex: 1; align-items: center; }
+        .left-group { justify-content: flex-end; }
+        .right-group { justify-content: flex-start; }
+        
+        .bar-collar { width: 12px; height: 32px; background: linear-gradient(to right, #444, #777, #333); border-radius: 2px; margin: 0 1px; box-shadow: 2px 0 4px rgba(0,0,0,0.8); border: 1px solid #111; }
+        .bar-shaft-spacer { width: 50px; height: 10px; background: linear-gradient(to bottom, #666, #aaa, #444); background-image: repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.2) 2px, rgba(0,0,0,0.2) 4px); }
+        
+        .plate { border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 10px; margin: 0 1px; box-shadow: inset -1px 1px 3px rgba(255,255,255,0.3), inset 1px -1px 4px rgba(0,0,0,0.6), 2px 0 5px rgba(0,0,0,0.5); border: 1px solid rgba(0,0,0,0.8); }
+        
+        /* Colores y anchos ajustados para que quepan muchos en móvil */
+        .plate-20 { height: 90px; width: 14px; background: #007AFF; color: white; } /* Azul */
+        .plate-15 { height: 75px; width: 13px; background: #FFCC00; color: black; } /* Amarillo */
+        .plate-10 { height: 60px; width: 12px; background: #34C759; color: black; } /* Verde */
+        .plate-5  { height: 45px; width: 10px; background: #FFFFFF; color: black; } /* Blanco */
+        .plate-2-5{ height: 35px; width: 8px; background: #333333; color: white; }  /* Negro */
+        .plate-1-25{height: 25px; width: 6px; background: #8E8E93; color: white; }  /* Gris */
+
+        /* SELECTOR RELOJ Y SONIDO */
+        .timer-header-flex { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; width: 100%; }
+        .timer-select-wrapper { position: relative; width: 180px; }
+        .timer-select-wrapper select { width: 100%; background: #111 !important; border: 1px solid #333; color: var(--primary-color) !important; font-size: 18px; font-weight: bold; padding: 14px 40px 14px 20px; border-radius: 30px; text-align: center; text-align-last: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
         .timer-select-wrapper select:focus { border-color: var(--primary-color); box-shadow: 0 0 15px rgba(0, 255, 148, 0.2); }
         .timer-select-wrapper i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #888; pointer-events: none; font-size: 20px; }
+        .sound-btn { background: #111; border: 1px solid #333; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .sound-btn.active { border-color: var(--primary-color); color: var(--primary-color); }
+        .sound-btn.muted { border-color: #333; color: #666; }
 
         /* TIMER STYLES */
-        .timer-display { font-size: clamp(70px, 22vw, 95px); font-weight: 800; color: var(--primary-color); font-variant-numeric: tabular-nums; text-align: center; margin: 10px 0 30px 0; text-shadow: 0 0 30px rgba(0, 255, 148, 0.25); line-height: 1; }
+        .timer-display { font-size: clamp(70px, 22vw, 95px); font-weight: 800; color: var(--primary-color); font-variant-numeric: tabular-nums; text-align: center; margin: 10px 0 30px 0; text-shadow: 0 0 30px rgba(0, 255, 148, 0.25); line-height: 1; transition: color 0.2s; }
         .timer-config { display: flex; gap: 15px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
         .timer-input-group { display: flex; flex-direction: column; align-items: center; }
         .timer-input-group label { font-size: 11px; color: #666; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
@@ -153,7 +181,7 @@
         .search-result-item { padding: 18px 10px; border-bottom: 1px solid #2a2a2a; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
 
         /* NAV */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; height: calc(var(--nav-height) + var(--safe-bottom)); background-color: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); border-top: 1px solid #222; display: flex; justify-content: space-around; align-items: flex-start; z-index: 100; padding-top: 12px; padding-bottom: var(--safe-bottom); }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; height: calc(var(--nav-height) + var(--safe-bottom)); background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); border-top: 1px solid #222; display: flex; justify-content: space-around; align-items: flex-start; z-index: 100; padding-top: 12px; padding-bottom: var(--safe-bottom); }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: #666; background: none; border: none; cursor: pointer; width: 20%; transition: color 0.2s; }
         .nav-item i { font-size: 28px; margin-bottom: 5px; transition: transform 0.2s, text-shadow 0.2s; }
         .nav-item span { font-size: 11px; font-weight: 500; }
@@ -228,6 +256,29 @@
             <h3 style="margin-bottom: 15px; color: white;">Datos Personales</h3>
             <div class="measure-item"><label>Tu Nombre</label><input type="text" id="profile-name-input" onchange="updateUserName(this.value)"></div>
         </div>
+        
+        <h2>Calculadora de Discos</h2>
+        <div class="card">
+            <p style="color: #888; font-size: 12px; margin-bottom: 15px;">Dime el peso y te digo qué discos poner.</p>
+            <div class="bar-toggle">
+                <div class="bar-btn active" onclick="setBarWeight(20, this)">Barra 20kg</div>
+                <div class="bar-btn" onclick="setBarWeight(15, this)">Barra 15kg</div>
+            </div>
+            <input type="number" id="target-weight" placeholder="Peso objetivo (ej: 100)" onkeyup="calcPlates()" style="margin-bottom: 10px; font-weight: bold; text-align: center; font-size: 20px;">
+            
+            <div class="barbell-visual" id="plate-visual">
+                <div class="bar-line"></div>
+                <div class="bar-items">
+                    <div class="sleeve-group left-group" id="sleeve-left"></div>
+                    <div class="bar-collar"></div>
+                    <div class="bar-shaft-spacer"></div>
+                    <div class="bar-collar"></div>
+                    <div class="sleeve-group right-group" id="sleeve-right"></div>
+                </div>
+            </div>
+            <p id="plate-result-text" style="font-size: 13px; color: var(--primary-color); font-weight: bold; text-align: center; min-height: 20px;"></p>
+        </div>
+
         <h2>Calculadora 1RM</h2>
         <div class="card">
             <p style="color: #888; font-size: 12px; margin-bottom: 15px;">Estima tu repetición máxima teórica.</p>
@@ -237,6 +288,7 @@
             </div>
             <div class="rm-result"><div class="rm-value" id="rm-display">0</div><div class="rm-label">KG (Estimado)</div></div>
         </div>
+
         <h2>Seguridad de Datos</h2>
         <div class="card">
             <p style="color: #888; font-size: 12px; margin-bottom: 15px;">Guarda tus entrenos en un archivo o recupéralos.</p>
@@ -256,12 +308,16 @@
             <div class="folder-card" onclick="openTemplateCategory('crossfit')"><div style="display: flex; align-items: center; gap: 15px;"><i class="ph ph-lightning accent" style="font-size: 32px;"></i><div><div class="folder-title">WODs Crossfit</div><div class="folder-subtitle">The Girls, Heroes, WODs</div></div></div><i class="ph ph-caret-right" style="color: #666; font-size: 20px;"></i></div>
             <div class="folder-card" onclick="openTemplateCategory('gym')"><div style="display: flex; align-items: center; gap: 15px;"><i class="ph ph-barbell accent" style="font-size: 32px;"></i><div><div class="folder-title">Rutinas Gym</div><div class="folder-subtitle">Hipertrofia, Fuerza, Push/Pull</div></div></div><i class="ph ph-caret-right" style="color: #666; font-size: 20px;"></i></div>
             <div class="folder-card" onclick="openTemplateCategory('metabolic')"><div style="display: flex; align-items: center; gap: 15px;"><i class="ph ph-heartbeat accent" style="font-size: 32px;"></i><div><div class="folder-title">Circuitos Metabólicos</div><div class="folder-subtitle">HIIT, Tiempo, Quema-grasa</div></div></div><i class="ph ph-caret-right" style="color: #666; font-size: 20px;"></i></div>
+            
+            <div class="folder-card" onclick="openTemplateCategory('open')"><div style="display: flex; align-items: center; gap: 15px;"><i class="ph ph-globe accent" style="font-size: 32px;"></i><div><div class="folder-title">Open Crossfit</div><div class="folder-subtitle">WODs Oficiales 2011-2025</div></div></div><i class="ph ph-caret-right" style="color: #666; font-size: 20px;"></i></div>
         </div>
+        
         <div id="train-sub-list" class="hidden">
             <button onclick="closeTemplateCategory()" style="background: none; border: none; color: white; display: flex; align-items: center; gap: 5px; margin-bottom: 20px;"><i class="ph ph-arrow-left" style="font-size: 20px;"></i> Volver</button>
             <h2 id="category-title" style="margin: 0 0 0 20px; color: var(--primary-color); border: none; padding: 0;">CATEGORÍA</h2>
             <div id="templates-container"></div>
         </div>
+        
         <div id="train-active" class="hidden">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #222;">
                 <div>
@@ -277,7 +333,7 @@
                 <button class="btn btn-outline" style="flex: 1; padding: 12px; font-size: 12px; border-color: var(--primary-color); color: var(--primary-color);" onclick="addWodBlock()">+ WOD / METCON</button>
             </div>
 
-            <button class="btn" style="margin-top: 30px;" onclick="finishWorkout()">TERMINAR SESIÓN</button>
+            <button class="btn" id="btn-finish-workout" style="margin-top: 30px;" onclick="finishWorkout()">TERMINAR SESIÓN</button>
             <div style="height: 50px;"></div>
         </div>
     </div>
@@ -289,15 +345,22 @@
 
     <div id="rest" class="screen">
         <div class="timer-container-wrapper">
-            <div class="timer-select-wrapper">
-                <select id="timer-mode-select" onchange="setTimerMode(this.value)">
-                    <option value="amrap">AMRAP</option>
-                    <option value="fortime">For Time</option>
-                    <option value="emom">EMOM</option>
-                    <option value="tabata">Tabata</option>
-                </select>
-                <i class="ph ph-caret-down"></i>
+            
+            <div class="timer-header-flex">
+                <div class="timer-select-wrapper">
+                    <select id="timer-mode-select" onchange="setTimerMode(this.value)">
+                        <option value="amrap">AMRAP</option>
+                        <option value="fortime">For Time</option>
+                        <option value="emom">EMOM</option>
+                        <option value="tabata">Tabata</option>
+                    </select>
+                    <i class="ph ph-caret-down"></i>
+                </div>
+                <div class="sound-btn active" id="sound-btn" onclick="toggleSound()">
+                    <i class="ph ph-speaker-high" id="sound-icon" style="font-size: 22px;"></i>
+                </div>
             </div>
+
             <div id="config-panel" class="timer-config"></div>
             <div style="text-align: center; min-height: 40px; margin-bottom: 5px;">
                 <p class="timer-label" id="timer-status-label">LISTO</p>
@@ -389,9 +452,111 @@
     <script>
         /* DATA */
         const initialExercises=[{id:'c1',name:"Arch Rock",muscle:"Crossfit",level:"Principiante"},{id:'c2',name:"Back Squat",muscle:"Crossfit",level:"Avanzado"},{id:'c3',name:"Bench Press",muscle:"Crossfit",level:"Intermedio"},{id:'c4',name:"Box Jump",muscle:"Crossfit",level:"Principiante"},{id:'c5',name:"Burpee",muscle:"Crossfit",level:"Principiante"},{id:'c6',name:"Clean",muscle:"Crossfit",level:"Avanzado"},{id:'c7',name:"Clean and Jerk",muscle:"Crossfit",level:"Avanzado"},{id:'c8',name:"Chest to Bar",muscle:"Crossfit",level:"Intermedio"},{id:'c9',name:"Deadlift",muscle:"Crossfit",level:"Avanzado"},{id:'c10',name:"Double Unders",muscle:"Crossfit",level:"Intermedio"},{id:'c11',name:"Front Squat",muscle:"Crossfit",level:"Intermedio"},{id:'c12',name:"Hollow",muscle:"Crossfit",level:"Principiante"},{id:'c13',name:"Hollow Rock",muscle:"Crossfit",level:"Intermedio"},{id:'c14',name:"HSPU (Handstand Push Up)",muscle:"Crossfit",level:"Avanzado"},{id:'c15',name:"Knees to Elbows",muscle:"Crossfit",level:"Intermedio"},{id:'c16',name:"Muscle Up",muscle:"Crossfit",level:"Avanzado"},{id:'c17',name:"Over Head Squat",muscle:"Crossfit",level:"Avanzado"},{id:'c18',name:"Pistol",muscle:"Crossfit",level:"Avanzado"},{id:'c19',name:"Push Press",muscle:"Crossfit",level:"Intermedio"},{id:'c20',name:"Push Jerk",muscle:"Crossfit",level:"Avanzado"},{id:'c21',name:"Pull Up",muscle:"Crossfit",level:"Intermedio"},{id:'c22',name:"Ring dips",muscle:"Crossfit",level:"Intermedio"},{id:'c23',name:"Rope climb",muscle:"Crossfit",level:"Intermedio"},{id:'c24',name:"Sumo Deadlift",muscle:"Crossfit",level:"Intermedio"},{id:'c25',name:"Sumo Deadlift High Pull",muscle:"Crossfit",level:"Intermedio"},{id:'c26',name:"Shoulder Press",muscle:"Crossfit",level:"Principiante"},{id:'c27',name:"Snatch",muscle:"Crossfit",level:"Avanzado"},{id:'c28',name:"Split Jerk",muscle:"Crossfit",level:"Avanzado"},{id:'c29',name:"Squat",muscle:"Crossfit",level:"Principiante"},{id:'c30',name:"SIT-ups",muscle:"Crossfit",level:"Principiante"},{id:'c31',name:"Single Unders",muscle:"Crossfit",level:"Principiante"},{id:'c32',name:"Superman",muscle:"Crossfit",level:"Principiante"},{id:'c33',name:"Toes to Bar",muscle:"Crossfit",level:"Intermedio"},{id:'c34',name:"V-ups",muscle:"Crossfit",level:"Intermedio"},{id:'c35',name:"Wall Ball",muscle:"Crossfit",level:"Principiante"},{id:'c36',name:"PushUp",muscle:"Crossfit",level:"Principiante"},{id:'c37',name:"Correr (Run)",muscle:"Crossfit",level:"Principiante"},{id:'c38',name:"Thruster",muscle:"Crossfit",level:"Avanzado"},{id:'c39',name:"Kettlebell Swing",muscle:"Crossfit",level:"Intermedio"},{id:'c40',name:"Hang Power Clean",muscle:"Crossfit",level:"Intermedio"},{id:'c41',name:"Squat Clean",muscle:"Crossfit",level:"Avanzado"},{id:'c42',name:"Remo (Rowing)",muscle:"Crossfit",level:"Principiante"},{id:'l1',name:"Sentadilla (Barra)",muscle:"Piernas",level:"Avanzado"},{id:'l2',name:"Prensa de piernas",muscle:"Piernas",level:"Principiante"},{id:'l3',name:"Extensión de piernas",muscle:"Piernas",level:"Principiante"},{id:'l4',name:"Zancada",muscle:"Piernas",level:"Intermedio"},{id:'l5',name:"Curl de pierna tumbado",muscle:"Piernas",level:"Principiante"},{id:'l6',name:"Sentadilla Hack",muscle:"Piernas",level:"Intermedio"},{id:'l7',name:"Curl de piernas sentado",muscle:"Piernas",level:"Principiante"},{id:'l8',name:"Extensión a una pierna",muscle:"Piernas",level:"Principiante"},{id:'l9',name:"Sentadilla frontal",muscle:"Piernas",level:"Avanzado"},{id:'l10',name:"Peso muerto rumano (mancuernas)",muscle:"Piernas",level:"Intermedio"},{id:'l11',name:"Peso muerto rumano (barra)",muscle:"Piernas",level:"Avanzado"},{id:'l12',name:"Sentadilla Goblet",muscle:"Piernas",level:"Principiante"},{id:'l13',name:"Salto Rodillas al Pecho",muscle:"Piernas",level:"Intermedio"},{id:'l14',name:"Sentadillas con propio peso",muscle:"Piernas",level:"Principiante"},{id:'l15',name:"Sentadillas con balón medicinal",muscle:"Piernas",level:"Principiante"},{id:'l16',name:"Sentadilla búlgara con barra",muscle:"Piernas",level:"Avanzado"},{id:'l17',name:"Sentadilla búlgara propio peso",muscle:"Piernas",level:"Intermedio"},{id:'l18',name:"Sentadilla con mini banda",muscle:"Piernas",level:"Principiante"},{id:'l19',name:"Sentadilla con salto",muscle:"Piernas",level:"Intermedio"},{id:'l20',name:"Sentadilla isométrica (Pared)",muscle:"Piernas",level:"Principiante"},{id:'l21',name:"Peso muerto con balón medicinal",muscle:"Piernas",level:"Principiante"},{id:'l22',name:"Peso muerto a una pierna",muscle:"Piernas",level:"Intermedio"},{id:'l23',name:"Sentadilla sumo con kettlebell",muscle:"Piernas",level:"Intermedio"},{id:'l24',name:"Ejercicio “buenos días”",muscle:"Piernas",level:"Intermedio"},{id:'l25',name:"Puente de glúteo",muscle:"Piernas",level:"Principiante"},{id:'l26',name:"Puentes a una pierna",muscle:"Piernas",level:"Intermedio"},{id:'l27',name:"Puente con bandas",muscle:"Piernas",level:"Principiante"},{id:'l28',name:"Hip Thrust (Máquina Smith)",muscle:"Piernas",level:"Intermedio"},{id:'l29',name:"Hip Thrust (Barra)",muscle:"Piernas",level:"Avanzado"},{id:'l30',name:"Abducciones sentado con banda",muscle:"Piernas",level:"Principiante"},{id:'l31',name:"Máquina de abducción de cadera",muscle:"Piernas",level:"Principiante"},{id:'l32',name:"Abducción con polea",muscle:"Piernas",level:"Intermedio"},{id:'l33',name:"Elevaciones rana (Frog Pumps)",muscle:"Piernas",level:"Principiante"},{id:'l34',name:"Frog Pumps en Smith",muscle:"Piernas",level:"Intermedio"},{id:'l35',name:"Levantamiento pierna de lado",muscle:"Piernas",level:"Principiante"},{id:'l36',name:"Elevaciones GHD (Glute Ham Raise)",muscle:"Piernas",level:"Avanzado"},{id:'l37',name:"Step Up con mancuernas",muscle:"Piernas",level:"Intermedio"},{id:'l38',name:"Caminata lateral con minibanda",muscle:"Piernas",level:"Principiante"},{id:'l39',name:"Elevaciones de rodilla",muscle:"Piernas",level:"Principiante"},{id:'l40',name:"Elevaciones cadera lateral",muscle:"Piernas",level:"Intermedio"},{id:'l41',name:"Elevación de talones (Gemelos)",muscle:"Piernas",level:"Principiante"},{id:'ab1',name:"Giros Rusos",muscle:"Core",level:"Intermedio"},{id:'p1',name:"Press de banca con barra",muscle:"Pecho",level:"Intermedio"},{id:'p2',name:"Press banca inclinado con mancuernas",muscle:"Pecho",level:"Intermedio"},{id:'p3',name:"Aperturas en máquina (Peck Deck)",muscle:"Pecho",level:"Principiante"},{id:'p4',name:"Cruce de poleas",muscle:"Pecho",level:"Intermedio"},{id:'p5',name:"Press de banca inclinado con barra",muscle:"Pecho",level:"Intermedio"},{id:'p6',name:"Press de banca con mancuernas",muscle:"Pecho",level:"Intermedio"},{id:'p7',name:"Aperturas con mancuernas",muscle:"Pecho",level:"Intermedio"},{id:'p8',name:"Aperturas Inclinadas con mancuernas",muscle:"Pecho",level:"Intermedio"},{id:'p9',name:"Press de banca en máquina sentado",muscle:"Pecho",level:"Principiante"},{id:'p10',name:"Press de banca declinado con barra",muscle:"Pecho",level:"Intermedio"},{id:'p11',name:"Press de banca declinado con mancuernas",muscle:"Pecho",level:"Intermedio"},{id:'p12',name:"Flexiones",muscle:"Pecho",level:"Principiante"},{id:'e1',name:"Remo con mancuerna a una mano",muscle:"Espalda",level:"Intermedio"},{id:'e2',name:"Jalón con agarre ancho",muscle:"Espalda",level:"Principiante"},{id:'e3',name:"Remo en máquina",muscle:"Espalda",level:"Principiante"},{id:'e4',name:"Jalón al pecho con agarre cerrado",muscle:"Espalda",level:"Principiante"},{id:'e5',name:"Remo con barra",muscle:"Espalda",level:"Avanzado"},{id:'e6',name:"Jalón tras nuca",muscle:"Espalda",level:"Intermedio"},{id:'e7',name:"Jalón al pecho con agarre invertido",muscle:"Espalda",level:"Principiante"},{id:'e8',name:"Jalón en polea con cuerda",muscle:"Espalda",level:"Principiante"},{id:'e9',name:"Remo en barra T",muscle:"Espalda",level:"Intermedio"},{id:'e10',name:"Remo inclinado con barra supinado",muscle:"Espalda",level:"Avanzado"},{id:'e11',name:"Elevaciones en barra fija (Dominadas)",muscle:"Espalda",level:"Avanzado"},{id:'e12',name:"Elevaciones tras nuca en barra fija",muscle:"Espalda",level:"Avanzado"},{id:'e13',name:"Dominadas agarre supinado (Chin-ups)",muscle:"Espalda",level:"Intermedio"},{id:'e14',name:"Jalón dorsal con brazos rectos",muscle:"Espalda",level:"Principiante"},{id:'e15',name:"Remo inclinado con mancuernas",muscle:"Espalda",level:"Intermedio"},{id:'e16',name:"Pullover con mancuerna",muscle:"Espalda",level:"Intermedio"},{id:'e17',name:"Pullover con barra",muscle:"Espalda",level:"Intermedio"},{id:'e18',name:"Peso muerto con barra",muscle:"Espalda",level:"Avanzado"},{id:'e19',name:"Peso muerto sumo con barra",muscle:"Espalda",level:"Avanzado"},{id:'e20',name:"Peso muerto con barra hexagonal",muscle:"Espalda",level:"Intermedio"},{id:'e21',name:"Peso muerto con mancuernas",muscle:"Espalda",level:"Intermedio"},{id:'e22',name:"Encogimiento de hombros con barra",muscle:"Espalda",level:"Principiante"},{id:'e23',name:"Encogimiento de hombros con mancuernas",muscle:"Espalda",level:"Principiante"},{id:'s1',name:"Press de hombro con mancuernas",muscle:"Hombros",level:"Intermedio"},{id:'s2',name:"Elevación lateral con mancuernas",muscle:"Hombros",level:"Principiante"},{id:'s3',name:"Elevación frontal con mancuernas",muscle:"Hombros",level:"Principiante"},{id:'s4',name:"Cruces inversos en polea alta",muscle:"Hombros",level:"Intermedio"},{id:'s5',name:"Press de hombros en Máquina Smith",muscle:"Hombros",level:"Intermedio"},{id:'s6',name:"Remo alto con barra",muscle:"Hombros",level:"Avanzado"},{id:'s7',name:"Elevaciones posteriores (Pájaro)",muscle:"Hombros",level:"Intermedio"},{id:'s8',name:"Elevación lateral con cable a una mano",muscle:"Hombros",level:"Intermedio"},{id:'s9',name:"Press Militar con mancuernas",muscle:"Hombros",level:"Intermedio"},{id:'s10',name:"Press Militar (Barra de pie)",muscle:"Hombros",level:"Avanzado"},{id:'s11',name:"Elevaciones frontales con cable a una mano",muscle:"Hombros",level:"Principiante"},{id:'s12',name:"Elevaciones frontales con barra",muscle:"Hombros",level:"Principiante"},{id:'s13',name:"Press militar sentado con barra",muscle:"Hombros",level:"Intermedio"},{id:'s14',name:"Press tras nuca sentado",muscle:"Hombros",level:"Avanzado"},{id:'s15',name:"Press militar de pie tras nuca",muscle:"Hombros",level:"Avanzado"},{id:'s16',name:"Elevación frontal alterna (agarre neutro)",muscle:"Hombros",level:"Principiante"},{id:'s17',name:"Elevación frontal 1 brazo polea (neutro)",muscle:"Hombros",level:"Principiante"},{id:'s18',name:"Elevación frontal con mancuerna a dos manos",muscle:"Hombros",level:"Principiante"},{id:'s19',name:"Face Pull",muscle:"Hombros",level:"Intermedio"},{id:'a1',name:"Extensión de tríceps tumbado",muscle:"Brazos",level:"Intermedio"},{id:'a2',name:"Extensión de tríceps en polea",muscle:"Brazos",level:"Principiante"},{id:'a3',name:"Extensión de tríceps en polea con cuerda",muscle:"Brazos",level:"Principiante"},{id:'a4',name:"Extensión con mancuernas tras nuca",muscle:"Brazos",level:"Intermedio"},{id:'a5',name:"Press Banca con agarre cerrado",muscle:"Brazos",level:"Intermedio"},{id:'a6',name:"Patadas traseras",muscle:"Brazos",level:"Principiante"},{id:'a7',name:"Extensión de tríceps agarre inverso",muscle:"Brazos",level:"Avanzado"},{id:'a8',name:"Extensión de tríceps a una mano",muscle:"Brazos",level:"Principiante"},{id:'a9',name:"Extensión de tríceps supinado a una mano",muscle:"Brazos",level:"Intermedio"},{id:'a10',name:"Extensión de tríceps mancuernas tumbado",muscle:"Brazos",level:"Intermedio"},{id:'a11',name:"Press francés sentado con barra",muscle:"Brazos",level:"Intermedio"},{id:'a12',name:"Fondos en banco",muscle:"Brazos",level:"Principiante"},{id:'a13',name:"Fondos en barras paralelas",muscle:"Brazos",level:"Avanzado"},{id:'a14',name:"Curl con barra",muscle:"Brazos",level:"Principiante"},{id:'a15',name:"Curl alterno con mancuernas",muscle:"Brazos",level:"Principiante"},{id:'a16',name:"Curl con cuerda en polea",muscle:"Brazos",level:"Principiante"},{id:'a17',name:"Curl con barra EZ",muscle:"Brazos",level:"Principiante"},{id:'a18',name:"Curl de predicador con barra EZ",muscle:"Brazos",level:"Intermedio"},{id:'a19',name:"Curl martillo con mancuernas",muscle:"Brazos",level:"Principiante"},{id:'a20',name:"Curl inclinado con mancuernas",muscle:"Brazos",level:"Intermedio"},{id:'a21',name:"Curl concentrado con mancuernas",muscle:"Brazos",level:"Intermedio"},{id:'a22',name:"Curl polea baja a una mano",muscle:"Brazos",level:"Principiante"},{id:'a23',name:"Curl polea baja barra recta",muscle:"Brazos",level:"Principiante"},{id:'a24',name:"Curl polea alta de pie",muscle:"Brazos",level:"Intermedio"},{id:'a25',name:"Curl de muñeca con barra",muscle:"Brazos",level:"Principiante"},{id:'a26',name:"Extensión de muñeca con barra",muscle:"Brazos",level:"Principiante"},{id:'a27',name:"Curl de barra invertido",muscle:"Brazos",level:"Intermedio"},{id:'m1',name:"Mountain Climbers",muscle:"Crossfit",level:"Intermedio"},{id:'m2',name:"Plancha Abdominal",muscle:"Crossfit",level:"Principiante"},{id:'m3',name:"Jumping Jacks",muscle:"Crossfit",level:"Principiante"},{id:'m4',name:"Battle Ropes",muscle:"Crossfit",level:"Intermedio"},{id:'m5',name:"Sentadilla con Mancuernas",muscle:"Piernas",level:"Principiante"}];
-        const templates=[{category:'crossfit',name:"WOD: JT",items:[{id:'c14',reps:[21,15,9]},{id:'c22',reps:[21,15,9]},{id:'c36',reps:[21,15,9]}]},{category:'crossfit',name:"WOD: Murph",items:[{id:'c37',reps:[1600]},{id:'c21',reps:[100]},{id:'c36',reps:[200]},{id:'c29',reps:[300]},{id:'c37',reps:[1600]}]},{category:'crossfit',name:"WOD: DT (5 Rondas)",items:[{id:'c9',reps:[12,12,12,12,12]},{id:'c40',reps:[9,9,9,9,9]},{id:'c20',reps:[6,6,6,6,6]}]},{category:'crossfit',name:"WOD: Fran",items:[{id:'c38',reps:[21,15,9]},{id:'c21',reps:[21,15,9]}]},{category:'crossfit',name:"WOD: Grace",items:[{id:'c7',reps:[30]}]},{category:'crossfit',name:"WOD: Helen (3 Rondas)",items:[{id:'c37',reps:[400,400,400]},{id:'c39',reps:[21,21,21]},{id:'c21',reps:[12,12,12]}]},{category:'crossfit',name:"WOD: Diane",items:[{id:'c9',reps:[21,15,9]},{id:'c14',reps:[21,15,9]}]},{category:'crossfit',name:"WOD: Annie",items:[{id:'c10',reps:[50,40,30,20,10]},{id:'c30',reps:[50,40,30,20,10]}]},{category:'crossfit',name:"WOD: Elizabeth",items:[{id:'c41',reps:[21,15,9]},{id:'c22',reps:[21,15,9]}]},{category:'crossfit',name:"WOD: Isabel",items:[{id:'c27',reps:[30]}]},{category:'crossfit',name:"WOD: Karen",items:[{id:'c35',reps:[150]}]},{category:'crossfit',name:"WOD: Nancy (5 Rondas)",items:[{id:'c37',reps:[400,400,400,400,400]},{id:'c17',reps:[15,15,15,15,15]}]},{category:'crossfit',name:"WOD: Kelly (5 Rondas)",items:[{id:'c37',reps:[400,400,400,400,400]},{id:'c4',reps:[30,30,30,30,30]},{id:'c35',reps:[30,30,30,30,30]}]},{category:'crossfit',name:"WOD: Jackie",items:[{id:'c42',reps:[1000]},{id:'c38',reps:[50]},{id:'c21',reps:[30]}]},{category:'gym',name:"Weider Pecho",items:[{id:'p1',reps:["6-10","6-10","6-10","6-10"]},{id:'p2',reps:["8-12","8-12","8-12","8-12"]},{id:'a13',reps:["8-12","8-12","8-12","8-12"]},{id:'p7',reps:["12-15","12-15","12-15"]},{id:'e16',reps:[12,12,12]}]},{category:'gym',name:"Weider Hombros",items:[{id:'s9',reps:["8-10","8-10","8-10","8-10"]},{id:'s2',reps:["12-15","12-15","12-15","12-15"]},{id:'s7',reps:["12-15","12-15","12-15"]},{id:'s3',reps:["12-15","12-15","12-15"]}]},{category:'gym',name:"Torso (Torso-Pierna)",items:[{id:'p1',reps:[6,6,6,6]},{id:'e5',reps:[8,8,8,8]},{id:'s10',reps:[8,8,8]},{id:'e11',reps:[10,10,10]},{id:'a14',reps:[10,10,10]},{id:'a2',reps:[12,12,12]}]},{category:'gym',name:"Pierna (Torso-Pierna)",items:[{id:'l1',reps:[6,6,6,6]},{id:'l11',reps:[8,8,8,8]},{id:'l2',reps:[10,10,10]},{id:'l4',reps:[10,10,10]},{id:'l41',reps:[15,15,15,15]},{id:'ab1',reps:[15,15,15]}]},{category:'gym',name:"6-12-25 Pecho",items:[{id:'p1',reps:[6,6,6]},{id:'p2',reps:[12,12,12]},{id:'a13',reps:[25,25,25]}]},{category:'gym',name:"6-12-25 Espalda",items:[{id:'e11',reps:[6,6,6]},{id:'e5',reps:[12,12,12]},{id:'s19',reps:[25,25,25]}]},{category:'gym',name:"6-12-25 Pierna",items:[{id:'l1',reps:[6,6,6]},{id:'l4',reps:[12,12,12]},{id:'l2',reps:[25,25,25]}]},{category:'metabolic',name:"Circuito Full Body (3 Rondas)",items:[{id:'c5',reps:["20\"","20\"","20\""]},{id:'l14',reps:["20\"","20\"","20\""]},{id:'p12',reps:["20\"","20\"","20\""]},{id:'m1',reps:["20\"","20\"","20\""]},{id:'e15',reps:["20\"","20\"","20\""]},{id:'m2',reps:["20\"","20\"","20\""]}]},{category:'metabolic',name:"Alta Intensidad (5 Rondas)",items:[{id:'c38',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'l19',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'c29',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'m3',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'c5',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'c30',reps:["30\"","30\"","30\"","30\"","30\""]}]},{category:'metabolic',name:"Circuito con Material (3 Rondas)",items:[{id:'m4',reps:["20\"","20\"","20\""]},{id:'c4',reps:["20\"","20\"","20\""]},{id:'c35',reps:["20\"","20\"","20\""]},{id:'c10',reps:["20\"","20\"","20\""]}]},{category:'metabolic',name:"Circuito Funcional Fitness (3 Rondas)",items:[{id:'c5',reps:["20\"","20\"","20\""]},{id:'m5',reps:["20\"","20\"","20\""]},{id:'l10',reps:["20\"","20\"","20\""]},{id:'e15',reps:["20\"","20\"","20\""]},{id:'s1',reps:["20\"","20\"","20\""]},{id:'p12',reps:["20\"","20\"","20\""]},{id:'l29',reps:["20\"","20\"","20\""]},{id:'c30',reps:["20\"","20\"","20\""]}]}];
+        
+        const templates=[
+            {category:'crossfit',name:"WOD: JT",items:[{id:'c14',reps:[21,15,9]},{id:'c22',reps:[21,15,9]},{id:'c36',reps:[21,15,9]}]},
+            {category:'crossfit',name:"WOD: Murph",items:[{id:'c37',reps:[1600]},{id:'c21',reps:[100]},{id:'c36',reps:[200]},{id:'c29',reps:[300]},{id:'c37',reps:[1600]}]},
+            {category:'crossfit',name:"WOD: DT (5 Rondas)",items:[{id:'c9',reps:[12,12,12,12,12]},{id:'c40',reps:[9,9,9,9,9]},{id:'c20',reps:[6,6,6,6,6]}]},
+            {category:'crossfit',name:"WOD: Fran",items:[{id:'c38',reps:[21,15,9]},{id:'c21',reps:[21,15,9]}]},
+            {category:'crossfit',name:"WOD: Grace",items:[{id:'c7',reps:[30]}]},
+            {category:'crossfit',name:"WOD: Helen (3 Rondas)",items:[{id:'c37',reps:[400,400,400]},{id:'c39',reps:[21,21,21]},{id:'c21',reps:[12,12,12]}]},
+            {category:'crossfit',name:"WOD: Diane",items:[{id:'c9',reps:[21,15,9]},{id:'c14',reps:[21,15,9]}]},
+            {category:'crossfit',name:"WOD: Annie",items:[{id:'c10',reps:[50,40,30,20,10]},{id:'c30',reps:[50,40,30,20,10]}]},
+            {category:'crossfit',name:"WOD: Elizabeth",items:[{id:'c41',reps:[21,15,9]},{id:'c22',reps:[21,15,9]}]},
+            {category:'crossfit',name:"WOD: Isabel",items:[{id:'c27',reps:[30]}]},
+            {category:'crossfit',name:"WOD: Karen",items:[{id:'c35',reps:[150]}]},
+            {category:'crossfit',name:"WOD: Nancy (5 Rondas)",items:[{id:'c37',reps:[400,400,400,400,400]},{id:'c17',reps:[15,15,15,15,15]}]},
+            {category:'crossfit',name:"WOD: Kelly (5 Rondas)",items:[{id:'c37',reps:[400,400,400,400,400]},{id:'c4',reps:[30,30,30,30,30]},{id:'c35',reps:[30,30,30,30,30]}]},
+            {category:'crossfit',name:"WOD: Jackie",items:[{id:'c42',reps:[1000]},{id:'c38',reps:[50]},{id:'c21',reps:[30]}]},
+            {category:'gym',name:"Weider Pecho",items:[{id:'p1',reps:["6-10","6-10","6-10","6-10"]},{id:'p2',reps:["8-12","8-12","8-12","8-12"]},{id:'a13',reps:["8-12","8-12","8-12","8-12"]},{id:'p7',reps:["12-15","12-15","12-15"]},{id:'e16',reps:[12,12,12]}]},
+            {category:'gym',name:"Weider Hombros",items:[{id:'s9',reps:["8-10","8-10","8-10","8-10"]},{id:'s2',reps:["12-15","12-15","12-15","12-15"]},{id:'s7',reps:["12-15","12-15","12-15"]},{id:'s3',reps:["12-15","12-15","12-15"]}]},
+            {category:'gym',name:"Torso (Torso-Pierna)",items:[{id:'p1',reps:[6,6,6,6]},{id:'e5',reps:[8,8,8,8]},{id:'s10',reps:[8,8,8]},{id:'e11',reps:[10,10,10]},{id:'a14',reps:[10,10,10]},{id:'a2',reps:[12,12,12]}]},
+            {category:'gym',name:"Pierna (Torso-Pierna)",items:[{id:'l1',reps:[6,6,6,6]},{id:'l11',reps:[8,8,8,8]},{id:'l2',reps:[10,10,10]},{id:'l4',reps:[10,10,10]},{id:'l41',reps:[15,15,15,15]},{id:'ab1',reps:[15,15,15]}]},
+            {category:'gym',name:"6-12-25 Pecho",items:[{id:'p1',reps:[6,6,6]},{id:'p2',reps:[12,12,12]},{id:'a13',reps:[25,25,25]}]},
+            {category:'gym',name:"6-12-25 Espalda",items:[{id:'e11',reps:[6,6,6]},{id:'e5',reps:[12,12,12]},{id:'s19',reps:[25,25,25]}]},
+            {category:'gym',name:"6-12-25 Pierna",items:[{id:'l1',reps:[6,6,6]},{id:'l4',reps:[12,12,12]},{id:'l2',reps:[25,25,25]}]},
+            {category:'metabolic',name:"Circuito Full Body (3 Rondas)",items:[{id:'c5',reps:["20\"","20\"","20\""]},{id:'l14',reps:["20\"","20\"","20\""]},{id:'p12',reps:["20\"","20\"","20\""]},{id:'m1',reps:["20\"","20\"","20\""]},{id:'e15',reps:["20\"","20\"","20\""]},{id:'m2',reps:["20\"","20\"","20\""]}]},
+            {category:'metabolic',name:"Alta Intensidad (5 Rondas)",items:[{id:'c38',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'l19',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'c29',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'m3',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'c5',reps:["30\"","30\"","30\"","30\"","30\""]},{id:'c30',reps:["30\"","30\"","30\"","30\"","30\""]}]},
+            {category:'metabolic',name:"Circuito con Material (3 Rondas)",items:[{id:'m4',reps:["20\"","20\"","20\""]},{id:'c4',reps:["20\"","20\"","20\""]},{id:'c35',reps:["20\"","20\"","20\""]},{id:'c10',reps:["20\"","20\"","20\""]}]},
+            {category:'metabolic',name:"Circuito Funcional Fitness (3 Rondas)",items:[{id:'c5',reps:["20\"","20\"","20\""]},{id:'m5',reps:["20\"","20\"","20\""]},{id:'l10',reps:["20\"","20\"","20\""]},{id:'e15',reps:["20\"","20\"","20\""]},{id:'s1',reps:["20\"","20\"","20\""]},{id:'p12',reps:["20\"","20\"","20\""]},{id:'l29',reps:["20\"","20\"","20\""]},{id:'c30',reps:["20\"","20\"","20\""]}]},
+            
+            // LA GRAN COLECCIÓN OPEN CROSSFIT
+            {category:'open', name:"Open 25.1", isWod:true, desc:"AMRAP 15 min. Escalera ascendente (+3 reps/ronda): DB Burpees laterales, DB Hang Clean-to-Overhead (22.5/15kg) y 9m de Zancadas."},
+            {category:'open', name:"Open 25.2", isWod:true, desc:"Por tiempo (Cap 12 min). 3 rondas con pesos crecientes de Thrusters (43/29kg, 52/34kg, 61/39kg) combinados con Double-unders y gimnásticos (Pull-ups, C2B, BMU)."},
+            {category:'open', name:"Open 25.3", isWod:true, desc:"Por tiempo (Cap 20 min).\n5 Wall walks\n50 cal Remo\n25 Deadlifts (102/70 kg)\n25 Cleans (61/38 kg)\n25 Snatches (43/29 kg)\n25 Cleans (61/38 kg)\n25 Deadlifts (102/70 kg)\n50 cal Remo\n5 Wall walks."},
+            {category:'open', name:"Open 24.1", isWod:true, desc:"Por tiempo (Cap 15 min). 21-15-9 de Dumbbell Snatches (22.5/15kg) y Burpees laterales sobre mancuerna."},
+            {category:'open', name:"Open 24.2", isWod:true, desc:"AMRAP 20 min. 300m Remo, 10 Deadlifts (83/56kg) y 50 Double-unders."},
+            {category:'open', name:"Open 24.3", isWod:true, desc:"Por tiempo (Cap 15 min). Dos rondas de: 10 Thrusters (43/29kg) + 10 C2B; seguido de dos rondas de: 7 Thrusters (61/39kg) + 7 BMU."},
+            {category:'open', name:"Open 23.1", isWod:true, desc:"AMRAP 14 min. 60 cal Remo, 50 Toes-to-bar, 40 Wall balls (9/6kg), 30 Cleans (61/43kg) y 20 Muscle-ups."},
+            {category:'open', name:"Open 23.2A", isWod:true, desc:"AMRAP 15 min. Shuttle runs (carrera) y Burpee Pull-ups con repeticiones ascendentes."},
+            {category:'open', name:"Open 23.2B", isWod:true, desc:"1RM Thruster. 5 minutos para establecer carga máxima inmediatamente después del 23.2A."},
+            {category:'open', name:"Open 23.3", isWod:true, desc:"Por tiempo (Cap 12 min). Ventanas de tiempo para completar Wall walks, Double-unders y Snatches con peso creciente (hasta 83/56kg)."},
+            {category:'open', name:"Open 22.1", isWod:true, desc:"AMRAP 15 min. 3 Wall walks, 12 DB Snatches (22.5/15kg) y 15 Box jump-overs."},
+            {category:'open', name:"Open 22.2", isWod:true, desc:"Por tiempo (Cap 10 min). 1-2-3-4-5-6-7-8-9-10-9-8-7-6-5-4-3-2-1 repeticiones de: Deadlifts (102/70kg) y Bar-facing Burpees."},
+            {category:'open', name:"Open 22.3", isWod:true, desc:"Por tiempo (Cap 12 min). 21 Pull-ups, 42 DU, 21 Thrusters (43/29kg); 18 C2B, 36 DU, 18 Thrusters (52/34kg); 15 BMU, 30 DU, 15 Thrusters (61/38kg)."},
+            {category:'open', name:"Open 21.1", isWod:true, desc:"Por tiempo (Cap 15 min). 1-3-6-9-15-21 de: Wall walks y Double-unders (los saltos multiplican las reps x10)."},
+            {category:'open', name:"Open 21.2", isWod:true, desc:"Por tiempo (Cap 20 min). Repetición del 17.1: DB Snatches (22.5/15kg) y Burpee Box Jump-overs con volumen ascendente (10-20-30-40-50)."},
+            {category:'open', name:"Open 21.3", isWod:true, desc:"Por tiempo (Cap 15 min). 15 Front Squats (43/29kg), 30 Toes-to-bar, 15 Thrusters; descanso 1 min; 15 FS, 30 C2B, 15 Thrusters; descanso 1 min; 15 FS, 30 BMU, 15 Thrusters."},
+            {category:'open', name:"Open 21.4", isWod:true, desc:"Complex de Halterofilia. Inmediatamente tras el 21.3 (7 min): 1 Deadlift + 1 Clean + 1 Hang Clean + 1 Jerk (Peso máximo)."},
+            {category:'open', name:"Open 20.1", isWod:true, desc:"10 rondas por tiempo (Cap 15 min). 8 Ground-to-overheads (43/29kg) y 10 Burpees sobre la barra."},
+            {category:'open', name:"Open 20.2", isWod:true, desc:"AMRAP 20 min. 4 Dumbbell Thrusters (22.5/15kg), 6 Toes-to-bar y 24 Double-unders."},
+            {category:'open', name:"Open 20.3", isWod:true, desc:"Por tiempo (Cap 9 min). 21-15-9 de Peso muerto (102/70kg) y HSPU; luego 21-15-9 de Peso muerto (143/93kg) y 15m de Handstand walk tras cada serie."},
+            {category:'open', name:"Open 20.4", isWod:true, desc:"Por tiempo (Cap 20 min). 30 Box jumps, 15 Clean & Jerks (43/29kg), 30 Box jumps, 15 C&J (61/43kg), 30 Box jumps, 10 C&J (83/52kg), 30 Pistols, 10 C&J (102/65kg), 30 Pistols, 5 C&J (124/80kg), 30 Pistols, 5 C&J (143/93kg)."},
+            {category:'open', name:"Open 20.5", isWod:true, desc:"Por tiempo (Cap 20 min). Repartir como quieras: 40 Muscle-ups en anillas, 80 cal Remo y 120 Wall balls (9/6kg)."},
+            {category:'open', name:"Open 19.1", isWod:true, desc:"AMRAP 15 min. 19 Wall balls (9/6kg) y 19 cal Remo."},
+            {category:'open', name:"Open 19.2", isWod:true, desc:"Por tiempo (Ventanas de 4 min). 25 Toes-to-bar, 50 Double-unders y 15 Squat cleans con peso creciente. Si terminas antes de los 4 min, sumas 4 min adicionales hasta un máximo de 20 min."},
+            {category:'open', name:"Open 19.3", isWod:true, desc:"Por tiempo (Cap 10 min). 60m Zancada aérea con mancuerna (22.5/15kg), 50 Step-ups con mancuerna, 50 Strict HSPU y 60m Handstand walk."},
+            {category:'open', name:"Open 19.4", isWod:true, desc:"Por tiempo (Cap 12 min). 3 rondas de: 10 Snatch (43/29kg) y 12 Bar-facing burpees. Descanso obligatorio de 3 min. Luego 3 rondas de: 10 Bar muscle-ups y 12 Bar-facing burpees."},
+            {category:'open', name:"Open 19.5", isWod:true, desc:"Por tiempo (Cap 20 min). 33-27-21-15-9 de Thrusters (43/29kg) y Chest-to-bar pull-ups."},
+            {category:'open', name:"Open 18.1", isWod:true, desc:"AMRAP 20 min. 8 Toes-to-bar, 10 Dumbbell hang clean & jerks (22.5/15kg) y 14/12 cal Remo."},
+            {category:'open', name:"Open 18.2", isWod:true, desc:"Por tiempo (Cap 12 min). 1-2-3-4-5-6-7-8-9-10 de Dumbbell squats (22.5/15kg) y Bar-facing burpees."},
+            {category:'open', name:"Open 18.2A", isWod:true, desc:"1RM Clean. En el tiempo restante de los 12 min tras terminar el 18.2."},
+            {category:'open', name:"Open 18.3", isWod:true, desc:"Por tiempo (Cap 14 min). 2 rondas de: 100 DU, 20 Overhead squats (52/36kg), 100 DU, 12 Ring MU, 100 DU, 20 DB Snatches (22.5/15kg), 100 DU y 12 Bar MU."},
+            {category:'open', name:"Open 18.4", isWod:true, desc:"Por tiempo (Cap 9 min). 21-15-9 de Peso muerto (102/70kg) y HSPU; luego 21-15-9 de Peso muerto (143/93kg) y 15m de Handstand walk."},
+            {category:'open', name:"Open 18.5", isWod:true, desc:"AMRAP 7 min. Escalera ascendente de 3-6-9-12... de Thrusters (45/30kg) y Chest-to-bar pull-ups."},
+            {category:'open', name:"Open 17.1", isWod:true, desc:"Por tiempo (Cap 20 min). 10-20-30-40-50 Dumbbell Snatches (22.5/15 kg) alternando brazos, intercalados con 15 Burpee Box Jump-overs (60/50 cm) después de cada serie de snatches."},
+            {category:'open', name:"Open 17.2", isWod:true, desc:"AMRAP 12 min. 2 rondas de: 15m Zancada frontal con mancuernas (22.5/15 kg), 16 Toes-to-bar y 8 Dumbbell Power Cleans. Luego, 2 rondas cambiando los TTB por 16 Bar Muscle-ups. Repetir la secuencia."},
+            {category:'open', name:"Open 17.3", isWod:true, desc:"Por tiempo (Ventanas de tiempo). 3 rondas de 6 Chest-to-bar y 6 Squat Snatches (43/29 kg). Si terminas antes del min 8, haces 3 rondas de 7 C2B y 5 Snatches (61/43 kg). El peso sube y las reps de snatch bajan cada 4 min extra ganados (hasta 120/84 kg)."},
+            {category:'open', name:"Open 17.4", isWod:true, desc:"AMRAP 13 min. 55 Deadlifts (102/70 kg), 55 Wall-ball shots (9/6 kg), 55 cal Remo y 55 HSPU."},
+            {category:'open', name:"Open 17.5", isWod:true, desc:"10 rondas por tiempo (Cap 40 min). 9 Thrusters (43/29 kg) y 35 Double-unders."},
+            {category:'open', name:"Open 16.1", isWod:true, desc:"AMRAP 20 min. 7.5m Zancada aérea con barra (43/29 kg), 8 Burpees laterales sobre la barra, 7.5m Zancada aérea y 8 Chest-to-bar Pull-ups."},
+            {category:'open', name:"Open 16.2", isWod:true, desc:"Por tiempo (Ventanas de 4 min). 25 Toes-to-bar, 50 Double-unders y 15 Squat Cleans (61/38 kg). Si terminas antes del min 4, ganas otros 4 min para repetir con peso creciente en la barra (hasta 143/93 kg) y menos reps de clean."},
+            {category:'open', name:"Open 16.3", isWod:true, desc:"AMRAP 7 min. 10 Power Snatches (34/25 kg) y 3 Bar Muscle-ups."},
+            {category:'open', name:"Open 16.4", isWod:true, desc:"AMRAP 13 min. 55 Deadlifts (102/70 kg), 55 Wall-ball shots (9/6 kg), 55 cal Remo y 55 HSPU."},
+            {category:'open', name:"Open 16.5", isWod:true, desc:"Por tiempo (Sin límite). 21-18-15-12-9-6-3 de: Thrusters (43/29 kg) y Bar-facing Burpees."},
+            {category:'open', name:"Open 15.1", isWod:true, desc:"AMRAP 9 min. 15 Toes-to-bar, 10 Deadlifts (52/34 kg) y 5 Snatch (52/34 kg)."},
+            {category:'open', name:"Open 15.1A", isWod:true, desc:"1RM Clean & Jerk. 6 minutos para carga máxima tras el 15.1."},
+            {category:'open', name:"Open 15.2", isWod:true, desc:"Por tiempo (Ventanas de 3 min). 2 rondas de 10 Overhead Squats (43/29 kg) y 10 C2B. Si terminas, sumas +2 reps por ronda cada 3 min."},
+            {category:'open', name:"Open 15.3", isWod:true, desc:"AMRAP 14 min. 7 Muscle-ups, 50 Wall Balls (9/6 kg) y 100 Double-unders."},
+            {category:'open', name:"Open 15.4", isWod:true, desc:"AMRAP 8 min. Escalera ascendente (3-6-9...): HSPU y Cleans (84/56 kg)."},
+            {category:'open', name:"Open 15.5", isWod:true, desc:"Por tiempo (No Cap). 27-21-15-9 de: Remo (Cal) y Thrusters (43/29 kg)."},
+            {category:'open', name:"Open 14.1", isWod:true, desc:"AMRAP 10 min. 30 Double-unders y 15 Power Snatches (34/25 kg)."},
+            {category:'open', name:"Open 14.2", isWod:true, desc:"Por tiempo (Ventanas de 3 min). Escalera ascendente de OHS (43/29 kg) y C2B."},
+            {category:'open', name:"Open 14.3", isWod:true, desc:"AMRAP 8 min. 10 Deadlifts (61/43 kg) + 15 Box Jumps. A cada ronda sube el peso del Deadlift hasta llegar a 165/115 kg."},
+            {category:'open', name:"Open 14.4", isWod:true, desc:"AMRAP 14 min. 60 cal Remo, 50 Toes-to-bar, 40 Wall Balls, 30 Cleans (61/43 kg) y 20 Muscle-ups."},
+            {category:'open', name:"Open 14.5", isWod:true, desc:"Por tiempo (No Cap). 21-18-15-12-9-6-3 de: Thrusters (43/29 kg) y Bar-facing Burpees."},
+            {category:'open', name:"Open 13.1", isWod:true, desc:"AMRAP 17 min. 40 Burpees, 30 Snatches (34/20 kg), 30 Burpees, 30 Snatches (61/34 kg), 20 Burpees, 30 Snatches (75/45 kg), 10 Burpees y Snatches máx (95/56 kg)."},
+            {category:'open', name:"Open 13.2", isWod:true, desc:"AMRAP 10 min. 5 Shoulder-to-overhead (52/34 kg), 10 Deadlifts (52/34 kg) y 15 Box Jumps."},
+            {category:'open', name:"Open 13.3", isWod:true, desc:"AMRAP 12 min. 150 Wall Balls, 90 Double-unders y 30 Muscle-ups."},
+            {category:'open', name:"Open 13.4", isWod:true, desc:"AMRAP 7 min. Escalera (3-6-9...): Clean & Jerk (61/43 kg) y Toes-to-bar."},
+            {category:'open', name:"Open 13.5", isWod:true, desc:"AMRAP 4 min. 15 Thrusters (45/30 kg) y 15 Chest-to-bar. (Si hacías 90 reps, ganabas 4 min extra)."},
+            {category:'open', name:"Open 12.1", isWod:true, desc:"AMRAP 7 min. Máximos Burpees (objetivo a 15cm sobre el alcance)."},
+            {category:'open', name:"Open 12.2", isWod:true, desc:"AMRAP 10 min. 30 Snatches (34/20 kg), 30 Snatches (45/29 kg), 30 Snatches (54/34 kg) y Snatches máx (68/45 kg)."},
+            {category:'open', name:"Open 12.3", isWod:true, desc:"AMRAP 18 min. 15 Box Jumps, 12 Push Press (52/34 kg) y 9 Toes-to-bar."},
+            {category:'open', name:"Open 12.4", isWod:true, desc:"AMRAP 12 min. 150 Wall Balls, 90 Double-unders y 30 Muscle-ups."},
+            {category:'open', name:"Open 12.5", isWod:true, desc:"AMRAP 7 min. Escalera (3-6-9...): Thrusters (45/30 kg) y Chest-to-bar."},
+            {category:'open', name:"Open 11.1", isWod:true, desc:"AMRAP 10 min. 30 Double-unders y 15 Power Snatches (34/25 kg)."},
+            {category:'open', name:"Open 11.2", isWod:true, desc:"AMRAP 15 min. 9 Deadlifts (70/45 kg), 12 Push-ups (flexiones) y 15 Box Jumps."},
+            {category:'open', name:"Open 11.3", isWod:true, desc:"AMRAP 5 min. Squat Clean & Jerk (75/49 kg)."},
+            {category:'open', name:"Open 11.4", isWod:true, desc:"AMRAP 10 min. 60 Bar-facing Burpees, 30 Overhead Squats (54/34 kg) y 10 Muscle-ups."},
+            {category:'open', name:"Open 11.5", isWod:true, desc:"AMRAP 20 min. 5 Power Cleans (65/45 kg), 10 Toes-to-bar y 15 Wall Balls."},
+            {category:'open', name:"Open 11.6", isWod:true, desc:"AMRAP 7 min. Escalera (3-6-9...): Thrusters (45/30 kg) y Chest-to-bar."}
+        ];
 
         /* STATE */
+        let audioCtx = null;
+        let soundEnabled = true;
+
         let state = {
             history: JSON.parse(localStorage.getItem('kilo_history')) || [],
             progress: JSON.parse(localStorage.getItem('kilo_progress')) || [],
@@ -400,14 +565,153 @@
             currentUser: JSON.parse(localStorage.getItem('kilo_current_user')) || null,
             currentSession: null,
             exercises: initialExercises,
-            timerMode: 'amrap', timerInterval: null, timeLeft: 600, isRunning: false, lastTick: 0, initialDuration: 600,
+            
+            /* VARIABLES EDICIÓN */
+            editingWorkoutId: null,
+            editingWorkoutDate: null,
+            editingWorkoutDuration: 0,
+            
+            /* CALCULADORA DISCOS */
+            barWeight: 20,
+            
+            /* RELOJ */
+            timerMode: 'amrap', timerInterval: null, timeLeft: 600, isRunning: false, 
+            startTime: 0, accumulatedTime: 0, lastBeep: -1,
+            isPrep: false, isPrepCompleted: false,
             cfgAmrap: 10, cfgForTimeCap: 0, cfgEmomTotal: 10, cfgTabataWork: 20, cfgTabataRest: 10, cfgTabataRounds: 8,
             emomCurrentMinute: 1, tabataRound: 1, tabataState: 'work'
         };
 
         window.onload = () => {
-            setTimeout(() => { document.getElementById('splash-screen').classList.add('fade-out'); setTimeout(() => document.getElementById('splash-screen').style.display='none',800); if(state.currentUser) showHome(); else showLogin(); setTimerMode('amrap'); }, 1500);
+            setTimeout(() => { document.getElementById('splash-screen').classList.add('fade-out'); setTimeout(() => document.getElementById('splash-screen').style.display='none',800); if(state.currentUser) showHome(); else showLogin(); setTimerMode('amrap'); calcPlates(); }, 1500);
         };
+
+        /* FUNCIONES CALCULADORA DISCOS */
+        function setBarWeight(w, btn) {
+            state.barWeight = w;
+            document.querySelectorAll('.bar-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            calcPlates();
+        }
+
+        function calcPlates() {
+            const target = parseFloat(document.getElementById('target-weight').value) || 0;
+            const resultDiv = document.getElementById('plate-result-text');
+            
+            const leftContainer = document.getElementById('sleeve-left');
+            const rightContainer = document.getElementById('sleeve-right');
+            
+            if (target === 0) { 
+                resultDiv.innerText = ""; 
+                leftContainer.innerHTML = '';
+                rightContainer.innerHTML = '';
+                return; 
+            }
+            if (target <= state.barWeight) {
+                resultDiv.innerText = "El peso debe ser mayor que la barra.";
+                leftContainer.innerHTML = '';
+                rightContainer.innerHTML = '';
+                return;
+            }
+            
+            let sideWeight = (target - state.barWeight) / 2;
+            let remaining = sideWeight;
+            let platesToLoad = [];
+            
+            if (remaining >= 20) {
+                let num20s = Math.floor(remaining / 20);
+                platesToLoad.push({weight: 20, count: num20s, css: 'plate-20'});
+                remaining = parseFloat((remaining % 20).toFixed(2));
+            }
+            
+            const availablePlates = [
+                {w: 15, c: 'plate-15'},
+                {w: 10, c: 'plate-10'},
+                {w: 5, c: 'plate-5'},
+                {w: 2.5, c: 'plate-2-5'},
+                {w: 1.25, c: 'plate-1-25'}
+            ];
+            
+            for (let p of availablePlates) {
+                let count = Math.floor(remaining / p.w);
+                if (count > 0) {
+                    platesToLoad.push({weight: p.w, count: count, css: p.c});
+                    remaining = parseFloat((remaining % p.w).toFixed(2));
+                }
+            }
+            
+            if (remaining > 0) {
+                 resultDiv.innerText = `Faltan ${remaining}kg. Pon por lado: ` + platesToLoad.map(p => `${p.count}x${p.weight}`).join(', ');
+            } else {
+                 resultDiv.innerText = "Pon por lado: " + platesToLoad.map(p => `${p.count}x${p.weight}`).join(', ');
+            }
+            
+            let leftHTML = '';
+            let rightHTML = '';
+            
+            let reversedPlates = [...platesToLoad].reverse();
+            reversedPlates.forEach(p => {
+                for(let i=0; i<p.count; i++) {
+                    leftHTML += `<div class="plate ${p.css}"><span style="transform: rotate(180deg); display:flex; align-items:center; justify-content:center;">${p.weight}</span></div>`;
+                }
+            });
+            
+            platesToLoad.forEach(p => {
+                for(let i=0; i<p.count; i++) {
+                    rightHTML += `<div class="plate ${p.css}"><span style="transform: rotate(0deg); display:flex; align-items:center; justify-content:center;">${p.weight}</span></div>`;
+                }
+            });
+            
+            leftContainer.innerHTML = leftHTML;
+            rightContainer.innerHTML = rightHTML;
+        }
+
+        /* FUNCIONES DE AUDIO */
+        function initAudio() {
+            if (!soundEnabled) return;
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playBeep(type) {
+            if (!soundEnabled || !audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            osc.type = 'sine';
+            
+            if (type === 'short') {
+                osc.frequency.setValueAtTime(1000, audioCtx.currentTime); 
+                gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+                osc.start(audioCtx.currentTime);
+                osc.stop(audioCtx.currentTime + 0.15);
+            } else if (type === 'long') {
+                osc.frequency.setValueAtTime(1500, audioCtx.currentTime); 
+                gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+                osc.start(audioCtx.currentTime);
+                osc.stop(audioCtx.currentTime + 0.6);
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('sound-btn');
+            const icon = document.getElementById('sound-icon');
+            if(soundEnabled) {
+                btn.classList.add('active'); btn.classList.remove('muted');
+                icon.classList.remove('ph-speaker-slash'); icon.classList.add('ph-speaker-high');
+                initAudio(); playBeep('short');
+            } else {
+                btn.classList.remove('active'); btn.classList.add('muted');
+                icon.classList.remove('ph-speaker-high'); icon.classList.add('ph-speaker-slash');
+            }
+        }
 
         /* AUTH & NAV */
         function showLogin() { hideAll(); document.getElementById('login-screen').classList.add('active'); }
@@ -429,50 +733,103 @@
             document.getElementById('home-stats-display').innerHTML=`<div class="stat-box"><div class="stat-label">Peso</div><div class="stat-val">${w}</div></div><div class="stat-box"><div class="stat-label">Cintura</div><div class="stat-val">${p.waist||'--'}</div></div><div class="stat-box"><div class="stat-label">Pecho</div><div class="stat-val">${p.chest||'--'}</div></div><div class="stat-box"><div class="stat-label">Cadera</div><div class="stat-val">${p.hips||'--'}</div></div><div class="stat-box"><div class="stat-label">Brazo</div><div class="stat-val">${p.arm||'--'}</div></div><div class="stat-box"><div class="stat-label">Muslo</div><div class="stat-val">${p.thigh||'--'}</div></div>`;
         }
         
-        /* PROFILE */
         function updateUserName(n) { if(state.currentUser&&n){state.currentUser.name=n; localStorage.setItem('kilo_current_user',JSON.stringify(state.currentUser)); const i=state.users.findIndex(u=>u.email===state.currentUser.email); if(i!==-1){state.users[i].name=n;localStorage.setItem('kilo_users',JSON.stringify(state.users));}}}
         function calcRM() { const w=parseFloat(document.getElementById('rm-weight').value)||0, r=parseFloat(document.getElementById('rm-reps').value)||0; document.getElementById('rm-display').innerText = (w>0&&r>0) ? Math.round(w*(1+r/30)) : "0"; }
         function exportBackup() { const a=document.createElement('a'); a.href="data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(localStorage)); a.download="kilo_backup.json"; document.body.appendChild(a); a.click(); a.remove(); }
         function importBackup(i) { const f=i.files[0]; if(!f)return; const r=new FileReader(); r.onload=e=>{try{const d=JSON.parse(e.target.result);Object.keys(d).forEach(k=>localStorage.setItem(k,d[k]));showCustomAlert("Importado. Recargando...");setTimeout(()=>location.reload(),2000);}catch(x){showCustomAlert("Error archivo");}}; r.readAsText(f); }
 
-        /* DIALOGS */
         function showCustomAlert(m) { document.getElementById('dialog-msg').innerText=m; document.getElementById('dialog-cancel').style.display='none'; document.getElementById('dialog-confirm').onclick=closeDialog; document.getElementById('customDialog').style.display='flex'; }
         function showCustomConfirm(m,cb) { document.getElementById('dialog-msg').innerText=m; document.getElementById('dialog-cancel').style.display='block'; document.getElementById('dialog-confirm').onclick=()=>{cb();closeDialog();}; document.getElementById('customDialog').style.display='flex'; }
         function closeDialog() { document.getElementById('customDialog').style.display='none'; }
 
         /* TRAINING LOGIC */
-        function openTemplateCategory(c) { document.getElementById('train-main-menu').classList.add('hidden'); document.getElementById('train-sub-list').classList.remove('hidden'); document.getElementById('category-title').innerText={crossfit:'WODs Crossfit',gym:'Rutinas Gym',metabolic:'Circuitos Metabólicos'}[c]; document.getElementById('templates-container').innerHTML=templates.filter(t=>t.category===c).map(t=>`<div class="card" onclick='startWorkout(${JSON.stringify(t)})'><h3 style="color:white;">${t.name}</h3><p>${t.items.length} ejercicios</p></div>`).join(''); }
+        function openTemplateCategory(c) { 
+            document.getElementById('train-main-menu').classList.add('hidden'); 
+            document.getElementById('train-sub-list').classList.remove('hidden'); 
+            document.getElementById('category-title').innerText={crossfit:'WODs Crossfit',gym:'Rutinas Gym',metabolic:'Circuitos Metabólicos',open:'Open Crossfit'}[c]; 
+            
+            document.getElementById('templates-container').innerHTML = templates.filter(t=>t.category===c).map(t => {
+                let index = templates.indexOf(t);
+                let subtitle = t.isWod ? '' : `<p style="font-size:12px; color:#888; margin-top:5px;">${t.items.length} ejercicios</p>`;
+                return `<div class="card" onclick="startWorkoutByIndex(${index})"><h3 style="color:white; font-size:16px;">${t.name}</h3>${subtitle}</div>`;
+            }).join('');
+        }
         function closeTemplateCategory() { document.getElementById('train-sub-list').classList.add('hidden'); document.getElementById('train-main-menu').classList.remove('hidden'); }
-        function startWorkout(t) { document.getElementById('train-main-menu').classList.add('hidden'); document.getElementById('train-sub-list').classList.add('hidden'); document.getElementById('train-active').classList.remove('hidden'); sessionStartTime=new Date(); state.currentSession={name:t?t.name:"Entrenamiento Libre",exercises:[]}; document.getElementById('active-routine-name').innerText=state.currentSession.name; document.getElementById('active-exercises-list').innerHTML=''; if(t)t.items.forEach(i=>{const e=state.exercises.find(x=>x.id===i.id);if(e)addExerciseBlock(e.name,i.reps)}); }
+        
+        function startWorkoutByIndex(index) {
+            startWorkout(templates[index]);
+        }
+
+        function startWorkout(t) { 
+            document.getElementById('train-main-menu').classList.add('hidden'); 
+            document.getElementById('train-sub-list').classList.add('hidden'); 
+            document.getElementById('train-active').classList.remove('hidden'); 
+            
+            state.editingWorkoutId = null; 
+            document.getElementById('btn-finish-workout').innerText = "TERMINAR SESIÓN";
+
+            sessionStartTime=new Date(); 
+            state.currentSession={name:t?t.name:"Entrenamiento Libre",exercises:[]}; 
+            document.getElementById('active-routine-name').innerText=state.currentSession.name; 
+            document.getElementById('active-exercises-list').innerHTML=''; 
+            
+            if(t) {
+                if(t.isWod) {
+                    addWodBlock(t.desc, t.name);
+                } else if(t.items) {
+                    t.items.forEach(i=>{const e=state.exercises.find(x=>x.id===i.id);if(e)addExerciseBlock(e.name,i.reps)}); 
+                }
+            }
+        }
+        
         function openExerciseSelector() { document.getElementById('selector-input').value=''; updateExerciseSelector(); openModal('addExerciseModal'); }
         function updateExerciseSelector() { const q=document.getElementById('selector-input').value.toLowerCase(); const html=state.exercises.filter(e=>e.name.toLowerCase().includes(q)).map(e=>`<div class="search-result-item" onclick="selectExercise('${e.name}')"><div><h3>${e.name}</h3><p>${e.muscle}</p></div><i class="ph ph-plus-circle" style="font-size:24px; color:#555;"></i></div>`).join(''); document.getElementById('selector-results').innerHTML=html + (q.length>0 && !state.exercises.find(e=>e.name.toLowerCase()===q) ? `<div class="search-result-item" onclick="selectExercise('${document.getElementById('selector-input').value}')" style="border-left:3px solid var(--primary-color);"><div><h3 class="accent">Crear "${document.getElementById('selector-input').value}"</h3></div></div>`:''); }
         function selectExercise(n) { addExerciseBlock(n.charAt(0).toUpperCase()+n.slice(1)); closeModal('addExerciseModal'); }
         
-        /* BLOQUE NORMAL (EJERCICIO GYM) */
         function addExerciseBlock(n,r=null) { 
             const d=document.createElement('div'); d.className='exercise-block block-item'; 
             d.innerHTML=`<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><h3 style="color:var(--primary-color);" contenteditable="true">${n}</h3><button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; color:#666; padding:0 5px;"><i class="ph ph-trash" style="font-size:20px;"></i></button></div><div class="sets-container"></div><button class="btn-outline" style="width:100%; margin-top:10px; padding:8px; border-style:dashed; color:#666;" onclick="addSet(this)">+ Añadir Serie</button><textarea class="exercise-note" placeholder="Notas (ej: banco al 30%)..." rows="1"></textarea>`; 
             document.getElementById('active-exercises-list').appendChild(d); const c=d.querySelector('.sets-container'); if(r)r.forEach(v=>addSetRow(c,v)); else addSetRow(c,null); d.scrollIntoView({behavior:'smooth'}); 
         }
+        function addExerciseBlockForEdit(n, sets, note) { 
+            const d=document.createElement('div'); d.className='exercise-block block-item'; 
+            d.innerHTML=`<div style="display:flex; justify-content:space-between; margin-bottom:10px;"><h3 style="color:var(--primary-color);" contenteditable="true">${n}</h3><button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; color:#666; padding:0 5px;"><i class="ph ph-trash" style="font-size:20px;"></i></button></div><div class="sets-container"></div><button class="btn-outline" style="width:100%; margin-top:10px; padding:8px; border-style:dashed; color:#666;" onclick="addSet(this)">+ Añadir Serie</button><textarea class="exercise-note" placeholder="Notas (ej: banco al 30%)..." rows="1">${note||''}</textarea>`; 
+            document.getElementById('active-exercises-list').appendChild(d); 
+            const c=d.querySelector('.sets-container'); 
+            if(sets && sets.length) {
+                sets.forEach(s => {
+                    const num=c.children.length+1; 
+                    const row=document.createElement('div'); row.className='set-row'; 
+                    row.innerHTML=`<div class="set-num">${num}</div><input type="number" class="input-mini set-kg" placeholder="Kg" value="${s.kg||''}"><input type="text" class="input-mini set-reps" placeholder="Reps" value="${s.reps||''}">`; 
+                    c.appendChild(row);
+                });
+            } else {
+                addSetRow(c,null); 
+            }
+            d.scrollIntoView({behavior:'smooth'}); 
+        }
+
         function addSet(b) { addSetRow(b.previousElementSibling,null); }
         function addSetRow(c,v) { const n=c.children.length+1, d=document.createElement('div'); d.className='set-row'; d.innerHTML=`<div class="set-num">${n}</div><input type="number" class="input-mini set-kg" placeholder="Kg"><input type="text" class="input-mini set-reps" placeholder="Reps" ${v?`value="${v}"`:''}>`; c.appendChild(d); }
         
-        /* BLOQUE WOD (PIZARRA) */
-        function addWodBlock() {
+        function addWodBlock(descOrEvent='', title='Nuevo WOD', restVal='', resultVal='', rxVal='RX') {
+            const presetDesc = typeof descOrEvent === 'string' ? descOrEvent : '';
+            const presetTitle = typeof title === 'string' ? title : 'Nuevo WOD';
+
             const container = document.getElementById('active-exercises-list');
             const div = document.createElement('div');
             div.className = 'wod-block block-item';
             div.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
-                    <h3 class="wod-title" style="color:var(--primary-color); font-size:18px; margin:0;" contenteditable="true">Nuevo WOD</h3>
+                    <h3 class="wod-title" style="color:var(--primary-color); font-size:18px; margin:0;" contenteditable="true">${presetTitle}</h3>
                     <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; color:#666; padding:0 5px;"><i class="ph ph-trash" style="font-size:20px;"></i></button>
                 </div>
-                <textarea class="wod-desc" placeholder="Apunta aquí la pizarra (ej: 21-15-9 Thrusters y Dominadas)..." rows="3"></textarea>
-                <input type="text" class="wod-score-input wod-rest" placeholder="⏳ Descanso (ej: 1 min entre rondas)" style="margin-bottom: 10px;">
-                <input type="text" class="wod-score-input wod-result" placeholder="🏆 Tu Score final (ej: 14:30 o 5 Rnd)" style="margin-bottom: 10px; font-weight:bold;">
+                <textarea class="wod-desc" placeholder="Apunta aquí la pizarra (ej: 21-15-9...)" rows="5">${presetDesc}</textarea>
+                <input type="text" class="wod-score-input wod-rest" placeholder="⏳ Descanso (ej: 1 min entre rondas)" style="margin-bottom: 10px;" value="${restVal}">
+                <input type="text" class="wod-score-input wod-result" placeholder="🏆 Tu Score final (ej: 14:30 o 5 Rnd)" style="margin-bottom: 10px; font-weight:bold;" value="${resultVal}">
                 <div class="rx-toggle">
-                    <div class="rx-btn active rx" onclick="toggleRx(this, 'RX')">RX</div>
-                    <div class="rx-btn sc" onclick="toggleRx(this, 'SCALED')">SCALED</div>
+                    <div class="rx-btn ${rxVal === 'RX' ? 'active rx' : ''}" onclick="toggleRx(this, 'RX')">RX</div>
+                    <div class="rx-btn ${rxVal === 'SCALED' ? 'active sc' : ''}" onclick="toggleRx(this, 'SCALED')">SCALED</div>
                 </div>
             `;
             container.appendChild(div);
@@ -486,13 +843,26 @@
             else btn.classList.add('sc');
         }
 
-        function cancelWorkout() { document.getElementById('train-active').classList.add('hidden'); document.getElementById('train-main-menu').classList.remove('hidden'); }
+        function cancelWorkout() { 
+            document.getElementById('train-active').classList.add('hidden'); 
+            document.getElementById('train-main-menu').classList.remove('hidden'); 
+            if (state.editingWorkoutId) {
+                state.editingWorkoutId = null;
+                document.getElementById('btn-finish-workout').innerText = "TERMINAR SESIÓN";
+            }
+        }
         
-        /* GUARDAR */
         function finishWorkout() { 
-            const d=Math.round((new Date()-sessionStartTime)/60000); 
+            let d = state.editingWorkoutId ? state.editingWorkoutDuration : Math.round((new Date()-sessionStartTime)/60000); 
             const finalName = document.getElementById('active-routine-name').innerText.trim() || state.currentSession.name;
-            const s={id:Date.now(),date:new Date().toISOString(),name:finalName,duration:d||1,exercises:[]}; 
+            
+            const s = {
+                id: state.editingWorkoutId || Date.now(),
+                date: state.editingWorkoutId ? state.editingWorkoutDate : new Date().toISOString(),
+                name: finalName,
+                duration: d || 1,
+                exercises: []
+            }; 
             
             const blocks = document.querySelectorAll('#active-exercises-list .block-item');
             blocks.forEach(block => {
@@ -511,8 +881,20 @@
                 }
             }); 
             
-            if(!s.exercises.length)return showCustomAlert("Añade algún ejercicio o WOD."); 
-            state.history.unshift(s); localStorage.setItem('kilo_history',JSON.stringify(state.history)); cancelWorkout(); navTo('history'); 
+            if(!s.exercises.length) return showCustomAlert("Añade algún ejercicio o WOD."); 
+
+            if (state.editingWorkoutId) {
+                const idx = state.history.findIndex(w => w.id === state.editingWorkoutId);
+                if (idx !== -1) state.history[idx] = s;
+                state.editingWorkoutId = null;
+                document.getElementById('btn-finish-workout').innerText = "TERMINAR SESIÓN";
+            } else {
+                state.history.unshift(s); 
+            }
+            
+            localStorage.setItem('kilo_history',JSON.stringify(state.history)); 
+            cancelWorkout(); 
+            navTo('history'); 
         }
 
         /* HISTORY & LIB */
@@ -537,6 +919,7 @@
                 <div class="modal-header">
                     <h2 style="color:var(--primary-color); font-size:24px; margin:0;">${w.name}</h2>
                     <div style="display:flex; gap:10px;">
+                        <button class="modal-close-icon" onclick="loadWorkoutForEdit(${w.id})" title="Editar"><i class="ph ph-pencil-simple" style="font-size:20px;"></i></button>
                         <button class="modal-close-icon" onclick="shareWorkout(\`${shareText}\`)"><i class="ph ph-share-network" style="font-size:20px;"></i></button>
                         <button class="modal-close-icon" onclick="closeModal('workoutDetailModal')"><i class="ph ph-x" style="font-size:20px;"></i></button>
                     </div>
@@ -566,16 +949,48 @@
                 <div style="height:30px;"></div>`; 
             openModal('workoutDetailModal'); 
         }
+
+        function loadWorkoutForEdit(id) {
+            closeModal('workoutDetailModal');
+            const w = state.history.find(i => i.id === id);
+            if(!w) return;
+
+            state.editingWorkoutId = id;
+            state.editingWorkoutDate = w.date; 
+            state.editingWorkoutDuration = w.duration; 
+
+            document.getElementById('train-main-menu').classList.add('hidden');
+            document.getElementById('train-sub-list').classList.add('hidden');
+            document.getElementById('train-active').classList.remove('hidden');
+
+            document.getElementById('active-routine-name').innerText = w.name;
+            document.getElementById('active-exercises-list').innerHTML = '';
+
+            w.exercises.forEach(e => {
+                if (e.type === 'wod' || e.desc !== undefined) {
+                    let legacyResult = e.result || '';
+                    if(!legacyResult && e.time) legacyResult += e.time + ' ';
+                    if(!legacyResult && e.reps) legacyResult += e.reps;
+                    addWodBlock(e.desc, e.name, e.rest || '', legacyResult.trim(), e.rx);
+                } else {
+                    addExerciseBlockForEdit(e.name, e.sets, e.note);
+                }
+            });
+
+            document.getElementById('btn-finish-workout').innerText = "GUARDAR CAMBIOS";
+            navTo('train');
+        }
+
         function shareWorkout(t) {
             if (navigator.share) { navigator.share({ title: 'KILO Workout', text: t }).catch(console.error); }
             else { navigator.clipboard.writeText(t).then(()=>showCustomAlert("¡Copiado!")).catch(()=>showCustomAlert("Error copia")); }
         }
-        function renderLibrary() { const q=document.getElementById('library-search').value.toLowerCase(); const f=state.exercises.filter(e=>e.name.toLowerCase().includes(q) && (!currentMuscleFilter || e.muscle===currentMuscleFilter)); document.getElementById('library-list').innerHTML=f.map(e=>`<div class="card" style="margin-bottom:10px; padding:15px;" onclick="confirmAddToWorkout('${e.id}')"><div style="display:flex; justify-content:space-between; align-items:center;"><h3 style="font-size:16px;">${e.name}</h3><span style="font-size:10px; background:#333; padding:4px 8px; border-radius:4px; color:var(--primary-color); text-transform:uppercase;">${e.muscle}</span></div><p style="font-size:12px; margin-top:5px;">Nivel: ${e.level}</p></div>`).join(''); }
+        function renderLibrary() { const q=document.getElementById('library-search').value.toLowerCase(); const f=state.exercises.filter(e=>e.name.toLowerCase().includes(q) && (!currentMuscleFilter || e.muscle===currentMuscleFilter)); document.getElementById('library-list').innerHTML=f.map(e=>`<div class="card" style="margin-bottom:10px; padding:15px;" onclick="confirmAddToWorkout('${e.id}')"><div style="display:flex; justify-content:space-between; align-items:center;"><h3 style="font-size:16px;">${e.name}</h3><span style="font-size:10px; background:#333; padding:4px 8px; border-radius:4px; color:var(--primary-color); text-transform:uppercase;">${e.muscle}</span></div><p style="font-size:12px; margin-top:5px; color:#888;">${e.level}</p></div>`).join(''); }
         function filterLibrary(m,b) { currentMuscleFilter=m; document.querySelectorAll('#muscle-filters .chip').forEach(c=>c.classList.remove('active')); b.classList.add('active'); renderLibrary(); }
         function confirmAddToWorkout(id) { const e=state.exercises.find(x=>x.id===id); if(e){tempExerciseToAdd=e; document.getElementById('confirm-add-name').innerText=e.name; openModal('confirmAddModal');} }
         function executeAddToWorkout() { closeModal('confirmAddModal'); if(!tempExerciseToAdd)return; if(!state.currentSession){navTo('train'); startWorkout(null);} else navTo('train'); addExerciseBlock(tempExerciseToAdd.name); tempExerciseToAdd=null; }
         
-        /* UTILS & GRÁFICAS SVG NATIVAS */
+        /* UTILS & GRÁFICAS */
         function openModal(id) { 
             if(id==='progressModal'){
                 const l=state.progress[state.progress.length-1]||{}; 
@@ -600,7 +1015,6 @@
             } 
         }
 
-        /* GENERADOR DE GRÁFICA SVG SIN LIBRERÍAS */
         function renderEvolucion() {
             const metric = document.getElementById('chart-metric-select').value;
             const validData = state.progress.filter(p => p[metric] !== undefined && p[metric] !== '' && !isNaN(parseFloat(p[metric])));
@@ -661,7 +1075,7 @@
             `;
         }
 
-        /* TIMER LOGIC */
+        /* TIMER LOGIC MEJORADO (PREP TIME 10s + PAUSA) */
         function setTimerMode(m) {
             resetTimer(); state.timerMode=m; 
             const p=document.getElementById('config-panel'); const l=document.getElementById('timer-status-label'); document.getElementById('tabata-indicator').classList.add('hidden');
@@ -671,32 +1085,93 @@
             else if(m==='tabata') { l.innerText="TABATA"; p.innerHTML=`<div class="timer-input-group"><label>Work</label><input type="number" class="timer-input" value="${state.cfgTabataWork}" onchange="state.cfgTabataWork=this.value; resetTimer()"></div><div class="timer-input-group"><label>Rest</label><input type="number" class="timer-input" value="${state.cfgTabataRest}" onchange="state.cfgTabataRest=this.value; resetTimer()"></div><div class="timer-input-group"><label>Rondas</label><input type="number" class="timer-input" value="${state.cfgTabataRounds}" onchange="state.cfgTabataRounds=this.value; resetTimer()"></div>`; document.getElementById('tabata-indicator').classList.remove('hidden'); state.initialDuration=state.cfgTabataWork; state.timeLeft=state.cfgTabataWork; state.tabataRound=1; state.tabataState='work'; updateTabataUI(); }
             updateTimerDisplay();
         }
+
         function toggleTimer() {
             const svg=document.getElementById('timer-icon-svg').querySelector('path');
             document.getElementById('timer-mode-select').disabled = !state.isRunning;
 
-            if(state.isRunning) { clearInterval(state.timerInterval); state.isRunning=false; svg.setAttribute('d','M8 5V19L19 12L8 5Z'); document.querySelectorAll('.timer-input').forEach(i=>i.disabled=false); }
-            else {
-                state.isRunning=true; state.startTime=Date.now(); state.accumulatedTime=0; svg.setAttribute('d','M6 19h4V5H6v14zm8-14v14h4V5h-4z'); document.querySelectorAll('.timer-input').forEach(i=>i.disabled=true);
+            if(state.isRunning) { 
+                clearInterval(state.timerInterval); 
+                state.isRunning=false; 
+                svg.setAttribute('d','M8 5V19L19 12L8 5Z'); 
+                document.querySelectorAll('.timer-input').forEach(i=>i.disabled=false); 
+                state.accumulatedTime += Date.now() - state.startTime; 
+            } else {
+                initAudio(); 
+                state.isRunning=true; 
+                state.startTime=Date.now(); 
+                
+                if (state.accumulatedTime === 0 && !state.isPrepCompleted) {
+                    state.isPrep = true;
+                }
+
+                svg.setAttribute('d','M6 19h4V5H6v14zm8-14v14h4V5h-4z'); 
+                document.querySelectorAll('.timer-input').forEach(i=>i.disabled=true);
                 state.timerInterval=setInterval(gameLoop, 100);
             }
         }
+
         function gameLoop() {
-            const elapsed = (Date.now() - state.startTime) / 1000;
+            const elapsedTotal = (Date.now() - state.startTime + state.accumulatedTime) / 1000;
+
+            if (state.isPrep) {
+                let prepLeft = 10 - elapsedTotal;
+                if (prepLeft <= 0) {
+                    state.isPrep = false;
+                    state.isPrepCompleted = true;
+                    playBeep('long');
+                    state.startTime = Date.now();
+                    state.accumulatedTime = 0;
+                    state.lastBeep = -1;
+                    
+                    document.getElementById('timer-val').style.color = "var(--primary-color)";
+                    const l = document.getElementById('timer-status-label');
+                    if(state.timerMode==='amrap') l.innerText="CUENTA ATRÁS";
+                    else if(state.timerMode==='fortime') l.innerText="CRONÓMETRO";
+                    else if(state.timerMode==='emom') l.innerText=`MINUTO 1/${state.cfgEmomTotal}`;
+                    else if(state.timerMode==='tabata') l.innerText="TABATA";
+                } else {
+                    let secLeft = Math.ceil(prepLeft);
+                    if (secLeft <= 3 && secLeft > 0 && secLeft !== state.lastBeep) {
+                        playBeep('short');
+                        state.lastBeep = secLeft;
+                    }
+                    document.getElementById('timer-status-label').innerText = "PREPARACIÓN...";
+                    document.getElementById('timer-val').style.color = "var(--danger)";
+                    document.getElementById('timer-val').innerText = `-${secLeft.toString().padStart(2,'0')}`;
+                    return; 
+                }
+            }
+
+            const elapsed = (Date.now() - state.startTime + state.accumulatedTime) / 1000;
+
             if(state.timerMode === 'fortime') {
                 state.timeLeft = elapsed;
-                if(state.cfgForTimeCap > 0 && state.timeLeft >= state.cfgForTimeCap*60) { resetTimer(); showCustomAlert("TIME CAP!"); return; }
+                if(state.cfgForTimeCap > 0) {
+                    let capSec = state.cfgForTimeCap * 60;
+                    let secLeft = Math.ceil(capSec - elapsed);
+                    if (secLeft <= 3 && secLeft > 0 && secLeft !== state.lastBeep) { playBeep('short'); state.lastBeep = secLeft; }
+                    if (state.timeLeft >= capSec) { playBeep('long'); resetTimer(); showCustomAlert("TIME CAP!"); return; }
+                }
             }
             else if(state.timerMode === 'amrap') {
                 state.timeLeft = state.initialDuration - elapsed;
-                if(state.timeLeft <= 0) { resetTimer(); showCustomAlert("¡TIEMPO!"); return; }
+                let secLeft = Math.ceil(state.timeLeft);
+                if (secLeft <= 3 && secLeft > 0 && secLeft !== state.lastBeep) { playBeep('short'); state.lastBeep = secLeft; }
+                if(state.timeLeft <= 0) { playBeep('long'); resetTimer(); showCustomAlert("¡TIEMPO!"); return; }
             }
             else if(state.timerMode === 'emom') {
                 const totalMinutes = Math.floor(elapsed / 60) + 1;
                 const secondsInMinute = elapsed % 60;
                 state.timeLeft = 60 - secondsInMinute;
+
+                let secLeft = Math.ceil(state.timeLeft);
+                if (secLeft <= 3 && secLeft > 0 && secLeft !== state.lastBeep) { playBeep('short'); state.lastBeep = secLeft; }
+
                 if(totalMinutes > state.emomCurrentMinute) { 
+                    playBeep('long');
                     state.emomCurrentMinute = totalMinutes; 
+                    state.lastBeep = -1;
                     if(state.emomCurrentMinute > state.cfgEmomTotal) { resetTimer(); showCustomAlert("EMOM FIN"); return; }
                 }
                 document.getElementById('timer-status-label').innerText = `MINUTO ${state.emomCurrentMinute}/${state.cfgEmomTotal}`;
@@ -706,21 +1181,51 @@
                 const currentRoundIndex = Math.floor(elapsed / cycleTime);
                 const timeInCycle = elapsed % cycleTime;
                 state.tabataRound = currentRoundIndex + 1;
-                if(state.tabataRound > state.cfgTabataRounds) { resetTimer(); showCustomAlert("TABATA FIN"); return; }
-                if(timeInCycle < state.cfgTabataWork) { state.tabataState = 'work'; state.timeLeft = state.cfgTabataWork - timeInCycle; } else { state.tabataState = 'rest'; state.timeLeft = cycleTime - timeInCycle; }
+
+                if(state.tabataRound > state.cfgTabataRounds) { playBeep('long'); resetTimer(); showCustomAlert("TABATA FIN"); return; }
+
+                let newState = 'work';
+                if(timeInCycle < state.cfgTabataWork) {
+                    newState = 'work';
+                    state.timeLeft = state.cfgTabataWork - timeInCycle;
+                } else {
+                    newState = 'rest';
+                    state.timeLeft = cycleTime - timeInCycle;
+                }
+
+                let secLeft = Math.ceil(state.timeLeft);
+                if (secLeft <= 3 && secLeft > 0 && secLeft !== state.lastBeep) { playBeep('short'); state.lastBeep = secLeft; }
+
+                if (newState !== state.tabataState) {
+                    playBeep('long');
+                    state.tabataState = newState;
+                    state.lastBeep = -1;
+                }
                 updateTabataUI();
             }
             updateTimerDisplay();
         }
+
         function resetTimer() { 
             clearInterval(state.timerInterval); state.isRunning=false; 
+            state.accumulatedTime = 0; state.lastBeep = -1; 
+            state.isPrep = false; state.isPrepCompleted = false;
+
             document.getElementById('timer-icon-svg').querySelector('path').setAttribute('d','M8 5V19L19 12L8 5Z'); 
             document.querySelectorAll('.timer-input').forEach(i=>i.disabled=false); 
             document.getElementById('timer-mode-select').disabled = false; 
             
-            if(state.timerMode==='amrap') state.timeLeft=state.cfgAmrap*60; else if(state.timerMode==='fortime') state.timeLeft=0; else if(state.timerMode==='emom') { state.timeLeft=60; state.emomCurrentMinute=1; document.getElementById('timer-status-label').innerText=`MINUTO 1/${state.cfgEmomTotal}`; } else if(state.timerMode==='tabata') { state.timeLeft=state.cfgTabataWork; state.tabataRound=1; state.tabataState='work'; updateTabataUI(); } 
+            document.getElementById('timer-val').style.color = "var(--primary-color)";
+            const l = document.getElementById('timer-status-label');
+
+            if(state.timerMode==='amrap') { state.timeLeft=state.cfgAmrap*60; l.innerText="CUENTA ATRÁS"; } 
+            else if(state.timerMode==='fortime') { state.timeLeft=0; l.innerText="CRONÓMETRO"; } 
+            else if(state.timerMode==='emom') { state.timeLeft=60; state.emomCurrentMinute=1; l.innerText=`MINUTO 1/${state.cfgEmomTotal}`; } 
+            else if(state.timerMode==='tabata') { state.timeLeft=state.cfgTabataWork; state.tabataRound=1; state.tabataState='work'; l.innerText="TABATA"; updateTabataUI(); } 
+            
             updateTimerDisplay(); 
         }
+
         function updateTabataUI() { const i=document.getElementById('tabata-indicator'), v=document.getElementById('timer-val'); i.innerText=`Ronda ${state.tabataRound}/${state.cfgTabataRounds}`; if(state.tabataState==='work'){i.className='tabata-indicator tabata-work'; v.style.color='var(--primary-color)'; i.innerText+=' - WORK';} else {i.className='tabata-indicator tabata-rest'; v.style.color='var(--danger)'; i.innerText+=' - REST';} }
         function updateTimerDisplay() { let t=Math.abs(state.timeLeft); if(state.timerMode!=='fortime') t=Math.ceil(t); else t=Math.floor(t); let m=Math.floor(t/60), s=t%60; document.getElementById('timer-val').innerText=`${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`; }
     </script>
