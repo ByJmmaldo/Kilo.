@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KILO">
 
-    <link rel="icon" type="image/png" href="icon.png?v=17">
-    <link rel="apple-touch-icon" href="icon.png?v=17">
+    <link rel="icon" type="image/png" href="icon.png?v=18">
+    <link rel="apple-touch-icon" href="icon.png?v=18">
 
     <title>KILO App</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -260,7 +260,10 @@
         </div>
         <div id="train-active" class="hidden">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #222;">
-                <div><p style="font-size: 10px; text-transform: uppercase; color: var(--primary-color);">EN CURSO</p><h3 id="active-routine-name" style="font-size: 18px;">Libre</h3></div>
+                <div>
+                    <p style="font-size: 10px; text-transform: uppercase; color: var(--primary-color);">EN CURSO</p>
+                    <h3 id="active-routine-name" style="font-size: 18px; border-bottom: 1px dashed #666; padding-bottom: 2px; margin-top: 4px;" contenteditable="true">Libre</h3>
+                </div>
                 <button onclick="showCustomConfirm('¿Cancelar entreno?', cancelWorkout)" style="background: none; border: none; padding: 10px;"><i class="ph ph-x-circle" style="font-size: 32px; color: var(--danger);"></i></button>
             </div>
             <div id="active-exercises-list"></div>
@@ -434,7 +437,7 @@
         function addSet(b) { addSetRow(b.previousElementSibling,null); }
         function addSetRow(c,v) { const n=c.children.length+1, d=document.createElement('div'); d.className='set-row'; d.innerHTML=`<div class="set-num">${n}</div><input type="number" class="input-mini set-kg" placeholder="Kg"><input type="text" class="input-mini set-reps" placeholder="Reps" ${v?`value="${v}"`:''}>`; c.appendChild(d); }
         
-        /* BLOQUE WOD (PIZARRA) CON DESCANSO Y SCORE */
+        /* BLOQUE WOD (PIZARRA) */
         function addWodBlock() {
             const container = document.getElementById('active-exercises-list');
             const div = document.createElement('div');
@@ -467,10 +470,12 @@
 
         function cancelWorkout() { document.getElementById('train-active').classList.add('hidden'); document.getElementById('train-main-menu').classList.remove('hidden'); }
         
-        /* GUARDAR (DISCRIMINA ENTRE GYM Y WOD) */
+        /* GUARDAR */
         function finishWorkout() { 
             const d=Math.round((new Date()-sessionStartTime)/60000); 
-            const s={id:Date.now(),date:new Date().toISOString(),name:state.currentSession.name,duration:d||1,exercises:[]}; 
+            // NUEVO: Capturar el nombre editado del entrenamiento
+            const finalName = document.getElementById('active-routine-name').innerText.trim() || state.currentSession.name;
+            const s={id:Date.now(),date:new Date().toISOString(),name:finalName,duration:d||1,exercises:[]}; 
             
             const blocks = document.querySelectorAll('#active-exercises-list .block-item');
             blocks.forEach(block => {
