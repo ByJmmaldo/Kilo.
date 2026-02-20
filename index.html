@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="KILO">
 
-    <link rel="icon" type="image/png" href="icon.png?v=18">
-    <link rel="apple-touch-icon" href="icon.png?v=18">
+    <link rel="icon" type="image/png" href="icon.png?v=19">
+    <link rel="apple-touch-icon" href="icon.png?v=19">
 
     <title>KILO App</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -31,7 +31,7 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
         
-        /* INPUTS - ELIMINAR FLECHAS Y ESTILO DARK */
+        /* INPUTS */
         input, textarea, select { 
             user-select: text; 
             background-color: #252527 !important; 
@@ -50,11 +50,9 @@
         input:focus, textarea:focus, select:focus { border-color: var(--primary-color); }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
-        /* ESTILOS ESPECÍFICOS */
         .measure-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .measure-item label { display: block; color: var(--text-dim); font-size: 12px; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px; }
         .measure-item input { text-align: center; font-weight: bold; font-size: 18px; }
-        
         .weight-hero input { background-color: #000 !important; border: 2px solid #333; color: var(--primary-color) !important; font-size: 32px; height: 60px; text-align: center; }
         #library-search, #selector-input { background-color: #111 !important; border-radius: 50px; padding-left: 20px; }
 
@@ -341,6 +339,22 @@
     <div id="progressModal" class="modal">
         <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
             <div class="modal-header"><h2>Progreso</h2><button class="modal-close-icon" onclick="closeModal('progressModal')"><i class="ph ph-x" style="font-size:20px;"></i></button></div>
+            
+            <div style="background: #111; border: 1px solid #333; border-radius: 12px; padding: 15px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <span style="font-size: 12px; color: #888; text-transform: uppercase; font-weight: bold;">Evolución</span>
+                    <select id="chart-metric-select" style="width: auto; padding: 4px 8px; font-size: 12px; border-radius: 6px; background: #222 !important; border: 1px solid #444;" onchange="renderEvolucion()">
+                        <option value="weight">Peso</option>
+                        <option value="chest">Pecho</option>
+                        <option value="waist">Cintura</option>
+                        <option value="hips">Cadera</option>
+                        <option value="arm">Brazo</option>
+                        <option value="thigh">Muslo</option>
+                    </select>
+                </div>
+                <div id="chart-container" style="min-height: 120px;"></div>
+            </div>
+
             <div class="measure-item weight-hero"><label>Peso (kg)</label><input type="number" id="prog-weight" placeholder="0.0"></div>
             <div class="measure-grid">
                 <div class="measure-item"><label>Pecho</label><input type="number" id="prog-chest" placeholder="-"></div>
@@ -349,7 +363,7 @@
                 <div class="measure-item"><label>Brazo</label><input type="number" id="prog-arm" placeholder="-"></div>
                 <div class="measure-item"><label>Muslo</label><input type="number" id="prog-thigh" placeholder="-"></div>
             </div>
-            <button class="btn" onclick="saveProgress()">Guardar</button>
+            <button class="btn" onclick="saveProgress()">Guardar Nueva Medida</button>
             <div style="height: 20px;"></div>
         </div>
     </div>
@@ -448,10 +462,8 @@
                     <button onclick="this.parentElement.parentElement.remove()" style="background:none; border:none; color:#666; padding:0 5px;"><i class="ph ph-trash" style="font-size:20px;"></i></button>
                 </div>
                 <textarea class="wod-desc" placeholder="Apunta aquí la pizarra (ej: 21-15-9 Thrusters y Dominadas)..." rows="3"></textarea>
-                
                 <input type="text" class="wod-score-input wod-rest" placeholder="⏳ Descanso (ej: 1 min entre rondas)" style="margin-bottom: 10px;">
                 <input type="text" class="wod-score-input wod-result" placeholder="🏆 Tu Score final (ej: 14:30 o 5 Rnd)" style="margin-bottom: 10px; font-weight:bold;">
-                
                 <div class="rx-toggle">
                     <div class="rx-btn active rx" onclick="toggleRx(this, 'RX')">RX</div>
                     <div class="rx-btn sc" onclick="toggleRx(this, 'SCALED')">SCALED</div>
@@ -473,7 +485,6 @@
         /* GUARDAR */
         function finishWorkout() { 
             const d=Math.round((new Date()-sessionStartTime)/60000); 
-            // NUEVO: Capturar el nombre editado del entrenamiento
             const finalName = document.getElementById('active-routine-name').innerText.trim() || state.currentSession.name;
             const s={id:Date.now(),date:new Date().toISOString(),name:finalName,duration:d||1,exercises:[]}; 
             
@@ -504,7 +515,6 @@
         
         function showWorkoutDetail(id) { 
             const w=state.history.find(i=>i.id===id); 
-            
             let shareText = `🚀 KILO Workout: ${w.name}\n📅 ${new Date(w.date).toLocaleDateString()}\n⏱️ ${w.duration} min\n\n`;
             w.exercises.forEach(e => {
                 if(e.type === 'wod' || e.desc !== undefined) {
@@ -559,13 +569,91 @@
         function confirmAddToWorkout(id) { const e=state.exercises.find(x=>x.id===id); if(e){tempExerciseToAdd=e; document.getElementById('confirm-add-name').innerText=e.name; openModal('confirmAddModal');} }
         function executeAddToWorkout() { closeModal('confirmAddModal'); if(!tempExerciseToAdd)return; if(!state.currentSession){navTo('train'); startWorkout(null);} else navTo('train'); addExerciseBlock(tempExerciseToAdd.name); tempExerciseToAdd=null; }
         
-        /* UTILS */
+        /* UTILS & GRÁFICAS SVG NATIVAS */
         function openModal(id) { 
-            if(id==='progressModal'){const l=state.progress[state.progress.length-1]||{}; document.getElementById('prog-weight').value=l.weight||''; document.getElementById('prog-chest').value=l.chest||''; document.getElementById('prog-waist').value=l.waist||''; document.getElementById('prog-hips').value=l.hips||''; document.getElementById('prog-arm').value=l.arm||''; document.getElementById('prog-thigh').value=l.thigh||'';} 
+            if(id==='progressModal'){
+                const l=state.progress[state.progress.length-1]||{}; 
+                document.getElementById('prog-weight').value=l.weight||''; 
+                document.getElementById('prog-chest').value=l.chest||''; 
+                document.getElementById('prog-waist').value=l.waist||''; 
+                document.getElementById('prog-hips').value=l.hips||''; 
+                document.getElementById('prog-arm').value=l.arm||''; 
+                document.getElementById('prog-thigh').value=l.thigh||'';
+                setTimeout(renderEvolucion, 100); // Renderiza gráfica al abrir
+            } 
             document.getElementById(id).style.display='flex'; 
         }
         function closeModal(id) { document.getElementById(id).style.display='none'; }
-        function saveProgress() { const e={date:new Date(), weight:document.getElementById('prog-weight').value, chest:document.getElementById('prog-chest').value, waist:document.getElementById('prog-waist').value, hips:document.getElementById('prog-hips').value, arm:document.getElementById('prog-arm').value, thigh:document.getElementById('prog-thigh').value}; if(e.weight||e.chest){state.progress.push(e); localStorage.setItem('kilo_progress',JSON.stringify(state.progress)); if(e.weight){state.weight.push({date:e.date,val:e.weight}); localStorage.setItem('kilo_weight',JSON.stringify(state.weight));} renderHome(); closeModal('progressModal');} }
+        
+        function saveProgress() { 
+            const e={date:new Date().toISOString(), weight:document.getElementById('prog-weight').value, chest:document.getElementById('prog-chest').value, waist:document.getElementById('prog-waist').value, hips:document.getElementById('prog-hips').value, arm:document.getElementById('prog-arm').value, thigh:document.getElementById('prog-thigh').value}; 
+            if(e.weight||e.chest||e.waist||e.hips||e.arm||e.thigh){
+                state.progress.push(e); localStorage.setItem('kilo_progress',JSON.stringify(state.progress)); 
+                if(e.weight){state.weight.push({date:e.date,val:e.weight}); localStorage.setItem('kilo_weight',JSON.stringify(state.weight));} 
+                renderHome(); renderEvolucion(); showCustomAlert("¡Medida guardada!");
+            } 
+        }
+
+        /* GENERADOR DE GRÁFICA SVG SIN LIBRERÍAS */
+        function renderEvolucion() {
+            const metric = document.getElementById('chart-metric-select').value;
+            const validData = state.progress.filter(p => p[metric] !== undefined && p[metric] !== '' && !isNaN(parseFloat(p[metric])));
+            const container = document.getElementById('chart-container');
+            
+            if (validData.length < 2) {
+                container.innerHTML = '<p style="text-align:center; color:#666; font-size:12px; margin-top:40px;">Añade al menos 2 registros para ver tu evolución.</p>';
+                return;
+            }
+
+            const values = validData.map(p => parseFloat(p[metric]));
+            const minVal = Math.min(...values);
+            const maxVal = Math.max(...values);
+            const padding = (maxVal - minVal) * 0.1 || 1; 
+            const adjustedMin = minVal - padding;
+            const adjustedMax = maxVal + padding;
+            const range = adjustedMax - adjustedMin;
+
+            const w = 300; 
+            const h = 80; 
+
+            let points = values.map((val, i) => {
+                const x = (i / (values.length - 1)) * w;
+                const y = h - (((val - adjustedMin) / range) * h);
+                return `${x},${y}`;
+            }).join(' ');
+
+            let circles = values.map((val, i) => {
+                const x = (i / (values.length - 1)) * w;
+                const y = h - (((val - adjustedMin) / range) * h);
+                return `<circle cx="${x}" cy="${y}" r="3.5" fill="#00FF94" stroke="#111" stroke-width="1.5"/>`;
+            }).join('');
+
+            let fillPath = `0,${h} ${points} ${w},${h}`;
+
+            const firstDate = new Date(validData[0].date).toLocaleDateString(undefined, {month:'short', day:'numeric'});
+            const lastDate = new Date(validData[validData.length-1].date).toLocaleDateString(undefined, {month:'short', day:'numeric'});
+
+            container.innerHTML = `
+                <div style="position:relative; width:100%; height:120px; display:flex; flex-direction:column; justify-content:flex-end;">
+                    <svg viewBox="-5 -5 ${w+10} ${h+10}" style="width:100%; height:100%; overflow:visible;">
+                        <defs>
+                            <linearGradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="rgba(0, 255, 148, 0.4)" />
+                                <stop offset="100%" stop-color="rgba(0, 255, 148, 0)" />
+                            </linearGradient>
+                        </defs>
+                        <polygon points="${fillPath}" fill="url(#chartGrad)" />
+                        <polyline points="${points}" fill="none" stroke="#00FF94" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+                        ${circles}
+                    </svg>
+                    <div style="display:flex; justify-content:space-between; font-size:10px; color:#666; margin-top:5px;">
+                        <span>${firstDate}</span>
+                        <span style="color:var(--primary-color); font-weight:bold; font-size:12px; padding:0 10px;">Actual: ${values[values.length-1]}</span>
+                        <span>${lastDate}</span>
+                    </div>
+                </div>
+            `;
+        }
 
         /* TIMER LOGIC */
         function setTimerMode(m) {
